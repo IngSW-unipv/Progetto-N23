@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialicons.*?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="808.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipv.ingsw.magstudio.controller.LoginController">
+    <children>
+        <AnchorPane layoutX="204.0" layoutY="55.0" prefHeight="412.5" prefWidth="601.3" style="-fx-background-color: white;" styleClass="centerBar" stylesheets="@../style.css">
+            <children>
+                <MFXButton buttonType="RAISED" layoutX="466.0" layoutY="312.0" prefHeight="50.0" prefWidth="100.0" rippleColor="#f2b705" style="-fx-border-radius: 40px;" styleClass="loginButton" stylesheets="@../style.css" text="Login">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </MFXButton>
+                <MFXTextField borderGap="25.0" floatMode="BORDER" floatingText="Nome Utente" floatingTextGap="10.0" graphicTextGap="20.0" layoutX="210.0" layoutY="95.0" prefHeight="50.0" prefWidth="356.0" styleClass="utente" stylesheets="@../style.css">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </MFXTextField>
+                <MFXPasswordField fx:id="passwordField" borderGap="25.0" floatMode="BORDER" floatingText="Password" floatingTextGap="10.0" graphicTextGap="20.0" layoutX="210.0" layoutY="206.0" prefHeight="50.0" prefWidth="356.0" styleClass="utente" stylesheets="@../style.css">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </MFXPasswordField>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="sideBar" layoutX="8.0" layoutY="8.0" prefHeight="525.0" prefWidth="375.81" styleClass="sideBar" stylesheets="@../style.css" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ImageView fx:id="img" fitHeight="474.0" fitWidth="380.0" layoutX="10.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../img/logo.png" />
+                    </image>
+                </ImageView>
+                <MaterialIconView fill="WHITE" glyphName="CLOSE" layoutX="19.0" layoutY="49.0" onMouseClicked="#closeAction" size="30" text="">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </MaterialIconView>
+            </children></AnchorPane>
+    </children>
+</AnchorPane>

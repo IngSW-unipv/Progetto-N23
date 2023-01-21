@@ -1,0 +1,29 @@
+AnchorPane{
+    -fx-background-radius: 40px;
+}
+
+.sideBar{
+    -fx-background-color: linear-gradient(to right top, yellow, orange);
+}
+
+.centerBar{
+    -fx-background-color: white;
+}
+
+.loginButton{
+    -fx-background-radius: 90px;
+}
+
+.exitButton{
+    -fx-background-color: transparent;
+}
+
+.utente{
+    -fx-border-radius: 40px;
+    -fx-background-radius: 40px;
+    -fx-border-color: orange;
+}
+
+.utente .floating-text{
+    -fx-text-fill: black;
+}
