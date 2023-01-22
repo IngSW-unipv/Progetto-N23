@@ -1,4 +1,4 @@
-module it.unipv.ingsw {
+module it {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
@@ -8,4 +8,6 @@ module it.unipv.ingsw {
 
     opens it.unipv.ingsw.magstudio.controller to javafx.fxml;
     exports it.unipv.ingsw.magstudio.controller;
+    exports it.unipv.ingsw.magstudio;
+    opens it.unipv.ingsw.magstudio to javafx.fxml;
 }

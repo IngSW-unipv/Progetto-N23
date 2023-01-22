@@ -1,5 +1,6 @@
-package it.unipv.ingsw.magstudio.controller;
+package it.unipv.ingsw.magstudio;
 
+import it.unipv.ingsw.magstudio.controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
