@@ -16,7 +16,7 @@
 HiveHub è un Software di logistica creato per la gestione di medi e grandi magazzini, con l'obiettivo di semplificare le principali operazioni che si svolgono all'interno di essi.
 
 ## Fuzionalità
-Le funzioni che possono essere utilizzate all'interno dell'applicativo sono svariate, ma le principali sono:
-* Creazione, modifica dipendenti e responsabili
-* Creazione, modifica, visualizzazione dei prodotti
+Le funzioni che possono essere utilizzate all'interno dell'applicativo sono svariate, le principali sono:
+* Gestione dipendenti e responsabili
+* Gestione dei prodotti
 * Gestione fatture 
