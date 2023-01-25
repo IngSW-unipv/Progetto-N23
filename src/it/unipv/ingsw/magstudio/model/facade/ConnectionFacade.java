@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import it.unipv.ingsw.magstudio.model.connections.IConnectionStrategy;
+import it.unipv.ingsw.magstudio.model.connections.MySQLConnection;
 import it.unipv.ingsw.magstudio.model.connections.MySQLOverSSHConnection;
 
 public class ConnectionFacade {
@@ -23,13 +24,14 @@ public class ConnectionFacade {
     }
 
     private void setMySQLStrategy(){
-        //TODO: implementare MySQL in locale
-        System.out.println("Non ancora implementato");
-        strategy = null;
+        strategy = MySQLConnection.getIstance();
     }
 
     private void setMySQLOverSSHStrategy(){
-        strategy = new MySQLOverSSHConnection();
+        strategy = MySQLOverSSHConnection.getIstance();
+    }
+
+    public void connect(){
         strategy.connect();
     }
 

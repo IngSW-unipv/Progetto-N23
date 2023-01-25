@@ -3,27 +3,21 @@ package it.unipv.ingsw.magstudio.model.connections;
 import java.sql.ResultSet;
 
 public class MySQLOverSSHConnection implements IConnectionStrategy {
-    private MySQLConnection sqlConnection;
-    private SSHConnection sshConnection;
+    private static MySQLOverSSHConnection istance;
+    private final MySQLConnection sqlConnection;
+    private final SSHConnection sshConnection;
 
-    public MySQLOverSSHConnection(){
-        this.sshConnection = new SSHConnection.Builder()
-                .setHost("195.231.85.22")
-                .setUser("hivehub")
-                .setPassword("hivehub")
-                .setRemoteHost("127.0.0.1")
-                .setListenPort(5656)
-                .setRecivePort(3306)
-        .build();
-
-        this.sqlConnection = new MySQLConnection.Builder()
-                .setHost("127.0.0.1")
-                .setPort(5656)
-                .setSchema("HIVEHUB")
-                .setUsername("sql-hivehub")
-                .setPassword("Hivehub2023!")
-        .build();
+    private MySQLOverSSHConnection(){
+        this.sshConnection = SSHConnection.getIstance();
+        this.sqlConnection = MySQLConnection.getIstance();
     }
+
+    public static MySQLOverSSHConnection getIstance() {
+        if(istance == null)
+            istance = new MySQLOverSSHConnection();
+        return istance;
+    }
+
     @Override
     public void connect() {
         try {

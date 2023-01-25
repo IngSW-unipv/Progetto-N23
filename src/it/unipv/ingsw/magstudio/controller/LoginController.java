@@ -97,6 +97,7 @@ public class LoginController implements Initializable {
 
         ConnectionFacade connectionFacade = new ConnectionFacade();
         connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL_OVER_SSH);
+        connectionFacade.connect();
 
         //TODO: migliorare velocità per togliere lag
         boolean esito = false;

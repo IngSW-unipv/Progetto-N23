@@ -4,12 +4,14 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
 public class SSHConnection{
-    private String host;
-    private String user;
-    private String password;
+    private static SSHConnection istance;
+    private final String host;
+    private final String user;
+    private final String password;
 
-    private String internalHost;
-    private int lport, rport;
+    private final String internalHost;
+    private final int lport;
+    private final int rport;
 
     private Session session;
 
@@ -20,6 +22,19 @@ public class SSHConnection{
         this.internalHost = builder.internalHost;
         this.lport = builder.lport;
         this.rport = builder.rport;
+    }
+
+    public static SSHConnection getIstance() {
+        if(istance == null)
+            istance = new SSHConnection.Builder()
+                    .setHost("195.231.85.22")
+                    .setUser("hivehub")
+                    .setPassword("hivehub")
+                    .setRemoteHost("127.0.0.1")
+                    .setListenPort(5656)
+                    .setRecivePort(3306)
+            .build();
+        return istance;
     }
 
     public void connect() {
@@ -46,7 +61,7 @@ public class SSHConnection{
         return session.isConnected();
     }
 
-    public static class Builder {
+    private static class Builder {
         private String host;
         private String user;
         private String password;

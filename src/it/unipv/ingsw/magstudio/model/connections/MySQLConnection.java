@@ -3,12 +3,13 @@ package it.unipv.ingsw.magstudio.model.connections;
 import java.sql.*;
 
 public class MySQLConnection implements IConnectionStrategy {
+    private static MySQLConnection istance;
     private final String url;
-    private String host;
-    private String username;
-    private String password;
-    private int port;
-    private String schema;
+    private final String host;
+    private final String username;
+    private final String password;
+    private final int port;
+    private final String schema;
     private Connection connection;
 
     private MySQLConnection(Builder builder) {
@@ -18,6 +19,19 @@ public class MySQLConnection implements IConnectionStrategy {
         this.port = builder.port;
         this.schema = builder.schema;
         this.url = String.format("jdbc:mysql://%s:%d/%s", this.host,this.port,this.schema);
+    }
+
+    public static MySQLConnection getIstance() {
+        if(istance == null){
+            istance = new MySQLConnection.Builder()
+                    .setHost("127.0.0.1")
+                    .setPort(5656)
+                    .setSchema("HIVEHUB")
+                    .setUsername("sql-hivehub")
+                    .setPassword("Hivehub2023!")
+                    .build();
+        }
+        return istance;
     }
 
     @Override
@@ -73,7 +87,7 @@ public class MySQLConnection implements IConnectionStrategy {
             return -1;
         }
     }
-    public static class Builder {
+    private static class Builder {
         private String host;
         private String username;
         private String password;
