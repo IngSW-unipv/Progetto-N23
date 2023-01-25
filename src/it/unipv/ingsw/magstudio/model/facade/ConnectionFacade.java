@@ -1,6 +1,8 @@
 package it.unipv.ingsw.magstudio.model.facade;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import it.unipv.ingsw.magstudio.model.connections.IConnectionStrategy;
 import it.unipv.ingsw.magstudio.model.connections.MySQLOverSSHConnection;
 
@@ -42,5 +44,15 @@ public class ConnectionFacade {
 
     public int executeUpdate(String query){
         return strategy.executeUpdate(query);
+    }
+
+    public boolean controllaCredenziali(String nomeUtente, String password) throws SQLException {
+        //TODO: SQL injection
+        ResultSet rs =executeQuery("SELECT COUNT(*) AS N FROM T_PERSONA, PERSONA WHERE NOME_UTENTE='"+nomeUtente+"' AND PASSWORD='"+password+"'");
+        rs.next();
+        if(rs.getInt("N") == 1){
+            return true;
+        }
+        return false;
     }
 }
