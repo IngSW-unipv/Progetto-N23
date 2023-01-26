@@ -5,8 +5,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Classe contenente alcuni metodi di criptatura di testi
+ */
 public class Encryption {
     private static MessageDigest md;
+
+    /**
+     * Metodo utilizzato per criptare un testo con l'algoritmo MD5
+     * @param text Il testo da criptare
+     * @return Il testo criptato
+     */
     public static String MD5Encryptor(String text){
         byte[] bytesOfMessage = new byte[0];
         try {
@@ -19,6 +28,11 @@ public class Encryption {
         }
     }
 
+    /**
+     * Metodo utilizzato per criptare un testo con l'algoritmo SHA-256
+     * @param text Il testo da criptare
+     * @return Il testo criptato
+     */
     public static String SHA256Encryptor(String text){
         byte[] bytesOfMessage = new byte[0];
         try {

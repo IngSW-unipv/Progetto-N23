@@ -54,6 +54,8 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         connectionFacade = new ConnectionFacade();
         connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL_OVER_SSH);
+
+        //Impostazioni per movimento finestra
         sideBar.setOnMousePressed (mouseEvent -> {
             x = mouseEvent.getSceneX();
             y = mouseEvent.getSceneY();
@@ -75,6 +77,7 @@ public class LoginController implements Initializable {
 
         img.setVisible(true);
 
+        //Inizio Animazione Logo
         double time = 1.5;
         ParallelTransition parallelTransition = new ParallelTransition();
 
@@ -97,10 +100,12 @@ public class LoginController implements Initializable {
         stage.close();
     }
 
-    public void loginButtonPressed(ActionEvent actionEvent) throws SQLException, InterruptedException {
+    //Azione di Click su bottone Login
+    public void loginButtonPressed(ActionEvent actionEvent){
         String nomeUtente = nomeUtenteField.getText();
         String password = Encryption.SHA256Encryptor(passwordField.getText());
-        
+
+        //Creazione del Task in Background per Thread
         Task<Boolean> task = new Task<Boolean>() {
             @Override
             protected Boolean call(){
@@ -138,6 +143,7 @@ public class LoginController implements Initializable {
                 erroreLabel.setVisible(false);
             }
         });
+        //Thread per richiesta al DataBase
         new Thread(task).start();
     }
 }

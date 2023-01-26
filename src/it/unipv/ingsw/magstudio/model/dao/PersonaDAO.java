@@ -1,6 +1,6 @@
 package it.unipv.ingsw.magstudio.model.dao;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
+
 import it.unipv.ingsw.magstudio.model.bean.*;
 import it.unipv.ingsw.magstudio.model.exceptions.CfFormatException;
 import it.unipv.ingsw.magstudio.model.exceptions.EmailFormatException;
@@ -13,11 +13,21 @@ import java.util.Date;
 public class PersonaDAO implements IPersonaDAO{
 
     private ConnectionFacade connectionFacade;
+
+    /**
+     * Crea un nuovo oggetto PersonaDAO
+     * @param connectionFacade Facade da cui connettersi al DB
+     */
     public PersonaDAO(ConnectionFacade connectionFacade) {
         this.connectionFacade=connectionFacade;
-
     }
 
+    /**
+     * Restituisce l'oggetto Persona identificato dal nome utente passato
+     * @param nomeUtente Il nome utente
+     * @return L'oggetto Persona
+     * @see Persona
+     */
     @Override
     public Persona selectByNomeUtente(String nomeUtente) {
         Persona out = null;

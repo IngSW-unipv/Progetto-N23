@@ -17,6 +17,19 @@ public class Persona {
     private Indirizzo indirizzo;
     private Contatto contatto;
 
+    /**
+     * Crea una Persona
+     * @param nome Il nome della Persona
+     * @param cognome Il cognome della Persona
+     * @param cf Il Codice Fiscale
+     * @param dataNascita La Data di Nascita secondo il formato "yyyy-MM-dd"
+     * @param indirizzo L'indirizzo di residenza
+     * @param contatto Il Contatto con almeno o il numero di telefono o l'email
+     * @throws CfFormatException Eccezione lanciata in caso il Codice Fisiscale inserito non segua lo standard del Codice Fiscale italiano
+     * @see Indirizzo
+     * @see Contatto
+     * @see Date
+     */
     public Persona(String nome, String cognome, String cf, Date dataNascita, Indirizzo indirizzo, Contatto contatto) throws CfFormatException {
         this.nome = nome;
         this.cognome = cognome;
@@ -26,34 +39,71 @@ public class Persona {
         this.contatto = contatto;
     }
 
+    /**
+     * Restituisce il nome della Persona
+     * @return Il nome
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Restituisce il cognome della Persona
+     * @return Il cognome
+     */
     public String getCognome() {
         return cognome;
     }
 
+    /**
+     * Restituisce il Codice Fiscale della Persona
+     * @return Il Codice Fiscale
+     */
     public String getCf() {
         return cf;
     }
 
+    /**
+     * La Data di Nascita della Persona
+     * @return La Data di Nascita
+     * @see Date
+     */
     public Date getDataNascita() {
         return dataNascita;
     }
 
+    /**
+     * Restituisce l'Indirizzo della Persona
+     * @return L'Indirizzo
+     * @see Indirizzo
+     */
     public Indirizzo getIndirizzo() {
         return indirizzo;
     }
 
+    /**
+     * Restituisce il Contatto della Persona
+     * @return Il Contatto
+     * @see Contatto
+     */
     public Contatto getContatto() {
         return contatto;
     }
 
+    /**
+     * Sostituisce l'Indirizzo attuale con quello passato tramite parametro
+     * @param indirizzo Il nuovo Indirizzo
+     * @see Indirizzo
+     */
     public void setIndirizzo(Indirizzo indirizzo) {
         this.indirizzo = indirizzo;
     }
 
+    /**
+     * Imposta il Codice Fiscale solo se rispetta lo standard del Codice Fiscale italiano
+     * @param cf Il Codice Fiscale
+     * @throws CfFormatException Eccezione lanciata in caso il codice fiscale fornito non segua lo standard del Codice Fiscale italiano
+     */
     private void setCf(String cf) throws CfFormatException {
         Pattern pattern = Pattern.compile("^([a-zA-Z]{3})([a-zA-Z]{3})([0-9]{2})([a-zA-Z]{1})([0-9]{2})([a-zA-Z]{1}[0-9]{3})([a-zA-Z]{1})$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(cf);
@@ -65,10 +115,20 @@ public class Persona {
         }
     }
 
+    /**
+     * Modifica l'indirizzo email che viene passato attraverso il parametro
+     * @param email L'oggetto Contatto che contiene il nuovo indirizzo email
+     * @throws EmailFormatException Eccezione lanciata in caso l'email non segue il pattern di un indirizzo email
+     */
     public void modificaEmail(Contatto email) throws EmailFormatException {
         this.contatto.setEmail(email.getEmail());
     }
 
+    /**
+     * Modifica il numero di telefono che viene passato attraverso il parametro
+     * @param telefono L'oggetto Contatto che contiene il nuovo numero di telefono
+     * @throws TelefonoFormatException Eccezione lanciata in caso il numero di telefono non segue il pattern di un numero di telefono
+     */
     public void modificaTelefono(Contatto telefono) throws TelefonoFormatException {
         this.contatto.setTelefono(telefono.getTelefono());
     }
