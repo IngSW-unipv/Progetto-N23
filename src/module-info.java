@@ -4,6 +4,7 @@ module it {
     requires java.sql;
     requires jsch;
     requires MaterialFX;
+    requires mysql.connector.java;
 
 
     opens it.unipv.ingsw.magstudio.controller to javafx.fxml;
