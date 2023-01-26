@@ -67,12 +67,4 @@ public class PersonaDAO implements IPersonaDAO{
     public boolean insertPersona(Persona p) {
         return false;
     }
-
-    public static void main(String[] args) {
-        ConnectionFacade connectionFacade = new ConnectionFacade();
-        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL_OVER_SSH);
-
-        PersonaDAO personaDAO = new PersonaDAO(connectionFacade);
-        System.out.println(personaDAO.selectByNomeUtente("admin"));
-    }
 }
