@@ -35,7 +35,7 @@ public class MySQLConnection implements IConnectionStrategy {
     }
 
     @Override
-    public void connect(){
+    public Connection connect(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = DriverManager.getConnection(url, username, password);
@@ -43,6 +43,7 @@ public class MySQLConnection implements IConnectionStrategy {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return this.connection;
     }
 
     @Override
@@ -66,27 +67,6 @@ public class MySQLConnection implements IConnectionStrategy {
         return out;
     }
 
-    @Override
-    public ResultSet executeQuery(String query) {
-        try {
-            Statement statement = connection.createStatement();
-            return statement.executeQuery(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public int executeUpdate(String query) {
-        try {
-            Statement statement = connection.createStatement();
-            return statement.executeUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
     private static class Builder {
         private String host;
         private String username;

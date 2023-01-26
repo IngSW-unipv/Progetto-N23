@@ -1,11 +1,10 @@
 package it.unipv.ingsw.magstudio.model.connections;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 
 public interface IConnectionStrategy {
-    void connect();
+    Connection connect();
     void disconnect();
     boolean isOpen();
-    ResultSet executeQuery(String query);
-    int executeUpdate(String query);
 }

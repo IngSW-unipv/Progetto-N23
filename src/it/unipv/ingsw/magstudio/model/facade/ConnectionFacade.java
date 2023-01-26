@@ -1,5 +1,7 @@
 package it.unipv.ingsw.magstudio.model.facade;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -13,7 +15,7 @@ public class ConnectionFacade {
     }
 
     private IConnectionStrategy strategy;
-
+    private Connection connection;
     public ConnectionFacade(){}
 
     public void setStrategy(ConnectionStrategy strategy){
@@ -31,8 +33,9 @@ public class ConnectionFacade {
         strategy = MySQLOverSSHConnection.getIstance();
     }
 
-    public void connect(){
-        strategy.connect();
+    public Connection connect(){
+        this.connection = strategy.connect();
+        return this.connection;
     }
 
     public void close(){
@@ -40,17 +43,11 @@ public class ConnectionFacade {
             strategy.disconnect();
     }
 
-    public ResultSet executeQuery(String query){
-        return strategy.executeQuery(query);
-    }
-
-    public int executeUpdate(String query){
-        return strategy.executeUpdate(query);
-    }
-
     public boolean controllaCredenziali(String nomeUtente, String password) throws SQLException {
-        //TODO: SQL injection
-        ResultSet rs =executeQuery("SELECT COUNT(*) AS N FROM T_PERSONA, PERSONA WHERE NOME_UTENTE='"+nomeUtente+"' AND PASSWORD='"+password+"'");
+        PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS N FROM T_PERSONA, PERSONA WHERE NOME_UTENTE=? AND PASSWORD=?");
+        ps.setString(1,nomeUtente);
+        ps.setString(2,password);
+        ResultSet rs = ps.executeQuery();
         rs.next();
         if(rs.getInt("N") == 1){
             return true;

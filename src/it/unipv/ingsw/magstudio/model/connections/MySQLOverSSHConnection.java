@@ -1,11 +1,13 @@
 package it.unipv.ingsw.magstudio.model.connections;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 
 public class MySQLOverSSHConnection implements IConnectionStrategy {
     private static MySQLOverSSHConnection istance;
     private final MySQLConnection sqlConnection;
     private final SSHConnection sshConnection;
+    private Connection connection;
 
     private MySQLOverSSHConnection(){
         this.sshConnection = SSHConnection.getIstance();
@@ -19,13 +21,14 @@ public class MySQLOverSSHConnection implements IConnectionStrategy {
     }
 
     @Override
-    public void connect() {
+    public Connection connect() {
         try {
             sshConnection.connect();
-            sqlConnection.connect();
+            this.connection = sqlConnection.connect();
         }catch (Exception e){
             sshConnection.disconnect();
         }
+        return this.connection;
     }
 
     @Override
@@ -37,15 +40,5 @@ public class MySQLOverSSHConnection implements IConnectionStrategy {
     @Override
     public boolean isOpen() {
         return sqlConnection.isOpen() || sshConnection.isOpen();
-    }
-
-    @Override
-    public ResultSet executeQuery(String query) {
-        return sqlConnection.executeQuery(query);
-    }
-
-    @Override
-    public int executeUpdate(String query) {
-        return sqlConnection.executeUpdate(query);
     }
 }

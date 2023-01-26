@@ -1,5 +1,8 @@
 package it.unipv.ingsw.magstudio.model.bean;
 
+import it.unipv.ingsw.magstudio.model.exceptions.CfFormatException;
+import it.unipv.ingsw.magstudio.model.exceptions.TelefonoFormatException;
+
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,7 +13,14 @@ public class App {
         Indirizzo i=new Indirizzo(TipoStrada.VIA, "dei pini", "14/A", 27000, "vidigulfo", "pavia",Regione.LOMBARDIA);
         System.out.println(i);
 
-        Persona p=new Persona("Mario","Rossi","ABCD123",new Date(2000,10,10), i, new Contatto(123123));
+        Persona p= null;
+        try {
+            p = new Persona("Mario","Rossi","ABCDEF12G34H567I",new Date(2000,10,10), i, new Contatto(Long.parseLong("1112345678")));
+        } catch (CfFormatException e) {
+            System.out.println(e.getMessage());
+        } catch (TelefonoFormatException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println(p);
 
         regexEmail();

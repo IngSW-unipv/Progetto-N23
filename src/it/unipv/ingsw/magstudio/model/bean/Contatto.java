@@ -1,5 +1,8 @@
 package it.unipv.ingsw.magstudio.model.bean;
 
+import it.unipv.ingsw.magstudio.model.exceptions.EmailFormatException;
+import it.unipv.ingsw.magstudio.model.exceptions.TelefonoFormatException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,17 +10,17 @@ public class Contatto {
     private String email;
     private long telefono;
 
-    public Contatto(String email) {
+    public Contatto(String email) throws EmailFormatException {
         setEmail(email);
         this.telefono=0;
     }
 
-    public Contatto(long telefono) {
+    public Contatto(long telefono) throws TelefonoFormatException {
         setTelefono(telefono);
         this.email=null;
     }
 
-    public Contatto(String email, long telefono) {
+    public Contatto(String email, long telefono) throws EmailFormatException, TelefonoFormatException {
         setEmail(email);
         setTelefono(telefono);
     }
@@ -30,23 +33,23 @@ public class Contatto {
         return telefono;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws EmailFormatException {
         Pattern pattern = Pattern.compile("^(\\S+)@(\\S[a-zA-Z0-9-]+)\\.(\\S[a-zA-Z0-9]{1,5})$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         if (matcher.find()){
             this.email=email;
         }else{
-            //TODO:fare eccezione per errore
+            throw new EmailFormatException("Formato Email errato");
         }
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(long telefono) throws TelefonoFormatException {
         Pattern pattern = Pattern.compile("^[0-9]{6,12}$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(Long.toString(telefono));
         if (matcher.find()){
             this.telefono=telefono;
         }else{
-            //TODO:fare eccezione per errore
+            throw new TelefonoFormatException("Formato numero di Telefono errato");
         }
     }
 

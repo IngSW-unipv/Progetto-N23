@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HiveHub.iml" filepath="$PROJECT_DIR$/HiveHub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/IngDelSoftware.iml" filepath="$PROJECT_DIR$/.idea/IngDelSoftware.iml" />
     </modules>
   </component>
 </project>
