@@ -7,6 +7,7 @@ import it.unipv.ingsw.magstudio.model.util.Encryption;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +19,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -38,6 +38,7 @@ public class LoginController implements Initializable {
     @FXML
     private Label erroreLabel;
 
+    private ConnectionFacade connectionFacade;
     private double x, y;
     private Stage stage;
 
@@ -48,6 +49,8 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        connectionFacade = new ConnectionFacade();
+        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL_OVER_SSH);
         sideBar.setOnMousePressed (mouseEvent -> {
             x = mouseEvent.getSceneX();
             y = mouseEvent.getSceneY();
@@ -94,28 +97,34 @@ public class LoginController implements Initializable {
     public void loginButtonPressed(ActionEvent actionEvent) throws SQLException, InterruptedException {
         String nomeUtente = nomeUtenteField.getText();
         String password = Encryption.SHA256Encryptor(passwordField.getText());
+        
+        Task<Boolean> task = new Task<Boolean>() {
+            @Override
+            protected Boolean call(){
+                boolean esito = false;
+                try {
+                    connectionFacade.connect();
+                    esito = connectionFacade.controllaCredenziali(nomeUtente, password);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    erroreLabel.setText("Errore di Collegamento al DB");
+                    erroreLabel.setVisible(true);
+                }finally {
+                    connectionFacade.close();
+                }
+                return esito;
+            };
+        };
 
-        ConnectionFacade connectionFacade = new ConnectionFacade();
-        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL_OVER_SSH);
-        connectionFacade.connect();
-
-        //TODO: migliorare velocità per togliere lag
-        boolean esito = false;
-
-        try {
-            esito = connectionFacade.controllaCredenziali(nomeUtente,password);
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            connectionFacade.close();
-        }
-
-        if (!esito){
-            erroreLabel.setText("Utente non riconosciuto");
-            erroreLabel.setVisible(true);
-        }else {
-            //cambiare scena
-            erroreLabel.setVisible(false);
-        }
+        task.setOnSucceeded(e -> {
+            if (!task.getValue()){
+                erroreLabel.setText("Utente non riconosciuto");
+                erroreLabel.setVisible(true);
+            }else {
+                //cambiare scena
+                erroreLabel.setVisible(false);
+            }
+        });
+        new Thread(task).start();
     }
 }
