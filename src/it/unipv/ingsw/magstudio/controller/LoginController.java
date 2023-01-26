@@ -2,6 +2,8 @@ package it.unipv.ingsw.magstudio.controller;
 
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import it.unipv.ingsw.magstudio.model.bean.Persona;
+import it.unipv.ingsw.magstudio.model.dao.PersonaDAO;
 import it.unipv.ingsw.magstudio.model.facade.ConnectionFacade;
 import it.unipv.ingsw.magstudio.model.util.Encryption;
 import javafx.animation.FadeTransition;
@@ -11,6 +13,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -122,6 +125,16 @@ public class LoginController implements Initializable {
                 erroreLabel.setVisible(true);
             }else {
                 //cambiare scena
+                PersonaDAO personaDAO = new PersonaDAO(connectionFacade);
+                Persona user = personaDAO.selectByNomeUtente(nomeUtente);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Benvenuto! - HiveHub");
+                alert.setHeaderText("Benvenuto!");
+                alert.setContentText(user.toString());
+
+                alert.showAndWait();
+
                 erroreLabel.setVisible(false);
             }
         });

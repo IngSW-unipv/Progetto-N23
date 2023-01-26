@@ -43,8 +43,12 @@ public class ConnectionFacade {
             strategy.disconnect();
     }
 
+    public boolean isOpen(){
+        return strategy.isOpen();
+    }
+
     public boolean controllaCredenziali(String nomeUtente, String password) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS N FROM T_PERSONA, PERSONA WHERE NOME_UTENTE=? AND PASSWORD=?");
+        PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS N FROM T_PERSONA INNER JOIN PERSONA ON T_PERSONA.ID = PERSONA.ID WHERE NOME_UTENTE=? AND PASSWORD=?");
         ps.setString(1,nomeUtente);
         ps.setString(2,password);
         ResultSet rs = ps.executeQuery();
