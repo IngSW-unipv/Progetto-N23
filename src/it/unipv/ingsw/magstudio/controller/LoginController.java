@@ -19,7 +19,6 @@ import javafx.animation.TranslateTransition;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -32,7 +31,6 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -65,11 +63,10 @@ public class LoginController implements Initializable {
         this.stage = stage;
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        connectionFacade = new ConnectionFacade();
-        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL_OVER_SSH);
+        connectionFacade = ConnectionFacade.getIstance();
+        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL);
 
         //Impostazioni per movimento finestra
         sideBar.setOnMousePressed (mouseEvent -> {
@@ -167,6 +164,8 @@ public class LoginController implements Initializable {
                     e.printStackTrace();
                     allertErrore("Connesione al db non avvenuta");
                 }finally {
+                    progressSpinner.setVisible(false);
+                    loginButton.setVisible(true);
                     connectionFacade.close();
                 }
                 return esito;
@@ -174,14 +173,17 @@ public class LoginController implements Initializable {
         };
 
         task.setOnSucceeded(e -> {
-            progressSpinner.setVisible(false);
-            loginButton.setVisible(true);
             if (!task.getValue()){
                 allertErrore("Credenziali utente errate");
             }else {
                 //cambiare scena
                 PersonaDAO personaDAO = new PersonaDAO(connectionFacade);
-                Persona user = personaDAO.selectByNomeUtente(nomeUtente);
+                Persona user = null;
+                try {
+                    user = personaDAO.selectByNomeUtente(nomeUtente);
+                } catch (SQLException ex) {
+                    allertErrore("Connesione al db non avvenuta");
+                }
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Benvenuto! - HiveHub");

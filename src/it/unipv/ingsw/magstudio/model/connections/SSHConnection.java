@@ -1,6 +1,7 @@
 package it.unipv.ingsw.magstudio.model.connections;
 
 import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 public class SSHConnection{
@@ -24,6 +25,10 @@ public class SSHConnection{
         this.rport = builder.rport;
     }
 
+    /**
+     * Fornisce l'istanza dell'oggetto SSHConnection
+     * @return L'istanza dell'oggetto
+     */
     public static SSHConnection getIstance() {
         if(istance == null)
             istance = new SSHConnection.Builder()
@@ -37,26 +42,33 @@ public class SSHConnection{
         return istance;
     }
 
-    public void connect() {
-        try {
-            JSch jsch = new JSch();
-            session = jsch.getSession(user, host, 22);
-            session.setPassword(password);
-            session.setConfig("StrictHostKeyChecking", "no");
-            session.connect();
-            System.out.println("Connected to " + host);
-            session.setPortForwardingL(lport, internalHost, rport);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    /**
+     * Metodo per aprire la connessione SSH
+     * @throws JSchException
+     */
+    public void connect() throws JSchException {
+        JSch jsch = new JSch();
+        session = jsch.getSession(user, host, 22);
+        session.setPassword(password);
+        session.setConfig("StrictHostKeyChecking", "no");
+        session.connect();
+        System.out.println("Connected to " + host);
+        session.setPortForwardingL(lport, internalHost, rport);
     }
 
+    /**
+     * Metodo per chiudere la connessione al Database MySQL
+     */
     public void disconnect() {
         session.disconnect();
         System.out.println("Disconnected from " + host);
     }
 
 
+    /**
+     * Metodo per controllare se la connessione al db è aperta
+     * @return true se la connessione è aperta, altrimenti false
+     */
     public boolean isOpen() {
         return session.isConnected();
     }

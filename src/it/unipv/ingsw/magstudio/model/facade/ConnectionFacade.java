@@ -19,7 +19,20 @@ public class ConnectionFacade {
 
     private IConnectionStrategy strategy;
     private Connection connection;
-    public ConnectionFacade(){}
+
+    private static ConnectionFacade istance;
+    private ConnectionFacade(){}
+
+    /**
+     * Restituisce l'istanza dell'oggetto ConnectionFacade.
+     * Assicurarsi di aver impostato la strategia desiderata prima di connettersi.
+     * @return
+     */
+    public static ConnectionFacade getIstance() {
+        if (istance == null)
+            istance = new ConnectionFacade();
+        return istance;
+    }
 
     /**
      * Metodo per impostare la strategia di Connessione
@@ -51,9 +64,10 @@ public class ConnectionFacade {
      * Attiva la connessione al DB secondo la strategia selezionata. Assicurarsi di aver impostato
      * la strategia desiderata prima di connettersi.
      * @return L'oggetto Connection
+     * @throws SQLException
      * @see Connection
      */
-    public Connection connect(){
+    public Connection connect() throws SQLException {
         this.connection = strategy.connect();
         return this.connection;
     }
@@ -82,6 +96,7 @@ public class ConnectionFacade {
      * @throws SQLException Eccezione lanciata in caso di errore con il server DB
      */
     public boolean controllaCredenziali(String nomeUtente, String password) throws SQLException {
+
         PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS N FROM T_PERSONA INNER JOIN PERSONA ON T_PERSONA.ID = PERSONA.ID WHERE NOME_UTENTE=? AND PASSWORD=?");
         ps.setString(1,nomeUtente);
         ps.setString(2,password);

@@ -26,10 +26,11 @@ public class PersonaDAO implements IPersonaDAO{
      * Restituisce l'oggetto Persona identificato dal nome utente passato
      * @param nomeUtente Il nome utente
      * @return L'oggetto Persona
+     * @throws SQLException
      * @see Persona
      */
     @Override
-    public Persona selectByNomeUtente(String nomeUtente) {
+    public Persona selectByNomeUtente(String nomeUtente) throws SQLException {
         Persona out = null;
 
         if(connectionFacade.isOpen())

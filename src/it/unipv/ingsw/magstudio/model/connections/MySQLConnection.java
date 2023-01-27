@@ -21,6 +21,10 @@ public class MySQLConnection implements IConnectionStrategy {
         this.url = String.format("jdbc:mysql://%s:%d/%s", this.host,this.port,this.schema);
     }
 
+    /**
+     * Fornisce l'istanza dell'oggetto MySQLConnection
+     * @return L'istanza di MySQLConnection
+     */
     public static MySQLConnection getIstance() {
         if(istance == null){
             istance = new MySQLConnection.Builder()
@@ -34,18 +38,27 @@ public class MySQLConnection implements IConnectionStrategy {
         return istance;
     }
 
+
+    /**
+     * Metodo per effettuare la connessione al server MySQL
+     * @return L'oggetto Connection
+     * @throws SQLException
+     */
     @Override
-    public Connection connect(){
+    public Connection connect() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to MySQL Database");
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return this.connection;
     }
 
+    /**
+     * Metodo per chiudere la connessione al Database MySQL
+     */
     @Override
     public void disconnect() {
         try {
@@ -56,6 +69,10 @@ public class MySQLConnection implements IConnectionStrategy {
         }
     }
 
+    /**
+     * Metodo per controllare se la connessione al db è aperta
+     * @return true se la connessione è aperta, altrimenti false
+     */
     @Override
     public boolean isOpen() {
         boolean out;
