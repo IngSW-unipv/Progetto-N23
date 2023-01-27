@@ -1,0 +1,10 @@
+/*
+ * Palette colori utilizzati per la GUI di HiveHub
+ */
+*{
+    -hh-black : #000;
+    -hh-white : #fff;
+    -hh-orange : #ffc403;
+    -hh-gray : #7a7a7a;
+    -hh-lightgray : #efefef;
+}

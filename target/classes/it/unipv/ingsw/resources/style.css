@@ -1,3 +1,6 @@
+
+@import 'colors.css'
+
 AnchorPane{
     -fx-background-radius: 40px;
 }
@@ -7,11 +10,19 @@ AnchorPane{
 }
 
 .centerBar{
-    -fx-background-color: white;
+    -fx-background-color: -hh-white;
+    -fx-border-width: 2px;
+    -fx-border-color: -hh-lightgray;
+    -fx-border-radius: 40px;
 }
 
+.mfx-button .mfx-ripple-generator {
+    -mfx-ripple-radius: 20;
+    -mfx-auto-clip: true;
+}
 .loginButton{
-    -fx-background-radius: 90px;
+    -fx-background-radius: 20px;
+    -fx-background-color: -hh-orange;
 }
 
 .exitButton{
@@ -19,11 +30,21 @@ AnchorPane{
 }
 
 .utente{
-    -fx-border-radius: 40px;
-    -fx-background-radius: 40px;
-    -fx-border-color: orange;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: -hh-gray;
 }
 
 .utente .floating-text{
-    -fx-text-fill: black;
+    -fx-text-fill: -hh-gray;
+}
+.utente .mfx-font-icon {
+    -mfx-color: -hh-gray;
+}
+
+/* css allert errore accesso - db */
+
+.mfx-error-dialog .header-label{
+    -mfx-color: derive(-mfx-red, 20%);
+    -fx-font-size: 20;
 }

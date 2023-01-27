@@ -1,7 +1,14 @@
 package it.unipv.ingsw.magstudio.controller;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
+import io.github.palexdev.materialfx.controls.MFXProgressSpinner;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
+import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
+import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
+import io.github.palexdev.materialfx.enums.ScrimPriority;
+import io.github.palexdev.materialfx.font.MFXFontIcon;
 import it.unipv.ingsw.magstudio.model.bean.Persona;
 import it.unipv.ingsw.magstudio.model.dao.PersonaDAO;
 import it.unipv.ingsw.magstudio.model.facade.ConnectionFacade;
@@ -12,17 +19,20 @@ import javafx.animation.TranslateTransition;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -39,7 +49,13 @@ public class LoginController implements Initializable {
     private MFXPasswordField passwordField;
 
     @FXML
-    private Label erroreLabel;
+    private MFXButton loginButton;
+
+    @FXML
+    private MFXProgressSpinner progressSpinner;
+
+    private MFXGenericDialog dialogContent;
+    private MFXStageDialog dialog;
 
     private ConnectionFacade connectionFacade;
     private double x, y;
@@ -100,6 +116,38 @@ public class LoginController implements Initializable {
         stage.close();
     }
 
+    /**
+     * metodo che crea un errore da testo in ingresso
+     * @param text Stringa che destrive il tipo di errore
+     */
+    private void allertErrore(String text){
+
+        this.dialogContent = MFXGenericDialogBuilder.build()
+                .setShowMinimize(false)
+                .setShowAlwaysOnTop(false)
+                .get();
+        this.dialog = MFXGenericDialogBuilder.build(dialogContent)
+                .toStageDialogBuilder()
+                .initOwner(stage)
+                .initModality(Modality.APPLICATION_MODAL)
+                .setDraggable(true)
+                .setTitle("Dialogs Preview")
+                .setScrimPriority(ScrimPriority.WINDOW)
+                .setScrimOwner(true)
+                .get();
+
+        dialogContent.setMinSize(400, 100);
+
+        MFXFontIcon errorIcon = new MFXFontIcon("mfx-exclamation-circle-filled", 25);
+        dialogContent.setHeaderIcon(errorIcon);
+        dialogContent.setHeaderText("Errore - HiveHub");
+        Label textErrore = new Label(text);
+        textErrore.setStyle("-fx-font-size: 18;");
+        dialogContent.setContent(textErrore);
+        dialogContent.getStyleClass().add("mfx-error-dialog");
+        dialog.showDialog();
+    }
+
     //Azione di Click su bottone Login
     public void loginButtonPressed(ActionEvent actionEvent){
         String nomeUtente = nomeUtenteField.getText();
@@ -109,14 +157,15 @@ public class LoginController implements Initializable {
         Task<Boolean> task = new Task<Boolean>() {
             @Override
             protected Boolean call(){
+                progressSpinner.setVisible(true);
+                loginButton.setVisible(false);
                 boolean esito = false;
                 try {
                     connectionFacade.connect();
                     esito = connectionFacade.controllaCredenziali(nomeUtente, password);
                 }catch (Exception e){
                     e.printStackTrace();
-                    erroreLabel.setText("Errore di Collegamento al DB");
-                    erroreLabel.setVisible(true);
+                    allertErrore("Connesione al db non avvenuta");
                 }finally {
                     connectionFacade.close();
                 }
@@ -125,9 +174,10 @@ public class LoginController implements Initializable {
         };
 
         task.setOnSucceeded(e -> {
+            progressSpinner.setVisible(false);
+            loginButton.setVisible(true);
             if (!task.getValue()){
-                erroreLabel.setText("Utente non riconosciuto");
-                erroreLabel.setVisible(true);
+                allertErrore("Credenziali utente errate");
             }else {
                 //cambiare scena
                 PersonaDAO personaDAO = new PersonaDAO(connectionFacade);
@@ -140,7 +190,6 @@ public class LoginController implements Initializable {
 
                 alert.showAndWait();
 
-                erroreLabel.setVisible(false);
             }
         });
         //Thread per richiesta al DataBase

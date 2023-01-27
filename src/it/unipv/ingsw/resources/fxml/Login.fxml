@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.materialicons.*?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="808.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipv.ingsw.magstudio.controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="808.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipv.ingsw.magstudio.controller.LoginController">
     <children>
-        <AnchorPane layoutX="204.0" layoutY="55.0" prefHeight="412.5" prefWidth="601.3" style="-fx-background-color: white;" styleClass="centerBar" stylesheets="@../style.css">
+        <AnchorPane layoutX="204.0" layoutY="55.0" prefHeight="412.5" prefWidth="602.0" styleClass="centerBar" stylesheets="@../style.css">
             <children>
-                <MFXButton buttonType="RAISED" layoutX="466.0" layoutY="312.0" onAction="#loginButtonPressed" prefHeight="50.0" prefWidth="100.0" rippleColor="#f2b705" style="-fx-border-radius: 40px;" styleClass="loginButton" stylesheets="@../style.css" text="Login">
+                <MFXButton fx:id="loginButton" layoutX="456.0" layoutY="312.0" onAction="#loginButtonPressed" prefHeight="50.0" prefWidth="110.0" rippleColor="#f09d07" styleClass="loginButton" stylesheets="@../style.css" text="Accesso" textFill="WHITE">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="20.0" />
                     </font>
                 </MFXButton>
                 <MFXTextField fx:id="nomeUtenteField" borderGap="25.0" floatMode="BORDER" floatingText="Nome Utente" floatingTextGap="10.0" graphicTextGap="20.0" layoutX="210.0" layoutY="95.0" prefHeight="50.0" prefWidth="356.0" styleClass="utente" stylesheets="@../style.css">
@@ -30,7 +27,20 @@
                         <Font size="18.0" />
                     </font>
                 </MFXPasswordField>
-            <Label fx:id="erroreLabel" alignment="CENTER" layoutX="217.0" layoutY="316.0" prefHeight="50.0" prefWidth="233.0" text="Errore connessione DB" textFill="RED" visible="false" />
+            <MFXProgressSpinner fx:id="progressSpinner" layoutX="491.0" layoutY="312.0" visible="false">
+               <color1>
+                  <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+               </color1>
+               <color2>
+                  <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+               </color2>
+               <color3>
+                  <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+               </color3>
+               <color4>
+                  <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+               </color4>
+            </MFXProgressSpinner>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="sideBar" layoutX="8.0" layoutY="8.0" prefHeight="525.0" prefWidth="375.81" styleClass="sideBar" stylesheets="@../style.css" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
