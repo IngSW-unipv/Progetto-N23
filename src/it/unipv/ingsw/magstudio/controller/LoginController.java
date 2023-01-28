@@ -16,6 +16,7 @@ import it.unipv.ingsw.magstudio.model.util.Encryption;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,7 +67,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         connectionFacade = ConnectionFacade.getIstance();
-        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL);
+        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL_OVER_SSH);
 
         //Impostazioni per movimento finestra
         sideBar.setOnMousePressed (mouseEvent -> {
@@ -157,12 +158,14 @@ public class LoginController implements Initializable {
                 progressSpinner.setVisible(true);
                 loginButton.setVisible(false);
                 boolean esito = false;
+
                 try {
                     connectionFacade.connect();
                     esito = connectionFacade.controllaCredenziali(nomeUtente, password);
                 }catch (Exception e){
-                    e.printStackTrace();
-                    allertErrore("Connesione al db non avvenuta");
+                    Platform.runLater(() -> {
+                        allertErrore("Connesione al db non avvenuta");
+                    });
                 }finally {
                     progressSpinner.setVisible(false);
                     loginButton.setVisible(true);
@@ -191,9 +194,9 @@ public class LoginController implements Initializable {
                 alert.setContentText(user.toString());
 
                 alert.showAndWait();
-
             }
         });
+
         //Thread per richiesta al DataBase
         new Thread(task).start();
     }
