@@ -68,7 +68,8 @@ public class ConnectionFacade {
      * @see Connection
      */
     public Connection connect() throws SQLException {
-        this.connection = strategy.connect();
+        if(connection == null || !strategy.isOpen())
+            this.connection = strategy.connect();
         return this.connection;
     }
 

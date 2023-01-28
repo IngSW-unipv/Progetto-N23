@@ -24,6 +24,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -67,7 +69,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         connectionFacade = ConnectionFacade.getIstance();
-        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL_OVER_SSH);
+        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL);
 
         //Impostazioni per movimento finestra
         sideBar.setOnMousePressed (mouseEvent -> {
@@ -118,7 +120,7 @@ public class LoginController implements Initializable {
      * metodo che crea un errore da testo in ingresso
      * @param text Stringa che destrive il tipo di errore
      */
-    private void allertErrore(String text){
+    private void alertErrore(String text){
 
         this.dialogContent = MFXGenericDialogBuilder.build()
                 .setShowMinimize(false)
@@ -147,47 +149,47 @@ public class LoginController implements Initializable {
     }
 
     //Azione di Click su bottone Login
-    public void loginButtonPressed(ActionEvent actionEvent){
+    public void loginButtonPressed(){
         String nomeUtente = nomeUtenteField.getText();
         String password = Encryption.SHA256Encryptor(passwordField.getText());
 
         //Creazione del Task in Background per Thread
-        Task<Boolean> task = new Task<Boolean>() {
+        Task<Persona> task = new Task<>() {
             @Override
-            protected Boolean call(){
+            protected Persona call(){
                 progressSpinner.setVisible(true);
                 loginButton.setVisible(false);
-                boolean esito = false;
+                Persona user = null;
 
                 try {
                     connectionFacade.connect();
-                    esito = connectionFacade.controllaCredenziali(nomeUtente, password);
-                }catch (Exception e){
+                    if(connectionFacade.controllaCredenziali(nomeUtente, password)){
+                        PersonaDAO personaDAO = new PersonaDAO();
+
+                        user = personaDAO.selectByNomeUtente(new Persona(nomeUtente));
+
+                        return user;
+                    }else {
+                        Platform.runLater(() -> {
+                            alertErrore("Credenziali utente errate");
+                        });
+                    }
+                }catch (SQLException e){
                     Platform.runLater(() -> {
-                        allertErrore("Connesione al db non avvenuta");
+                        alertErrore("Impossibile connettersi al Database");
                     });
                 }finally {
                     progressSpinner.setVisible(false);
                     loginButton.setVisible(true);
                     connectionFacade.close();
                 }
-                return esito;
+                return user;
             };
         };
 
-        task.setOnSucceeded(e -> {
-            if (!task.getValue()){
-                allertErrore("Credenziali utente errate");
-            }else {
-                //cambiare scena
-                PersonaDAO personaDAO = new PersonaDAO(connectionFacade);
-                Persona user = null;
-                try {
-                    user = personaDAO.selectByNomeUtente(nomeUtente);
-                } catch (SQLException ex) {
-                    allertErrore("Connesione al db non avvenuta");
-                }
-
+        task.setOnSucceeded(event -> {
+            Persona user = task.getValue();
+            if(user != null){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Benvenuto! - HiveHub");
                 alert.setHeaderText("Benvenuto!");
@@ -199,5 +201,12 @@ public class LoginController implements Initializable {
 
         //Thread per richiesta al DataBase
         new Thread(task).start();
+    }
+
+    //Azione pressione tasto Enter da tastiera
+    public void onEnterPressed(KeyEvent keyEvent) {
+        if(keyEvent.getCode() == KeyCode.ENTER){
+            loginButtonPressed();
+        }
     }
 }

@@ -4,12 +4,14 @@ import it.unipv.ingsw.magstudio.model.exceptions.CfFormatException;
 import it.unipv.ingsw.magstudio.model.exceptions.EmailFormatException;
 import it.unipv.ingsw.magstudio.model.exceptions.TelefonoFormatException;
 
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Persona {
+    private String nomeUtente;
     private String nome;
     private String cognome;
     private String cf;
@@ -19,6 +21,7 @@ public class Persona {
 
     /**
      * Crea una Persona
+     * @param nomeUtente Il nome utente associato alla persona
      * @param nome Il nome della Persona
      * @param cognome Il cognome della Persona
      * @param cf Il Codice Fiscale
@@ -30,13 +33,30 @@ public class Persona {
      * @see Contatto
      * @see Date
      */
-    public Persona(String nome, String cognome, String cf, Date dataNascita, Indirizzo indirizzo, Contatto contatto) throws CfFormatException {
+    public Persona(String nomeUtente, String nome, String cognome, String cf, Date dataNascita, Indirizzo indirizzo, Contatto contatto) throws CfFormatException {
+        this.nomeUtente = nomeUtente;
         this.nome = nome;
         this.cognome = cognome;
         setCf(cf);
         this.dataNascita = dataNascita;
         this.indirizzo = indirizzo;
         this.contatto = contatto;
+    }
+
+    /**
+     * Costruttore utilizzato per richiedere DAO
+     * @param nomeUtente Il nome utente
+     */
+    public Persona(String nomeUtente){
+        this.nomeUtente = nomeUtente;
+    }
+
+    /**
+     * Restituisce il nome utente della Persona
+     * @return Il nome utente
+     */
+    public String getNomeUtente() {
+        return nomeUtente;
     }
 
     /**
@@ -64,12 +84,12 @@ public class Persona {
     }
 
     /**
-     * La Data di Nascita della Persona
+     * La Data di Nascita della Persona.
+     * Segue il pattern dd/MM/yyyy
      * @return La Data di Nascita
-     * @see Date
      */
-    public Date getDataNascita() {
-        return dataNascita;
+    public String getDataNascita() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(dataNascita);
     }
 
     /**
@@ -136,10 +156,11 @@ public class Persona {
     @Override
     public String toString() {
         return "Persona{" +
+                "nome utente='" + getNomeUtente() +'\'' +
                 "nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", cf='" + cf + '\'' +
-                ", dataNascita=" + dataNascita +
+                ", dataNascita=" + getDataNascita() +
                 ", indirizzo=" + indirizzo +
                 ", contatto=" + contatto +
                 '}';

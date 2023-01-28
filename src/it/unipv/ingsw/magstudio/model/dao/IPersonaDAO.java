@@ -5,7 +5,6 @@ import it.unipv.ingsw.magstudio.model.bean.Persona;
 import java.sql.SQLException;
 
 public interface IPersonaDAO {
-    //TODO: migliorare
-    public Persona selectByNomeUtente(String nomeUtente) throws SQLException;
+    public Persona selectByNomeUtente(Persona p) throws SQLException;
     public boolean insertPersona(Persona p);
 }

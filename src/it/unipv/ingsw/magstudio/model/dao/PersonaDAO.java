@@ -16,36 +16,32 @@ public class PersonaDAO implements IPersonaDAO{
 
     /**
      * Crea un nuovo oggetto PersonaDAO
-     * @param connectionFacade Facade da cui connettersi al DB
      */
-    public PersonaDAO(ConnectionFacade connectionFacade) {
-        this.connectionFacade=connectionFacade;
+    public PersonaDAO() {
+        this.connectionFacade=ConnectionFacade.getIstance();
     }
 
     /**
      * Restituisce l'oggetto Persona identificato dal nome utente passato
-     * @param nomeUtente Il nome utente
+     * @param p L'oggetto Persona con il nome utente
      * @return L'oggetto Persona
      * @throws SQLException
      * @see Persona
      */
     @Override
-    public Persona selectByNomeUtente(String nomeUtente) throws SQLException {
+    public Persona selectByNomeUtente(Persona p) throws SQLException {
         Persona out = null;
-
-        if(connectionFacade.isOpen())
-            connectionFacade.close();
 
         Connection connection=connectionFacade.connect();
         PreparedStatement ps= null;
 
         try {
             ps = connection.prepareStatement("SELECT * FROM PERSONA WHERE NOME_UTENTE=?");
-            ps.setString(1,nomeUtente);
+            ps.setString(1,p.getNomeUtente());
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Date data = new Date();
+                Date data = new Date(rs.getDate("DATA_NASCITA").getTime());
                 Indirizzo indirizzo = new Indirizzo(TipoStrada.valueOf(rs.getString("INDIRIZZO_TIPO_STRADA")), rs.getString("INDIRIZZO_NOME"),
                         rs.getString("INDIRIZZO_CIVICO"), rs.getInt("INDIRIZZO_CAP"), rs.getString("INDIRIZZO_CITTA"),
                         rs.getString("INDIRIZZO_PROVINCIA"), Regione.valueOf(rs.getString("INDIRIZZO_REGIONE")));
@@ -57,16 +53,10 @@ public class PersonaDAO implements IPersonaDAO{
                 }else {
                     contatto = new Contatto(rs.getLong("CONTATTO_TELEFONO"));
                 }
-                out = new Persona(rs.getString("NOME"), rs.getString("COGNOME"), rs.getString("CF"),
+                out = new Persona(rs.getString("NOME_UTENTE"),rs.getString("NOME"), rs.getString("COGNOME"), rs.getString("CF"),
                         data, indirizzo, contatto);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (EmailFormatException e) {
-            throw new RuntimeException(e);
-        } catch (TelefonoFormatException e) {
-            throw new RuntimeException(e);
-        } catch (CfFormatException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {
             connectionFacade.close();

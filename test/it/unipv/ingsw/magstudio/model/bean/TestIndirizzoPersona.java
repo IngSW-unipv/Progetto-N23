@@ -15,7 +15,7 @@ public class TestIndirizzoPersona {
 
         Persona p= null;
         try {
-            p = new Persona("Mario","Rossi","ABCDEF12G34H567I",new Date(2000,10,10), i, new Contatto(Long.parseLong("1112345678")));
+            p = new Persona("admin","Mario","Rossi","ABCDEF12G34H567I",new Date(2000,10,10), i, new Contatto(Long.parseLong("1112345678")));
         } catch (CfFormatException e) {
             System.out.println(e.getMessage());
         } catch (TelefonoFormatException e) {
