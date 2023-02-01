@@ -48,3 +48,17 @@ AnchorPane{
     -mfx-color: derive(-mfx-red, 20%);
     -fx-font-size: 20;
 }
+.barra-laterale{
+	-fx-background-color: linear-gradient(to right top, #ffd703, #ff7c03);
+	-fx-background-radius:0 40 40 0;
+}
+
+.bottone{
+	-fx-background-color: #eeeeee;
+	-fx-background-radius:10;
+}
+
+.bottone:hover{
+	-fx-background-color: rgb(220, 220,220);
+	
+}
