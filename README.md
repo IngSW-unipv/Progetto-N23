@@ -7,7 +7,7 @@
 
 <p align="center">
     <img  
-         src="https://github.com/IngSW-unipv/Progetto-N23/blob/master/src/it/unipv/ingsw/resources/img/logo.png" 
+         src="https://github.com/IngSW-unipv/Progetto-N23/blob/utenti/src/it/unipv/ingsw/resources/img/Logo_HiveHub.png" 
          style="width: 300px; height: auto;" 
      />
 </p>
