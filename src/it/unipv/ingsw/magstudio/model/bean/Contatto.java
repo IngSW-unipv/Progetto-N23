@@ -3,6 +3,7 @@ package it.unipv.ingsw.magstudio.model.bean;
 import it.unipv.ingsw.magstudio.model.exceptions.EmailFormatException;
 import it.unipv.ingsw.magstudio.model.exceptions.TelefonoFormatException;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,16 +50,20 @@ public class Contatto {
      * Restituisce l'indirizzo email del contatto. Se non presente restituisce null
      * @return L'indirizzo email se presente, altrimenti null
      */
-    public String getEmail() {
-        return email;
+    public Optional<String> getEmail() {
+        if(email == null)
+            return Optional.empty();
+        return Optional.of(email);
     }
 
     /**
      * Restituisce il Numero di Telefono. Se non presente restituisce 0
      * @return Il numero di telfono se presente, altrimenti 0
      */
-    public long getTelefono() {
-        return telefono;
+    public Optional<Long> getTelefono() {
+        if(telefono == 0)
+            return Optional.empty();
+        return Optional.of(telefono);
     }
 
     /**

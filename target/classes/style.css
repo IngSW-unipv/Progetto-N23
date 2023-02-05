@@ -48,3 +48,79 @@ AnchorPane{
     -mfx-color: derive(-mfx-red, 20%);
     -fx-font-size: 20;
 }
+.barra-laterale{
+	-fx-background-color: linear-gradient(to right top, #ffd703, #ff7c03);
+	-fx-background-radius:0 40 40 0;
+}
+
+.bottone{
+	-fx-background-color: #eeeeee;
+	-fx-background-radius:10;
+}
+
+.bottone:hover{
+	-fx-background-color: rgb(220, 220,220);
+	
+}
+
+.box-informazioni{
+    -fx-background-color: #e2e2e2;
+    -fx-background-radius: 20;
+}
+.floating-text{
+    -fx-background-radius: 8;
+    -fx-text-fill: -hh-gray;
+    -fx-padding: 0 5 0 5;
+}
+
+.mfx-text-field{
+    -fx-border-color: -hh-gray;
+}
+
+.mfx-text-field:focus-within{
+    -fx-border-color: -hh-orange;
+    -fx-border-radius: 8;
+
+}
+.input-data .content{
+    -fx-background-color: white;
+    -fx-border-width: 2;
+    -fx-border-color: orange;
+}
+
+.input-data .date-picker-popup .months-combo:focus-within, .input-data .date-picker-popup .years-combo:focus-within{
+    -fx-text-fill: -hh-orange;
+}
+
+.input-data .date-picker-popup .months-combo .virtual-flow .mfx-combo-box-cell:selected,
+.input-data .date-picker-popup .years-combo .virtual-flow .mfx-combo-box-cell:selected{
+    -fx-background-color: rgba(255, 196, 3, 0.5);
+}
+.input-data .date-picker-popup .months-combo .virtual-flow .mfx-combo-box-cell:hover,
+.input-data .date-picker-popup .years-combo .virtual-flow .mfx-combo-box-cell:hover{
+    -fx-background-color: rgba(255, 196, 3, 0.2);
+}
+
+.input-data .date-picker-popup .mfx-date-cell:current {
+    -fx-background-color: white;
+    -fx-text-fill: -hh-orange;
+}
+
+.input-data .date-picker-popup .mfx-date-cell:selected {
+    -fx-background-color: #FF7C03;
+    -fx-text-fill: white;
+}
+
+.input-data .mfx-font-icon{
+    -mfx-color: -hh-gray;
+}
+
+.reset-tasto{
+    -fx-background-radius: 10;
+    -fx-background-color: #FF3F03;
+}
+
+.crea-tasto{
+    -fx-background-radius: 10;
+    -fx-background-color: #74c237;
+}

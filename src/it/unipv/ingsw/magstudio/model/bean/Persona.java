@@ -34,6 +34,7 @@ public class Persona {
      * @see Date
      */
     public Persona(String nomeUtente, String nome, String cognome, String cf, Date dataNascita, Indirizzo indirizzo, Contatto contatto) throws CfFormatException {
+        // TODO: controllare valori nulli
         this.nomeUtente = nomeUtente;
         this.nome = nome;
         this.cognome = cognome;
@@ -48,6 +49,7 @@ public class Persona {
      * @param nomeUtente Il nome utente
      */
     public Persona(String nomeUtente){
+        // TODO: controllare valori nulli
         this.nomeUtente = nomeUtente;
     }
 
@@ -141,7 +143,7 @@ public class Persona {
      * @throws EmailFormatException Eccezione lanciata in caso l'email non segue il pattern di un indirizzo email
      */
     public void modificaEmail(Contatto email) throws EmailFormatException {
-        this.contatto.setEmail(email.getEmail());
+        this.contatto.setEmail(email.getEmail().get());
     }
 
     /**
@@ -150,7 +152,7 @@ public class Persona {
      * @throws TelefonoFormatException Eccezione lanciata in caso il numero di telefono non segue il pattern di un numero di telefono
      */
     public void modificaTelefono(Contatto telefono) throws TelefonoFormatException {
-        this.contatto.setTelefono(telefono.getTelefono());
+        this.contatto.setTelefono(telefono.getTelefono().get());
     }
 
     @Override

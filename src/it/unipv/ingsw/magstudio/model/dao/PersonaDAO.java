@@ -2,13 +2,11 @@ package it.unipv.ingsw.magstudio.model.dao;
 
 
 import it.unipv.ingsw.magstudio.model.bean.*;
-import it.unipv.ingsw.magstudio.model.exceptions.CfFormatException;
-import it.unipv.ingsw.magstudio.model.exceptions.EmailFormatException;
-import it.unipv.ingsw.magstudio.model.exceptions.TelefonoFormatException;
 import it.unipv.ingsw.magstudio.model.facade.ConnectionFacade;
 
 import java.sql.*;
 import java.util.Date;
+import java.util.Optional;
 
 public class PersonaDAO implements IPersonaDAO{
 
@@ -23,14 +21,15 @@ public class PersonaDAO implements IPersonaDAO{
 
     /**
      * Restituisce l'oggetto Persona identificato dal nome utente passato
+     *
      * @param p L'oggetto Persona con il nome utente
      * @return L'oggetto Persona
      * @throws SQLException
      * @see Persona
      */
     @Override
-    public Persona selectByNomeUtente(Persona p) throws SQLException {
-        Persona out = null;
+    public Optional<Persona> selectByNomeUtente(Persona p) throws SQLException {
+        Optional<Persona> out = Optional.empty();
 
         Connection connection=connectionFacade.connect();
         PreparedStatement ps= null;
@@ -53,8 +52,9 @@ public class PersonaDAO implements IPersonaDAO{
                 }else {
                     contatto = new Contatto(rs.getLong("CONTATTO_TELEFONO"));
                 }
-                out = new Persona(rs.getString("NOME_UTENTE"),rs.getString("NOME"), rs.getString("COGNOME"), rs.getString("CF"),
-                        data, indirizzo, contatto);
+
+                out = Optional.of(new Persona(rs.getString("NOME_UTENTE"),rs.getString("NOME"), rs.getString("COGNOME"), rs.getString("CF"),
+                        data, indirizzo, contatto));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -66,6 +66,19 @@ public class PersonaDAO implements IPersonaDAO{
 
     @Override
     public boolean insertPersona(Persona p) {
+        //TODO: da implementare
+        return false;
+    }
+
+    @Override
+    public boolean updatePersona(Persona p) {
+        //TODO: da implementare
+        return false;
+    }
+
+    @Override
+    public boolean dropPersona(Persona p) {
+        //TODO: da implementare
         return false;
     }
 }

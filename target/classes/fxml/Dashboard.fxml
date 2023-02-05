@@ -22,31 +22,40 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipv.ingsw.magstudio.controller.DashboardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: white;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipv.ingsw.magstudio.controller.DashboardController">
    <left>
-      <VBox prefWidth="400.0" styleClass="barra-laterale" stylesheets="@../style.css" BorderPane.alignment="CENTER">
+      <VBox fx:id="sideBar" prefWidth="400.0" styleClass="barra-laterale" stylesheets="@../style.css" BorderPane.alignment="CENTER">
          <children>
-            <HBox minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="400.0">
+            <HBox alignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="400.0">
                <children>
-                  <MFXFontIcon description="mfx-x" size="30.0">
-                     <color>
-                        <Color red="1.0" green="1.0" blue="1.0" />
-                     </color>
-                     <HBox.margin>
-                        <Insets left="15.0" top="15.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </MFXFontIcon>
-                  <ImageView fitHeight="145.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/Logo_HiveHub.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="100.0" top="10.0" />
-                     </HBox.margin>
-                  </ImageView>
+                  <GridPane>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <MFXFontIcon description="mfx-x" onMouseClicked="#exitButton" size="30.0" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </GridPane.margin>
+                        </MFXFontIcon>
+                        <ImageView fitHeight="145.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../img/Logo_HiveHub.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </GridPane>
                </children>
                <VBox.margin>
                   <Insets bottom="40.0" />
@@ -75,7 +84,7 @@
                         <Insets left="90.0" />
                      </HBox.margin>
                      <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="bottone">
+                        <Pane onMouseClicked="#creaUtenteAction" prefHeight="200.0" prefWidth="200.0" styleClass="bottone">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -93,15 +102,11 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <children>
-                              <MFXFontIcon description="mfx-magnifying-glass" layoutX="14.0" layoutY="31.0" selectionFill="BLACK" size="18.0">
-                                 <color>
-                                    <Color />
-                                 </color>
-                              </MFXFontIcon>
                               <Label layoutX="12.0" layoutY="47.0" text="Ricerca" />
+                              <MaterialIconView glyphName="SEARCH" layoutX="7.0" layoutY="33.0" size="20" />
                            </children>
                         </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="bottone" GridPane.rowIndex="1">
+                        <Pane onMouseClicked="#modificaUtenteAction" prefHeight="200.0" prefWidth="200.0" styleClass="bottone" GridPane.rowIndex="1">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -132,7 +137,7 @@
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
+            <BorderPane fx:id="modificaUtentePane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
                <top>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
@@ -172,7 +177,7 @@
                               </Label>
                               <MFXTextField borderGap="15.0" disable="true" floatMode="BORDER" floatingText="Nome Utente" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
@@ -180,7 +185,7 @@
                               </MFXTextField>
                               <MFXTextField disable="true" floatMode="BORDER" floatingText="Codice fiscale" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
@@ -188,7 +193,7 @@
                               </MFXTextField>
                               <MFXTextField disable="true" floatMode="BORDER" floatingText="Cognome" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
@@ -196,18 +201,18 @@
                               </MFXTextField>
                               <MFXTextField disable="true" floatMode="BORDER" floatingText="Nome" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </MFXTextField>
-                              <MFXDatePicker disable="true" floatMode="BORDER" floatingText="Data di nascita" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                              <MFXDatePicker fx:id="datePicker" disable="true" floatMode="BORDER" floatingText="Data di nascita" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXDatePicker>
                            </children>
@@ -241,7 +246,7 @@
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
                               <MFXTextField floatMode="BORDER" floatingText="Civico" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -249,7 +254,7 @@
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
                               <MFXTextField floatMode="BORDER" floatingText="CAP" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -257,7 +262,7 @@
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
                               <MFXTextField floatMode="BORDER" floatingText="Città" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -265,7 +270,7 @@
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
                               <MFXTextField floatMode="BORDER" floatingText="Provincia" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -273,15 +278,7 @@
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
-                                 </GridPane.margin>
-                              </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Regione" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
                               <MFXComboBox floatMode="BORDER" floatingText="Tipo" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -289,7 +286,15 @@
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </GridPane.margin>
+                              </MFXComboBox>
+                              <MFXComboBox floatMode="BORDER" floatingText="Regione" layoutX="42.0" layoutY="105.0" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXComboBox>
                            </children>
@@ -322,7 +327,7 @@
                                           <Font size="18.0" />
                                        </font>
                                        <GridPane.margin>
-                                          <Insets left="15.0" right="15.0" />
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </GridPane.margin>
                                     </MFXTextField>
                                     <MFXTextField floatMode="BORDER" floatingText="Telefono" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -330,7 +335,7 @@
                                           <Font size="18.0" />
                                        </font>
                                        <GridPane.margin>
-                                          <Insets left="15.0" right="15.0" />
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </GridPane.margin>
                                     </MFXTextField>
                                  </children>
@@ -367,10 +372,13 @@
                            </children>
                         </HBox>
                      </children>
+                     <BorderPane.margin>
+                        <Insets bottom="20.0" />
+                     </BorderPane.margin>
                   </VBox>
                </center>
             </BorderPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
+            <BorderPane fx:id="creaUtentePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
                <top>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
@@ -408,44 +416,44 @@
                                     <Insets left="35.0" />
                                  </GridPane.margin>
                               </Label>
-                              <MFXTextField borderGap="15.0" floatMode="BORDER" floatingText="Nome Utente" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              <MFXTextField fx:id="crea_utente_nomeUtente" borderGap="15.0" floatMode="BORDER" floatingText="Nome Utente" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Codice fiscale" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                              <MFXTextField fx:id="crea_utente_cf" floatMode="BORDER" floatingText="Codice fiscale" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Cognome" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              <MFXTextField fx:id="crea_utente_cognome" floatMode="BORDER" floatingText="Cognome" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Nome" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              <MFXTextField fx:id="crea_utente_nome" floatMode="BORDER" floatingText="Nome" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </MFXTextField>
-                              <MFXDatePicker floatMode="BORDER" floatingText="Data di nascita" prefHeight="60.0" prefWidth="410.0" styleClass="input-data" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                              <MFXDatePicker fx:id="crea_utente_dataNascita" floatMode="BORDER" floatingText="Data di nascita" prefHeight="60.0" prefWidth="410.0" styleClass="input-data" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXDatePicker>
                            </children>
@@ -474,60 +482,60 @@
                                     <Insets left="35.0" />
                                  </GridPane.margin>
                               </Label>
-                              <MFXTextField floatMode="BORDER" floatingText="Indirizzo" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              <MFXTextField fx:id="crea_utente_indirizzo" floatMode="BORDER" floatingText="Indirizzo" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Civico" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              <MFXTextField fx:id="crea_utente_civico" floatMode="BORDER" floatingText="Civico" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="CAP" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                              <MFXTextField fx:id="crea_utente_cap" floatMode="BORDER" floatingText="CAP" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Città" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                              <MFXTextField fx:id="crea_utente_citta" floatMode="BORDER" floatingText="Città" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Provincia" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                              <MFXTextField fx:id="crea_utente_provincia" floatMode="BORDER" floatingText="Provincia" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXTextField>
-                              <MFXTextField floatMode="BORDER" floatingText="Regione" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                              <MFXComboBox fx:id="crea_utente_tipoIndirizzo" floatMode="BORDER" floatingText="Tipo" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
-                              </MFXTextField>
-                              <MFXComboBox floatMode="BORDER" floatingText="Tipo" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              </MFXComboBox>
+                              <MFXComboBox fx:id="crea_utente_regione" floatMode="BORDER" floatingText="Regione" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="15.0" right="15.0" />
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                               </MFXComboBox>
                            </children>
@@ -555,27 +563,27 @@
                                           <Insets left="35.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <MFXTextField floatMode="BORDER" floatingText="Email" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                    <MFXTextField fx:id="crea_utente_email" floatMode="BORDER" floatingText="Email" prefHeight="60.0" prefWidth="410.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                        <GridPane.margin>
-                                          <Insets left="15.0" right="15.0" />
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </GridPane.margin>
                                     </MFXTextField>
-                                    <MFXTextField floatMode="BORDER" floatingText="Telefono" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                    <MFXTextField fx:id="crea_utente_telefono" floatMode="BORDER" floatingText="Telefono" prefHeight="60.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                        <GridPane.margin>
-                                          <Insets left="15.0" right="15.0" />
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </GridPane.margin>
                                     </MFXTextField>
                                  </children>
                               </GridPane>
                               <VBox alignment="CENTER" prefHeight="190.0" prefWidth="400.0">
                                  <children>
-                                    <MFXButton prefHeight="60.0" prefWidth="200.0" styleClass="reset-tasto" text="reset" textFill="WHITE">
+                                    <MFXButton onAction="#creaUtenteReset" prefHeight="60.0" prefWidth="200.0" styleClass="reset-tasto" text="reset" textFill="WHITE" wrapText="true">
                                        <font>
                                           <Font size="35.0" />
                                        </font>
@@ -586,7 +594,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </MFXButton>
-                                    <MFXButton prefHeight="60.0" prefWidth="200.0" styleClass="crea-tasto" text="crea" textFill="WHITE">
+                                    <MFXButton onAction="#creaUtenteCrea" prefHeight="60.0" prefWidth="200.0" styleClass="crea-tasto" text="crea" textFill="WHITE" wrapText="true">
                                        <font>
                                           <Font size="35.0" />
                                        </font>
@@ -605,6 +613,9 @@
                            </children>
                         </HBox>
                      </children>
+                     <BorderPane.margin>
+                        <Insets bottom="20.0" />
+                     </BorderPane.margin>
                   </VBox>
                </center>
             </BorderPane>

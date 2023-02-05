@@ -97,13 +97,17 @@ public class ConnectionFacade {
      * @throws SQLException Eccezione lanciata in caso di errore con il server DB
      */
     public boolean controllaCredenziali(String nomeUtente, String password) throws SQLException {
+        connect();
 
         PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS N FROM T_PERSONA INNER JOIN PERSONA ON T_PERSONA.ID = PERSONA.ID WHERE NOME_UTENTE=? AND PASSWORD=?");
         ps.setString(1,nomeUtente);
         ps.setString(2,password);
         ResultSet rs = ps.executeQuery();
         rs.next();
-        if(rs.getInt("N") == 1){
+        int res = rs.getInt("N");
+        close();
+
+        if(res == 1){
             return true;
         }
         return false;

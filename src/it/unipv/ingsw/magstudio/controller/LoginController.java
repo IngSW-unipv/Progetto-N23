@@ -4,36 +4,33 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXProgressSpinner;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
-import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
-import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
-import io.github.palexdev.materialfx.enums.ScrimPriority;
-import io.github.palexdev.materialfx.font.MFXFontIcon;
+import it.unipv.ingsw.magstudio.App;
 import it.unipv.ingsw.magstudio.model.bean.Persona;
 import it.unipv.ingsw.magstudio.model.dao.PersonaDAO;
 import it.unipv.ingsw.magstudio.model.facade.ConnectionFacade;
 import it.unipv.ingsw.magstudio.model.util.Encryption;
+import it.unipv.ingsw.magstudio.model.util.HiveHubAlert;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -54,23 +51,17 @@ public class LoginController implements Initializable {
 
     @FXML
     private MFXProgressSpinner progressSpinner;
-
-    private MFXGenericDialog dialogContent;
-    private MFXStageDialog dialog;
-
-    private ConnectionFacade connectionFacade;
     private double x, y;
     private Stage stage;
+    private HiveHubAlert alert;
 
     public void setStage(Stage stage) {
         this.stage = stage;
+        alert = new HiveHubAlert(this.stage);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        connectionFacade = ConnectionFacade.getIstance();
-        connectionFacade.setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL);
-
         //Impostazioni per movimento finestra
         sideBar.setOnMousePressed (mouseEvent -> {
             x = mouseEvent.getSceneX();
@@ -116,86 +107,59 @@ public class LoginController implements Initializable {
         stage.close();
     }
 
-    /**
-     * metodo che crea un errore da testo in ingresso
-     * @param text Stringa che destrive il tipo di errore
-     */
-    private void alertErrore(String text){
-
-        this.dialogContent = MFXGenericDialogBuilder.build()
-                .setShowMinimize(false)
-                .setShowAlwaysOnTop(false)
-                .get();
-        this.dialog = MFXGenericDialogBuilder.build(dialogContent)
-                .toStageDialogBuilder()
-                .initOwner(stage)
-                .initModality(Modality.APPLICATION_MODAL)
-                .setDraggable(true)
-                .setTitle("Dialogs Preview")
-                .setScrimPriority(ScrimPriority.WINDOW)
-                .setScrimOwner(true)
-                .get();
-
-        dialogContent.setMinSize(400, 100);
-
-        MFXFontIcon errorIcon = new MFXFontIcon("mfx-exclamation-circle-filled", 25);
-        dialogContent.setHeaderIcon(errorIcon);
-        dialogContent.setHeaderText("Errore - HiveHub");
-        Label textErrore = new Label(text);
-        textErrore.setStyle("-fx-font-size: 18;");
-        dialogContent.setContent(textErrore);
-        dialogContent.getStyleClass().add("mfx-error-dialog");
-        dialog.showDialog();
-    }
-
     //Azione di Click su bottone Login
     public void loginButtonPressed(){
         String nomeUtente = nomeUtenteField.getText();
         String password = Encryption.SHA256Encryptor(passwordField.getText());
 
         //Creazione del Task in Background per Thread
-        Task<Persona> task = new Task<>() {
+        Task<Optional<Persona>> task = new Task<>() {
             @Override
-            protected Persona call(){
+            protected Optional<Persona> call(){
                 progressSpinner.setVisible(true);
                 loginButton.setVisible(false);
-                Persona user = null;
+                Optional<Persona> user = Optional.empty();
 
                 try {
-                    connectionFacade.connect();
-                    if(connectionFacade.controllaCredenziali(nomeUtente, password)){
-                        PersonaDAO personaDAO = new PersonaDAO();
+                    if(ConnectionFacade.getIstance().controllaCredenziali(nomeUtente, password)){
 
-                        user = personaDAO.selectByNomeUtente(new Persona(nomeUtente));
+                        user = new PersonaDAO().selectByNomeUtente(new Persona(nomeUtente));
 
                         return user;
                     }else {
                         Platform.runLater(() -> {
-                            alertErrore("Credenziali utente errate");
+                            alert.errore("Credenziali utente errate");
                         });
                     }
                 }catch (SQLException e){
                     Platform.runLater(() -> {
-                        alertErrore("Impossibile connettersi al Database");
+                        alert.errore("Impossibile connettersi al Database");
                     });
                 }finally {
                     progressSpinner.setVisible(false);
                     loginButton.setVisible(true);
-                    connectionFacade.close();
                 }
                 return user;
             };
         };
 
         task.setOnSucceeded(event -> {
-            Persona user = task.getValue();
-            if(user != null){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Benvenuto! - HiveHub");
-                alert.setHeaderText("Benvenuto!");
-                alert.setContentText(user.toString());
+            Optional<Persona> user = task.getValue();
+            if(user.isPresent()){
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Dashboard.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load());
+                    stage.setTitle("HiveHub - Dashboard");
 
-                alert.showAndWait();
+                    DashboardController controller = fxmlLoader.getController();
+
+                    stage.setScene(scene);
+                    controller.setStage(stage);
+
+                    stage.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
