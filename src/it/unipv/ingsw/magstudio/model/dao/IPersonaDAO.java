@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IPersonaDAO {
     public Optional<Persona> selectByNomeUtente(Persona p) throws SQLException;
-    public boolean insertPersona(Persona p);
-    public boolean updatePersona(Persona p);
+    public boolean insertPersona(Persona p) throws SQLException;
+    public boolean updatePersona(Persona p) throws SQLException;
     public boolean dropPersona(Persona p);
 }

@@ -65,14 +65,112 @@ public class PersonaDAO implements IPersonaDAO{
     }
 
     @Override
-    public boolean insertPersona(Persona p) {
-        //TODO: da implementare
+    public boolean insertPersona(Persona p) throws SQLException {
+        PreparedStatement ps = null;
+        int queryResult = 0;
+        try{
+            Connection connection = connectionFacade.connect();
+            String query = "INSERT INTO PERSONA(" +
+                    "NOME_UTENTE, " +
+                    "NOME," +
+                    "COGNOME," +
+                    "CF," +
+                    "DATA_NASCITA," +
+                    "INDIRIZZO_NOME," +
+                    "INDIRIZZO_CIVICO," +
+                    "INDIRIZZO_CAP," +
+                    "INDIRIZZO_CITTA," +
+                    "INDIRIZZO_PROVINCIA," +
+                    "INDIRIZZO_TIPO_STRADA," +
+                    "INDIRIZZO_REGIONE," +
+                    "CONTATTO_EMAIL," +
+                    "CONTATTO_TELEFONO" +
+                    ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            ps = connection.prepareStatement(query);
+
+            ps.setString(1,p.getNomeUtente().toUpperCase());
+            ps.setString(2,p.getNome().toUpperCase());
+            ps.setString(3,p.getCognome().toUpperCase());
+            ps.setString(4,p.getCf().toUpperCase());
+            ps.setString(5,p.getDataNascita());
+            ps.setString(6,p.getIndirizzo().getNome().toUpperCase());
+            ps.setString(7,p.getIndirizzo().getCivico().toUpperCase());
+            ps.setInt(8,p.getIndirizzo().getCap());
+            ps.setString(9,p.getIndirizzo().getCitta().toUpperCase());
+            ps.setString(10,p.getIndirizzo().getProvincia().toUpperCase());
+            ps.setString(11,p.getIndirizzo().getTipoStrada().name());
+            ps.setString(12,p.getIndirizzo().getRegione().name());
+            if(p.getContatto().getEmail().isEmpty()){
+                ps.setString(13,null);
+            }else{
+                ps.setString(13,p.getContatto().getEmail().get().toUpperCase());
+            }
+            if(p.getContatto().getTelefono().isEmpty()){
+                ps.setString(14,null);
+            }else{
+                ps.setLong(14,p.getContatto().getTelefono().get());
+            }
+
+            queryResult = ps.executeUpdate();
+        }finally {
+            ps.close();
+            connectionFacade.close();
+        }
+
+        if(queryResult> 0){
+            return true;
+        }
         return false;
     }
 
     @Override
-    public boolean updatePersona(Persona p) {
-        //TODO: da implementare
+    public boolean updatePersona(Persona p) throws SQLException {
+        PreparedStatement ps = null;
+        int queryResult = 0;
+        try{
+            Connection connection = connectionFacade.connect();
+            String query = "UPDATE PERSONA SET " +
+                    "INDIRIZZO_NOME = ?, " +
+                    "INDIRIZZO_CIVICO = ?, " +
+                    "INDIRIZZO_CAP = ?," +
+                    "INDIRIZZO_CITTA = ?," +
+                    "INDIRIZZO_PROVINCIA = ?," +
+                    "INDIRIZZO_TIPO_STRADA = ?," +
+                    "INDIRIZZO_REGIONE = ?," +
+                    "CONTATTO_EMAIL = ?," +
+                    "CONTATTO_TELEFONO = ? " +
+                    "WHERE NOME_UTENTE = ?";
+            ps = connection.prepareStatement(query);
+
+            ps.setString(1,p.getIndirizzo().getNome().toUpperCase());
+            ps.setString(2,p.getIndirizzo().getCivico().toUpperCase());
+            ps.setInt(3,p.getIndirizzo().getCap());
+            ps.setString(4,p.getIndirizzo().getCitta().toUpperCase());
+            ps.setString(5,p.getIndirizzo().getProvincia().toUpperCase());
+            ps.setString(6,p.getIndirizzo().getTipoStrada().name());
+            ps.setString(7,p.getIndirizzo().getRegione().name());
+            if(p.getContatto().getEmail().isEmpty()){
+                ps.setString(8,null);
+            }else{
+                ps.setString(8,p.getContatto().getEmail().get().toUpperCase());
+            }
+            if(p.getContatto().getTelefono().isEmpty()){
+                ps.setString(9,null);
+            }else{
+                ps.setLong(9,p.getContatto().getTelefono().get());
+            }
+
+            ps.setString(10,p.getNomeUtente().toUpperCase());
+
+            queryResult = ps.executeUpdate();
+        }finally {
+            ps.close();
+            connectionFacade.close();
+        }
+
+        if(queryResult> 0){
+            return true;
+        }
         return false;
     }
 

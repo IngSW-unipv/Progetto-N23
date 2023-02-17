@@ -91,7 +91,7 @@ public class Persona {
      * @return La Data di Nascita
      */
     public String getDataNascita() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(dataNascita);
+        return new SimpleDateFormat("yyyy-MM-dd").format(dataNascita);
     }
 
     /**
