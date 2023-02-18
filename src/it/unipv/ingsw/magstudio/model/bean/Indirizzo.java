@@ -89,6 +89,6 @@ public class Indirizzo {
 
     @Override
     public String toString() {
-        return "Indirizzo:"+tipoStrada+" "+nome+" "+civico+" "+citta+" "+cap+" "+provincia+" "+regione;
+        return tipoStrada+" "+nome+" "+civico+", "+citta+", "+cap+" ("+provincia+"), "+regione;
     }
 }

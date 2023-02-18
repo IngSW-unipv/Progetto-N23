@@ -9,5 +9,5 @@ public interface IPersonaDAO {
     public Optional<Persona> selectByNomeUtente(Persona p) throws SQLException;
     public boolean insertPersona(Persona p) throws SQLException;
     public boolean updatePersona(Persona p) throws SQLException;
-    public boolean dropPersona(Persona p);
+    public boolean dropPersona(Persona p) throws SQLException;
 }

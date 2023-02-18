@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class PersonaDAO implements IPersonaDAO{
 
-    private ConnectionFacade connectionFacade;
+    private final ConnectionFacade connectionFacade;
 
     /**
      * Crea un nuovo oggetto PersonaDAO
@@ -32,11 +32,9 @@ public class PersonaDAO implements IPersonaDAO{
         Optional<Persona> out = Optional.empty();
 
         Connection connection=connectionFacade.connect();
-        PreparedStatement ps= null;
 
-        try {
-            ps = connection.prepareStatement("SELECT * FROM PERSONA WHERE NOME_UTENTE=?");
-            ps.setString(1,p.getNomeUtente());
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM PERSONA WHERE NOME_UTENTE=?")) {
+            ps.setString(1, p.getNomeUtente());
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -45,20 +43,20 @@ public class PersonaDAO implements IPersonaDAO{
                         rs.getString("INDIRIZZO_CIVICO"), rs.getInt("INDIRIZZO_CAP"), rs.getString("INDIRIZZO_CITTA"),
                         rs.getString("INDIRIZZO_PROVINCIA"), Regione.valueOf(rs.getString("INDIRIZZO_REGIONE")));
                 Contatto contatto = null;
-                if(rs.getString("CONTATTO_EMAIL") != null && rs.getLong("CONTATTO_TELEFONO") != 0) {
-                    contatto = new Contatto(rs.getString("CONTATTO_EMAIL"),rs.getLong("CONTATTO_TELEFONO"));
+                if (rs.getString("CONTATTO_EMAIL") != null && rs.getLong("CONTATTO_TELEFONO") != 0) {
+                    contatto = new Contatto(rs.getString("CONTATTO_EMAIL"), rs.getLong("CONTATTO_TELEFONO"));
                 } else if (rs.getString("CONTATTO_EMAIL") != null) {
                     contatto = new Contatto(rs.getString("CONTATTO_EMAIL"));
-                }else {
+                } else {
                     contatto = new Contatto(rs.getLong("CONTATTO_TELEFONO"));
                 }
 
-                out = Optional.of(new Persona(rs.getString("NOME_UTENTE"),rs.getString("NOME"), rs.getString("COGNOME"), rs.getString("CF"),
+                out = Optional.of(new Persona(rs.getString("NOME_UTENTE"), rs.getString("NOME"), rs.getString("COGNOME"), rs.getString("CF"),
                         data, indirizzo, contatto));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             connectionFacade.close();
         }
         return out;
@@ -117,10 +115,7 @@ public class PersonaDAO implements IPersonaDAO{
             connectionFacade.close();
         }
 
-        if(queryResult> 0){
-            return true;
-        }
-        return false;
+        return queryResult > 0;
     }
 
     @Override
@@ -168,15 +163,27 @@ public class PersonaDAO implements IPersonaDAO{
             connectionFacade.close();
         }
 
-        if(queryResult> 0){
-            return true;
-        }
-        return false;
+        return queryResult > 0;
     }
 
     @Override
-    public boolean dropPersona(Persona p) {
-        //TODO: da implementare
-        return false;
+    public boolean dropPersona(Persona p) throws SQLException {
+        PreparedStatement ps = null;
+        int queryResult = 0;
+        try{
+            Connection connection = connectionFacade.connect();
+            String query = "DELETE FROM PERSONA " +
+                    "WHERE NOME_UTENTE = ?";
+            ps = connection.prepareStatement(query);
+
+            ps.setString(1,p.getNomeUtente());
+
+            queryResult = ps.executeUpdate();
+        }finally {
+            ps.close();
+            connectionFacade.close();
+        }
+
+        return queryResult > 0;
     }
 }
