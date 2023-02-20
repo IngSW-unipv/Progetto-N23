@@ -6,8 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
     @FXML
-    private VBox sideBar;
+    private HBox dragBox;
     @FXML
     private BorderPane mainPane;
 
@@ -27,22 +29,22 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sideBar.setOnMousePressed (mouseEvent -> {
+        dragBox.setOnMousePressed (mouseEvent -> {
             x = mouseEvent.getSceneX();
             y = mouseEvent.getSceneY();
         });
 
-        sideBar.setOnMouseDragged(mouseEvent -> {
+        dragBox.setOnMouseDragged(mouseEvent -> {
             stage.setX(mouseEvent.getScreenX() - x);
             stage.setY(mouseEvent.getScreenY() - y);
             stage.setOpacity(0.6);
         });
 
-        sideBar.setOnDragDone(mouseEvent -> {
+        dragBox.setOnDragDone(mouseEvent -> {
             stage.setOpacity(1);
         });
 
-        sideBar.setOnMouseReleased(mouseEvent -> {
+        dragBox.setOnMouseReleased(mouseEvent -> {
             stage.setOpacity(1);
         });
 

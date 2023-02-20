@@ -6,15 +6,15 @@ import io.github.palexdev.materialfx.controls.MFXProgressSpinner;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import it.unipv.ingsw.magstudio.App;
 import it.unipv.ingsw.magstudio.model.bean.Persona;
+import it.unipv.ingsw.magstudio.model.dao.GestoreAccount;
 import it.unipv.ingsw.magstudio.model.dao.PersonaDAO;
-import it.unipv.ingsw.magstudio.model.facade.ConnectionFacade;
-import it.unipv.ingsw.magstudio.model.util.Encryption;
 import it.unipv.ingsw.magstudio.model.util.HiveHubAlert;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,7 +24,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -35,25 +37,26 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
     @FXML
-    private AnchorPane sideBar;
+    private AnchorPane sideBar, primoAccesso, login;
 
     @FXML
     private ImageView img;
 
     @FXML
-    private MFXTextField nomeUtenteField;
+    private MFXTextField nomeUtenteField, nuovoNomeUtenteField;
 
     @FXML
-    private MFXPasswordField passwordField;
+    private MFXPasswordField passwordField, ripetiPasswordField, nuovaPasswordField;
 
     @FXML
-    private MFXButton loginButton;
+    private MFXButton loginButton, nuovoAccessoButton;
 
     @FXML
-    private MFXProgressSpinner progressSpinner;
+    private MFXProgressSpinner progressSpinner, progressSpinnerNuovoAccesso;
     private double x, y;
     private Stage stage;
     private HiveHubAlert alert;
+    private int posizione;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -101,6 +104,8 @@ public class LoginController implements Initializable {
         parallelTransition.getChildren().add(transition);
 
         parallelTransition.play();
+
+        posizione = 0;
     }
 
     public void closeAction(MouseEvent mouseEvent) {
@@ -110,7 +115,7 @@ public class LoginController implements Initializable {
     //Azione di Click su bottone Login
     public void loginButtonPressed(){
         String nomeUtente = nomeUtenteField.getText();
-        String password = Encryption.SHA256Encryptor(passwordField.getText());
+        String password = passwordField.getText();
 
         //Creazione del Task in Background per Thread
         Task<Optional<Persona>> task = new Task<>() {
@@ -121,7 +126,7 @@ public class LoginController implements Initializable {
                 Optional<Persona> user = Optional.empty();
 
                 try {
-                    if(ConnectionFacade.getIstance().controllaCredenziali(nomeUtente, password)){
+                    if(GestoreAccount.controllaCredenziali(nomeUtente, password)){
 
                         user = new PersonaDAO().selectByNomeUtente(new Persona(nomeUtente));
 
@@ -146,20 +151,7 @@ public class LoginController implements Initializable {
         task.setOnSucceeded(event -> {
             Optional<Persona> user = task.getValue();
             if(user.isPresent()){
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Dashboard.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load());
-                    stage.setTitle("HiveHub - Dashboard");
-
-                    DashboardController controller = fxmlLoader.getController();
-
-                    stage.setScene(scene);
-                    controller.setStage(stage);
-
-                    stage.show();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                switchToDashboard();
             }
         });
 
@@ -169,8 +161,83 @@ public class LoginController implements Initializable {
 
     //Azione pressione tasto Enter da tastiera
     public void onEnterPressed(KeyEvent keyEvent) {
-        if(keyEvent.getCode() == KeyCode.ENTER){
+        if(keyEvent.getCode() == KeyCode.ENTER && posizione < 1){
             loginButtonPressed();
+        } else if(keyEvent.getCode() == KeyCode.ENTER){
+            nuovoAccessoAction(null);
+        }
+    }
+
+    public void primoAccessoMostra(MouseEvent mouseEvent) {
+        primoAccesso.toFront();
+        posizione = 1;
+    }
+
+    public void nuovoAccessoAction(ActionEvent mouseEvent) {
+        String nomeUtente = nuovoNomeUtenteField.getText();
+        String password = nuovaPasswordField.getText();
+        String confermaPassword = ripetiPasswordField.getText();
+
+        //Creazione del Task in Background per Thread
+        Task<Boolean> task = new Task<>() {
+            @Override
+            protected Boolean call(){
+                nuovoAccessoButton.setVisible(false);
+                progressSpinnerNuovoAccesso.setVisible(true);
+                boolean esito = false;
+
+                try {
+                    if(GestoreAccount.impostaPassword(nomeUtente, password)){
+                        esito = true;
+                    }else {
+                        Platform.runLater(() -> {
+                            alert.errore("Errore, utente non trovato");
+                        });
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Platform.runLater(() -> {
+                        alert.errore("Impossibile connettersi al Database");
+                    });
+                }finally {
+                    progressSpinnerNuovoAccesso.setVisible(false);
+                    nuovoAccessoButton.setVisible(true);
+                }
+                return esito;
+            };
+        };
+
+        task.setOnSucceeded(event -> {
+            Boolean esito = task.getValue();
+            if(esito){
+                Platform.runLater(() -> {
+                    alert.informazione("Password aggiornata con successo");
+                });
+                switchToDashboard();
+            }
+        });
+
+        //Thread per richiesta al DataBase
+        if(password.equals(confermaPassword) && !password.isBlank() && !password.isEmpty())
+            new Thread(task).start();
+        else
+            alert.errore("Le password non coincidono");
+    }
+
+    private void switchToDashboard(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Dashboard.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("HiveHub - Dashboard");
+
+            DashboardController controller = fxmlLoader.getController();
+
+            stage.setScene(scene);
+            controller.setStage(stage);
+
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
