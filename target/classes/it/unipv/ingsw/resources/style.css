@@ -1,12 +1,16 @@
 
-@import 'colors.css'
+@import 'colors.css';
 
 AnchorPane{
     -fx-background-radius: 40px;
 }
-
 .sideBar{
     -fx-background-color: linear-gradient(to right top, yellow, orange);
+}
+
+.barra-laterale{
+	-fx-background-color: linear-gradient(to right top, #ffd703, #ff7c03);
+	-fx-background-radius:0 20 20 0;
 }
 
 .centerBar{
@@ -47,10 +51,6 @@ AnchorPane{
 .mfx-error-dialog .header-label{
     -mfx-color: derive(-mfx-red, 20%);
     -fx-font-size: 20;
-}
-.barra-laterale{
-	-fx-background-color: linear-gradient(to right top, #ffd703, #ff7c03);
-	-fx-background-radius:0 40 40 0;
 }
 
 .bottone{
@@ -123,4 +123,20 @@ AnchorPane{
 .crea-tasto{
     -fx-background-radius: 10;
     -fx-background-color: #74c237;
+}
+
+/* crea fatture */
+
+.backCreaFatture{
+    -fx-background-radius: 20;
+    -fx-background-color:  -hh-lightgray-1;
+}
+
+.backColonne{
+    -fx-background-radius: 20;
+    -fx-background-color:  -hh-gray-1;
+}
+.btnAggiungiProdotto{
+    -fx-background-radius: 10;
+    -fx-background-color: -hh-orange-1;
 }
