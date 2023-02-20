@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -24,6 +25,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class UtentiController implements Initializable {
+    @FXML
+    private StackPane mainPane;
     @FXML
     private BorderPane creaUtentePane, modificaUtentePane, ricercaUtentePane, eliminaUtentePane;
     @FXML
@@ -170,19 +173,23 @@ public class UtentiController implements Initializable {
     }
 
     public void showCreaUtenti(){
+        mainPane.toFront();
         creaUtentePane.toFront();
     }
 
     public void showModificaUtenti(){
+        mainPane.toFront();
         modificaUtentePane.toFront();
     }
 
     public void showCercaUtenti(){
+        mainPane.toFront();
         ricercaUtentePane.toFront();
         cerca_utente_nodes.forEach(element -> element.setText(""));
     }
 
     public void showRimuoviUtenti(){
+        mainPane.toFront();
         eliminaUtentePane.toFront();
         elimina_utente_nodes.forEach(element -> element.setText(""));
     }

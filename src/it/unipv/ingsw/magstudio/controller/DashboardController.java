@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -20,11 +21,14 @@ public class DashboardController implements Initializable {
     private HBox dragBox;
     @FXML
     private BorderPane mainPane;
+    @FXML
+    private StackPane centerPane;
 
     private Stage stage;
     private double x,y;
 
     private UtentiController utentiController;
+    private ProdottiController prodottiController;
 
 
     @Override
@@ -48,9 +52,18 @@ public class DashboardController implements Initializable {
             stage.setOpacity(1);
         });
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Utenti.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Prodotti.fxml"));
         try {
-            mainPane.setCenter(fxmlLoader.load());
+
+            centerPane.getChildren().add(fxmlLoader.load());
+            prodottiController = fxmlLoader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Utenti.fxml"));
+        try {
+            centerPane.getChildren().add(fxmlLoader.load());
             utentiController = fxmlLoader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -81,5 +94,21 @@ public class DashboardController implements Initializable {
 
     public void eliminaUtenteAction(MouseEvent mouseEvent) {
         utentiController.showRimuoviUtenti();
+    }
+
+    public void ricercaProdottoAction(MouseEvent mouseEvent) {
+        prodottiController.showRicercaProdotto();
+    }
+
+    public void modificaProdottoAction(MouseEvent mouseEvent) {
+        prodottiController.showModificaProdotto();
+    }
+
+    public void eliminaProdottoAction(MouseEvent mouseEvent) {
+        prodottiController.showEliminaProdotto();
+    }
+
+    public void creaProdottoAction(MouseEvent mouseEvent) {
+        prodottiController.showCreaProdotto();
     }
 }

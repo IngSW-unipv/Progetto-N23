@@ -22,11 +22,253 @@
 
 <StackPane fx:id="mainPane" prefHeight="982.0" prefWidth="1212.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipv.ingsw.magstudio.controller.ProdottiController">
    <children>
-      <BorderPane fx:id="modificaProdottoPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
+      <BorderPane fx:id="ricercaProdottoPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
+         <top>
+            <HBox alignment="CENTER" prefHeight="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Ricerca prodotto">
+                     <font>
+                        <Font name="Arial Bold" size="50.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: fff;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <MFXTextField floatMode="BORDER" floatingText="Nome Utente" minWidth="0.0" prefHeight="55.0" prefWidth="1348.0">
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </MFXTextField>
+                        <StackPane>
+                           <children>
+                              <MaterialIconView glyphName="SEARCH" size="40">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </MaterialIconView>
+                              <MFXProgressSpinner maxHeight="40.0" maxWidth="40.0" prefHeight="40.0" prefWidth="40.0" visible="false">
+                                 <color1>
+                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+                                 </color1>
+                                 <color2>
+                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+                                 </color2>
+                                 <color3>
+                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+                                 </color3>
+                                 <color4>
+                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+                                 </color4>
+                              </MFXProgressSpinner>
+                           </children>
+                        </StackPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <GridPane prefHeight="725.0" prefWidth="1470.0" style="-fx-background-color: #E2E2E2; -fx-background-radius: 10;">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <VBox.margin>
+                        <Insets bottom="50.0" left="25.0" right="25.0" top="40.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Dati prodotto" GridPane.valignment="TOP">
+                           <font>
+                              <Font name="Arial Bold" size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                           <children>
+                              <HBox prefHeight="60.0">
+                                 <children>
+                                    <Label text="Nome:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="30.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="60.0">
+                                 <children>
+                                    <Label text="Codice:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="30.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="246.0">
+                                       <children>
+                                          <Label text="Descrizione:">
+                                             <font>
+                                                <Font name="Arial Bold" size="20.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="30.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Label" wrapText="true">
+                                             <font>
+                                                <Font name="Arial" size="20.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="30.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <HBox prefHeight="60.0">
+                                 <children>
+                                    <Label text="Quantità:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="60.0">
+                                 <children>
+                                    <Label text="Fornitore:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Pane maxHeight="180.0" maxWidth="180.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                                 <children>
+                                    <ImageView fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
+                                    <MFXFontIcon description="mfx-" layoutX="90.0" layoutY="90.0" />
+                                    <MaterialIconView glyphName="PHOTO" layoutX="64.0" layoutY="109.0" size="40" />
+                                    <Label text="Immagini">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="10.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Pane>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                           <children>
+                              <Pane maxHeight="180.0" maxWidth="300.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                                 <children>
+                                    <ImageView fitHeight="180.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+                                    <MaterialIconView glyphName="PHOTO" layoutX="130.0" layoutY="107.0" size="40" text="" />
+                                    <Label text="Codice a barre">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="10.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin>
+                              </Pane>
+                              <Pane maxHeight="180.0" maxWidth="180.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                                 <children>
+                                    <ImageView fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
+                                    <MFXFontIcon description="mfx-" layoutX="90.0" layoutY="90.0" />
+                                    <MaterialIconView glyphName="PHOTO" layoutX="64.0" layoutY="109.0" size="40" text="" />
+                                    <Label text="Qr-code">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="10.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="100.0" />
+                                 </HBox.margin>
+                              </Pane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+      <BorderPane fx:id="creaProdottoPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
          <top>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" text="Modifica prodotto">
+                  <Label alignment="CENTER" text="Crea prodotto">
                      <font>
                         <Font name="Arial Bold" size="50.0" />
                      </font>
@@ -36,13 +278,13 @@
          </top>
          <center>
             <GridPane style="-fx-background-color: E2E2E2; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <BorderPane.margin>
                   <Insets bottom="60.0" left="25.0" right="25.0" top="50.0" />
                </BorderPane.margin>
@@ -125,8 +367,7 @@
                                  </HBox.margin>
                                  <children>
                                     <ImageView fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
-                                    <MFXFontIcon description="mfx-" layoutX="90.0" layoutY="90.0" />
-                                    <MaterialIconView glyphName="PHOTO" layoutX="71.0" layoutY="108.0" size="40" />
+                                    <MaterialIconView glyphName="PHOTO" layoutX="68.0" layoutY="110.0" size="40" />
                                     <Label text="Immagini">
                                        <font>
                                           <Font size="18.0" />
@@ -144,7 +385,6 @@
                               <Pane maxHeight="180.0" maxWidth="290.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="290.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                                  <children>
                                     <ImageView fitHeight="180.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true" />
-                                    <MaterialIconView glyphName="PHOTO" layoutX="125.0" layoutY="108.0" size="40" />
                                     <Label text="Codice a barre">
                                        <font>
                                           <Font size="18.0" />
@@ -153,6 +393,7 @@
                                           <Insets left="10.0" top="5.0" />
                                        </padding>
                                     </Label>
+                                    <MaterialIconView glyphName="PHOTO" layoutX="126.0" layoutY="109.0" size="40" />
                                  </children>
                                  <HBox.margin>
                                     <Insets left="50.0" />
@@ -161,7 +402,6 @@
                               <Pane maxHeight="180.0" maxWidth="180.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                                  <children>
                                     <ImageView fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
-                                    <MaterialIconView glyphName="PHOTO" layoutX="69.0" layoutY="108.0" size="40" />
                                     <Label text="Qr-code">
                                        <font>
                                           <Font size="18.0" />
@@ -170,13 +410,13 @@
                                           <Insets left="10.0" top="5.0" />
                                        </padding>
                                     </Label>
+                                    <MaterialIconView glyphName="PHOTO" layoutX="70.0" layoutY="111.0" size="40" />
                                  </children>
                                  <HBox.margin>
                                     <Insets left="65.0" />
                                  </HBox.margin>
                               </Pane>
-                           </children>
-                        </HBox>
+                           </children></HBox>
                         <HBox alignment="BOTTOM_RIGHT" prefHeight="170.0" prefWidth="710.0">
                            <children>
                               <MFXButton prefHeight="60.0" prefWidth="200.0" styleClass="reset-tasto" text="reset" textFill="WHITE">
@@ -184,7 +424,7 @@
                                     <Font name="System Bold" size="28.0" />
                                  </font>
                               </MFXButton>
-                              <MFXButton prefHeight="60.0" prefWidth="200.0" styleClass="crea-tasto" text="modifica" textFill="WHITE">
+                              <MFXButton prefHeight="60.0" prefWidth="200.0" styleClass="crea-tasto" text="crea" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="28.0" />
                                  </font>
@@ -217,7 +457,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <MFXTextField floatMode="BORDER" floatingText="Codice Prodotto" minWidth="0.0" prefHeight="55.0" prefWidth="1348.0">
+                        <MFXTextField floatMode="BORDER" floatingText="Nome Utente" minWidth="0.0" prefHeight="55.0" prefWidth="1348.0">
                            <HBox.margin>
                               <Insets right="25.0" />
                            </HBox.margin>
@@ -456,11 +696,11 @@
             </VBox>
          </center>
       </BorderPane>
-      <BorderPane fx:id="creaProdottoPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
+      <BorderPane fx:id="modificaProdottoPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
          <top>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" text="Crea prodotto">
+                  <Label alignment="CENTER" text="Modifica prodotto">
                      <font>
                         <Font name="Arial Bold" size="50.0" />
                      </font>
@@ -470,13 +710,13 @@
          </top>
          <center>
             <GridPane style="-fx-background-color: E2E2E2; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <BorderPane.margin>
                   <Insets bottom="60.0" left="25.0" right="25.0" top="50.0" />
                </BorderPane.margin>
@@ -559,7 +799,8 @@
                                  </HBox.margin>
                                  <children>
                                     <ImageView fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
-                                    <MaterialIconView glyphName="PHOTO" layoutX="68.0" layoutY="110.0" size="40" />
+                                    <MFXFontIcon description="mfx-" layoutX="90.0" layoutY="90.0" />
+                                    <MaterialIconView glyphName="PHOTO" layoutX="71.0" layoutY="108.0" size="40" />
                                     <Label text="Immagini">
                                        <font>
                                           <Font size="18.0" />
@@ -577,6 +818,7 @@
                               <Pane maxHeight="180.0" maxWidth="290.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="290.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                                  <children>
                                     <ImageView fitHeight="180.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true" />
+                                    <MaterialIconView glyphName="PHOTO" layoutX="125.0" layoutY="108.0" size="40" />
                                     <Label text="Codice a barre">
                                        <font>
                                           <Font size="18.0" />
@@ -585,7 +827,6 @@
                                           <Insets left="10.0" top="5.0" />
                                        </padding>
                                     </Label>
-                                    <MaterialIconView glyphName="PHOTO" layoutX="126.0" layoutY="109.0" size="40" />
                                  </children>
                                  <HBox.margin>
                                     <Insets left="50.0" />
@@ -594,6 +835,7 @@
                               <Pane maxHeight="180.0" maxWidth="180.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                                  <children>
                                     <ImageView fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
+                                    <MaterialIconView glyphName="PHOTO" layoutX="69.0" layoutY="108.0" size="40" />
                                     <Label text="Qr-code">
                                        <font>
                                           <Font size="18.0" />
@@ -602,13 +844,13 @@
                                           <Insets left="10.0" top="5.0" />
                                        </padding>
                                     </Label>
-                                    <MaterialIconView glyphName="PHOTO" layoutX="70.0" layoutY="111.0" size="40" />
                                  </children>
                                  <HBox.margin>
                                     <Insets left="65.0" />
                                  </HBox.margin>
                               </Pane>
-                           </children></HBox>
+                           </children>
+                        </HBox>
                         <HBox alignment="BOTTOM_RIGHT" prefHeight="170.0" prefWidth="710.0">
                            <children>
                               <MFXButton prefHeight="60.0" prefWidth="200.0" styleClass="reset-tasto" text="reset" textFill="WHITE">
@@ -616,7 +858,7 @@
                                     <Font name="System Bold" size="28.0" />
                                  </font>
                               </MFXButton>
-                              <MFXButton prefHeight="60.0" prefWidth="200.0" styleClass="crea-tasto" text="crea" textFill="WHITE">
+                              <MFXButton prefHeight="60.0" prefWidth="200.0" styleClass="crea-tasto" text="modifica" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="28.0" />
                                  </font>
@@ -630,248 +872,6 @@
                   </VBox>
                </children>
             </GridPane>
-         </center>
-      </BorderPane>
-      <BorderPane fx:id="ricercaProdottoPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
-         <top>
-            <HBox alignment="CENTER" prefHeight="100.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="Ricerca prodotto">
-                     <font>
-                        <Font name="Arial Bold" size="50.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-         </top>
-         <center>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: fff;" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <MFXTextField floatMode="BORDER" floatingText="Codice Prodotto" minWidth="0.0" prefHeight="55.0" prefWidth="1348.0">
-                           <HBox.margin>
-                              <Insets right="25.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </MFXTextField>
-                        <StackPane>
-                           <children>
-                              <MaterialIconView glyphName="SEARCH" size="40">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </MaterialIconView>
-                              <MFXProgressSpinner maxHeight="40.0" maxWidth="40.0" prefHeight="40.0" prefWidth="40.0" visible="false">
-                                 <color1>
-                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
-                                 </color1>
-                                 <color2>
-                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
-                                 </color2>
-                                 <color3>
-                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
-                                 </color3>
-                                 <color4>
-                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
-                                 </color4>
-                              </MFXProgressSpinner>
-                           </children>
-                        </StackPane>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <GridPane prefHeight="725.0" prefWidth="1470.0" style="-fx-background-color: #E2E2E2; -fx-background-radius: 10;">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <VBox.margin>
-                        <Insets bottom="50.0" left="25.0" right="25.0" top="40.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label text="Dati prodotto" GridPane.valignment="TOP">
-                           <font>
-                              <Font name="Arial Bold" size="30.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="30.0" top="10.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-                           <children>
-                              <HBox prefHeight="60.0">
-                                 <children>
-                                    <Label text="Nome:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="30.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="60.0">
-                                 <children>
-                                    <Label text="Codice:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="30.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <VBox prefHeight="246.0">
-                                       <children>
-                                          <Label text="Descrizione:">
-                                             <font>
-                                                <Font name="Arial Bold" size="20.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets left="30.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <Label text="Label" wrapText="true">
-                                             <font>
-                                                <Font name="Arial" size="20.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets left="30.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <HBox prefHeight="60.0">
-                                 <children>
-                                    <Label text="Quantità:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="20.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="60.0">
-                                 <children>
-                                    <Label text="Fornitore:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="20.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <children>
-                              <Pane maxHeight="180.0" maxWidth="180.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-color: white; -fx-background-radius: 5;">
-                                 <children>
-                                    <ImageView fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
-                                    <MFXFontIcon description="mfx-" layoutX="90.0" layoutY="90.0" />
-                                    <MaterialIconView glyphName="PHOTO" layoutX="64.0" layoutY="109.0" size="40" />
-                                    <Label text="Immagini">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets left="10.0" top="5.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-                           <children>
-                              <Pane maxHeight="180.0" maxWidth="300.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 5;">
-                                 <children>
-                                    <ImageView fitHeight="180.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
-                                    <MaterialIconView glyphName="PHOTO" layoutX="130.0" layoutY="107.0" size="40" text="" />
-                                    <Label text="Codice a barre">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets left="10.0" top="5.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="50.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane maxHeight="180.0" maxWidth="180.0" minHeight="180.0" minWidth="180.0" prefHeight="180.0" prefWidth="180.0" style="-fx-background-color: white; -fx-background-radius: 5;">
-                                 <children>
-                                    <ImageView fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
-                                    <MFXFontIcon description="mfx-" layoutX="90.0" layoutY="90.0" />
-                                    <MaterialIconView glyphName="PHOTO" layoutX="64.0" layoutY="109.0" size="40" text="" />
-                                    <Label text="Qr-code">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets left="10.0" top="5.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="100.0" />
-                                 </HBox.margin>
-                              </Pane>
-                           </children>
-                        </HBox>
-                     </children>
-                  </GridPane>
-               </children>
-            </VBox>
          </center>
       </BorderPane>
    </children>

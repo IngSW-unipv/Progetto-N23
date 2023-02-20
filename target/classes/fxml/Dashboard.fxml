@@ -13,8 +13,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: white;" styleClass="backPage" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipv.ingsw.magstudio.controller.DashboardController">
@@ -131,6 +133,89 @@
                   </GridPane>
                </children>
             </HBox>
+            <Line endX="250.0" stroke="WHITE" strokeWidth="2.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="25.0" top="10.0" />
+               </VBox.margin>
+            </Line>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="196.0" prefHeight="140.0" prefWidth="350.0">
+               <children>
+                  <VBox alignment="CENTER" prefWidth="100.0">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" prefWidth="100.0" text="Prodotti" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <GridPane hgap="8.0" maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" vgap="8.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="70.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="70.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <children>
+                        <Pane onMouseClicked="#creaProdottoAction" prefHeight="65.0" prefWidth="65.0" styleClass="bottone">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <children>
+                              <MFXFontIcon description="mfx-plus" layoutX="12.0" layoutY="33.0" selectionFill="BLACK" size="18.0">
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </MFXFontIcon>
+                              <Label layoutX="21.0" layoutY="47.0" text="Crea" />
+                           </children>
+                        </Pane>
+                        <Pane onMouseClicked="#ricercaProdottoAction" prefHeight="65.0" prefWidth="65.0" styleClass="bottone" GridPane.columnIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <children>
+                              <Label layoutX="12.0" layoutY="47.0" text="Ricerca" />
+                              <MaterialIconView glyphName="SEARCH" layoutX="7.0" layoutY="33.0" size="20" />
+                           </children>
+                        </Pane>
+                        <Pane onMouseClicked="#modificaProdottoAction" prefHeight="65.0" prefWidth="65.0" styleClass="bottone" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <children>
+                              <Label layoutX="7.0" layoutY="47.0" text="Modifica" />
+                              <MaterialIconView glyphName="EDIT" layoutX="7.0" layoutY="34.0" size="20" />
+                           </children>
+                        </Pane>
+                        <Pane onMouseClicked="#eliminaProdottoAction" prefHeight="65.0" prefWidth="65.0" styleClass="bottone" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <children>
+                              <MFXFontIcon description="mfx-delete" layoutX="9.0" layoutY="31.0" selectionFill="BLACK" size="18.0">
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </MFXFontIcon>
+                              <Label layoutX="9.0" layoutY="47.0" text="Rimuovi" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
          </children></VBox>
    </left>
+   <center>
+      <StackPane fx:id="centerPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>
