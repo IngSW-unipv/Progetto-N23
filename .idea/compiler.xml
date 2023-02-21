@@ -9,5 +9,8 @@
         <module name="HiveHub" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Hive-Hub" target="19" />
+    </bytecodeTargetLevel>
   </component>
 </project>
