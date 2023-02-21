@@ -236,6 +236,8 @@ public class UtentiController implements Initializable {
             );
 
             new PersonaDAO().insertPersona(p);  // Carico la persona
+            alert.informazione("Utente creato con successo");
+            creaUtenteReset(null);
         }catch (Exception e){
             alert.errore(e.getMessage());    // Mostro messaggio errore
         }
@@ -304,6 +306,7 @@ public class UtentiController implements Initializable {
             if(esito){
                 Platform.runLater(() -> {
                     alert.informazione("Utente modificato con successo");
+                    modificaUtenteReset(null);
                 });
             }else {
                 Platform.runLater(() -> {

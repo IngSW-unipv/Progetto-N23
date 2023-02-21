@@ -21,476 +21,6 @@
 
 <StackPane fx:id="mainPane" prefHeight="982.0" prefWidth="1212.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipv.ingsw.magstudio.controller.UtentiController">
    <children>
-      <BorderPane fx:id="creaUtentePane" minHeight="800.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
-         <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-               <children>
-                  <GridPane minWidth="1100.0" prefHeight="250.0" prefWidth="1100.0" styleClass="box-informazioni" stylesheets="@../style.css">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="227.10208892822266" minHeight="0.0" prefHeight="76.7" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="159.09933471679688" minHeight="0.0" prefHeight="76.7" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <VBox.margin>
-                        <Insets left="25.0" right="25.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label text="Informazioni personali">
-                           <font>
-                              <Font name="Arial" size="25.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <MFXTextField fx:id="crea_utente_nomeUtente" borderGap="15.0" floatMode="BORDER" floatingText="Nome Utente" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <GridPane.margin>
-                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                        </MFXTextField>
-                        <MFXTextField fx:id="crea_utente_cf" floatMode="BORDER" floatingText="Codice fiscale" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                           <GridPane.margin>
-                              <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                        </MFXTextField>
-                        <MFXTextField fx:id="crea_utente_cognome" floatMode="BORDER" floatingText="Cognome" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <GridPane.margin>
-                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                        </MFXTextField>
-                        <MFXTextField fx:id="crea_utente_nome" floatMode="BORDER" floatingText="Nome" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <GridPane.margin>
-                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                        </MFXTextField>
-                        <MFXDatePicker fx:id="crea_utente_dataNascita" floatMode="BORDER" floatingText="Data di nascita" prefHeight="50.0" prefWidth="325.0" styleClass="input-data" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                        </MFXDatePicker>
-                     </children>
-                  </GridPane>
-                  <GridPane minWidth="1100.0" prefHeight="350.0" prefWidth="1100.0" styleClass="box-informazioni" stylesheets="@../style.css">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <VBox.margin>
-                        <Insets left="25.0" right="25.0" top="15.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label text="Indirizzo">
-                           <font>
-                              <Font name="Arial" size="25.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <MFXTextField fx:id="crea_utente_indirizzo" floatMode="BORDER" floatingText="Indirizzo" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                        </MFXTextField>
-                        <MFXTextField fx:id="crea_utente_civico" floatMode="BORDER" floatingText="Civico" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                        </MFXTextField>
-                        <MFXTextField fx:id="crea_utente_cap" floatMode="BORDER" floatingText="CAP" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                        </MFXTextField>
-                        <MFXTextField fx:id="crea_utente_citta" floatMode="BORDER" floatingText="Città" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                        </MFXTextField>
-                        <MFXTextField fx:id="crea_utente_provincia" floatMode="BORDER" floatingText="Provincia" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                        </MFXTextField>
-                        <MFXComboBox fx:id="crea_utente_tipoIndirizzo" floatMode="BORDER" floatingText="Tipo" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                        </MFXComboBox>
-                        <MFXComboBox fx:id="crea_utente_regione" floatMode="BORDER" floatingText="Regione" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="Arial" size="16.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
-                           </GridPane.margin>
-                        </MFXComboBox>
-                     </children>
-                  </GridPane>
-                  <HBox>
-                     <VBox.margin>
-                        <Insets left="25.0" right="25.0" top="15.0" />
-                     </VBox.margin>
-                     <children>
-                        <GridPane prefHeight="180.0" prefWidth="900.0" styleClass="box-informazioni" stylesheets="@../style.css">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.3696899414062" minWidth="10.0" prefWidth="474.12457275390625" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.070068359375" minWidth="10.0" prefWidth="475.87542724609375" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Label text="Contatti">
-                                 <font>
-                                    <Font name="Arial" size="25.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <MFXTextField fx:id="crea_utente_email" floatMode="BORDER" floatingText="Email" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font name="Arial" size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                 </GridPane.margin>
-                              </MFXTextField>
-                              <MFXTextField fx:id="crea_utente_telefono" floatMode="BORDER" floatingText="Telefono" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font name="Arial" size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                 </GridPane.margin>
-                              </MFXTextField>
-                           </children>
-                        </GridPane>
-                        <VBox alignment="CENTER" prefHeight="190.0" prefWidth="400.0">
-                           <children>
-                              <MFXButton onAction="#creaUtenteCrea" prefHeight="50.0" prefWidth="150.0" styleClass="crea-tasto" text="crea" textFill="WHITE" wrapText="true">
-                                 <font>
-                                    <Font name="Arial" size="30.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </MFXButton>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="30.0" />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                  </HBox>
-               </children>
-               <BorderPane.margin>
-                  <Insets bottom="20.0" />
-               </BorderPane.margin>
-            </VBox>
-         </center>
-         <top>
-            <GridPane minHeight="100.0" BorderPane.alignment="CENTER">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <MFXButton maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#creaUtenteReset" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 20;" text=" " GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-                     <graphic>
-                        <MaterialIconView fill="#ff3030" glyphName="REMOVE_CIRCLE" size="40" translateX="-9.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </MaterialIconView>
-                     </graphic>
-                     <GridPane.margin>
-                        <Insets right="40.0" />
-                     </GridPane.margin>
-                  </MFXButton>
-                  <Label text="Crea Utente" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <font>
-                        <Font name="Arial Bold" size="50.0" />
-                     </font>
-                  </Label>
-               </children>
-            </GridPane>
-         </top>
-      </BorderPane>
-      <BorderPane fx:id="ricercaUtentePane" minHeight="800.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
-         <top>
-            <HBox alignment="CENTER" minHeight="100.0" prefHeight="100.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="Ricerca utente">
-                     <font>
-                        <Font name="Arial Bold" size="50.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-         </top>
-         <center>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: fff;" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <MFXTextField fx:id="cerca_utente_nomeUtente" floatMode="BORDER" floatingText="Nome Utente" minWidth="0.0" prefHeight="51.0" prefWidth="1348.0">
-                           <HBox.margin>
-                              <Insets right="25.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </MFXTextField>
-                        <StackPane>
-                           <children>
-                              <MaterialIconView glyphName="SEARCH" onMouseClicked="#cercaUtenteCerca" size="40">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </MaterialIconView>
-                              <MFXProgressSpinner fx:id="progressSpinner_cerca" maxHeight="40.0" maxWidth="40.0" prefHeight="40.0" prefWidth="40.0" visible="false">
-                                 <color1>
-                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
-                                 </color1>
-                                 <color2>
-                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
-                                 </color2>
-                                 <color3>
-                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
-                                 </color3>
-                                 <color4>
-                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
-                                 </color4>
-                              </MFXProgressSpinner>
-                           </children>
-                        </StackPane>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <GridPane prefHeight="725.0" prefWidth="1100.0" style="-fx-background-color: #E2E2E2; -fx-background-radius: 10;">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <VBox.margin>
-                        <Insets bottom="40.0" left="25.0" right="25.0" top="30.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label text="Dati Utente" GridPane.valignment="TOP">
-                           <font>
-                              <Font name="Arial Bold" size="30.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" top="10.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-                           <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label text="Nome Utente:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="20.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="cerca_utente_nome_utente" text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="200.0" prefWidth="710.0">
-                                 <children>
-                                    <Label text="Nome Cognome:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="20.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="cerca_utente_nome_cognome" text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label text="Codice Fiscale:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="20.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="cerca_utente_cf" text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="200.0" prefWidth="710.0">
-                                 <children>
-                                    <Label text="Data di Nascita:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="20.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="cerca_utente_dataNascita" text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-                           <children>
-                              <VBox prefHeight="246.0" prefWidth="710.0">
-                                 <children>
-                                    <Label text="Indirizzo:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="cerca_utente_indirizzo" text="Label" wrapText="true">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
-                           <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label text="Telefono:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="20.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="cerca_utente_telefono" text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="200.0" prefWidth="710.0">
-                                 <children>
-                                    <Label text="Email:">
-                                       <font>
-                                          <Font name="Arial Bold" size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="20.0" right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="cerca_utente_email" text="Label">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </GridPane>
-               </children>
-            </VBox>
-         </center>
-      </BorderPane>
       <BorderPane fx:id="eliminaUtentePane" layoutX="10.0" layoutY="10.0" minHeight="800.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
          <center>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: fff;" BorderPane.alignment="CENTER">
@@ -539,13 +69,13 @@
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <VBox.margin>
-                        <Insets bottom="10.0" left="25.0" right="25.0" top="30.0" />
+                        <Insets bottom="10.0" left="25.0" right="25.0" top="15.0" />
                      </VBox.margin>
                      <children>
                         <Label text="Dati Utente" GridPane.valignment="TOP">
@@ -698,9 +228,14 @@
                   </GridPane>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <MFXButton onAction="#eliminaUtenteElimina" prefHeight="50.0" prefWidth="150.0" styleClass="crea-tasto" text="elimina" textFill="WHITE">
+                        <MFXButton onAction="#eliminaUtenteReset" prefHeight="50.0" prefWidth="150.0" styleClass="reset-tasto" text="reset" textFill="WHITE">
                            <font>
-                              <Font name="Arial" size="30.0" />
+                              <Font name="Arial" size="25.0" />
+                           </font>
+                        </MFXButton>
+                        <MFXButton onAction="#eliminaUtenteElimina" prefHeight="50.0" prefWidth="150.0" styleClass="crea-tasto" text="conferma" textFill="WHITE">
+                           <font>
+                              <Font name="Arial" size="25.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -713,6 +248,9 @@
                      <VBox.margin>
                         <Insets bottom="10.0" left="50.0" right="50.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </HBox>
                </children>
             </VBox>
@@ -728,18 +266,6 @@
                 <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <MFXButton maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#eliminaUtenteReset" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 20;" text=" " GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-                     <graphic>
-                        <MaterialIconView fill="#ff3030" glyphName="REMOVE_CIRCLE" size="40" translateX="-9.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </MaterialIconView>
-                     </graphic>
-                     <GridPane.margin>
-                        <Insets right="40.0" />
-                     </GridPane.margin>
-                  </MFXButton>
                   <Label text="Elimina Utente" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="50.0" />
@@ -977,15 +503,26 @@
                               </MFXTextField>
                            </children>
                         </GridPane>
-                        <HBox alignment="CENTER" maxWidth="600.0" minWidth="300.0" prefHeight="100.0" prefWidth="300.0">
+                        <HBox alignment="CENTER" maxWidth="600.0" minWidth="300.0" prefHeight="100.0" prefWidth="500.0">
                            <children>
+                              <MFXButton onAction="#modificaUtenteReset" prefHeight="50.0" prefWidth="150.0" styleClass="reset-tasto" text="reset" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial" size="25.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </MFXButton>
                               <MFXButton onAction="#modificaUtenteModifica" prefHeight="50.0" prefWidth="150.0" styleClass="crea-tasto" text="applica" textFill="WHITE">
                                  <font>
-                                    <Font name="Arial" size="30.0" />
+                                    <Font name="Arial" size="25.0" />
                                  </font>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
                               </MFXButton>
                            </children>
                         </HBox>
@@ -1008,18 +545,470 @@
                 <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <MFXButton maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#modificaUtenteReset" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 20;" text=" " GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-                     <graphic>
-                        <MaterialIconView fill="#ff3030" glyphName="REMOVE_CIRCLE" size="40" translateX="-9.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor></MaterialIconView>
-                     </graphic>
-                     <GridPane.margin>
-                        <Insets right="40.0" />
-                     </GridPane.margin>
-                  </MFXButton>
                   <Label text="Modifica Utente" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Arial Bold" size="50.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </top>
+      </BorderPane>
+      <BorderPane fx:id="ricercaUtentePane" minHeight="800.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
+         <top>
+            <HBox alignment="CENTER" minHeight="100.0" prefHeight="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Ricerca utente">
+                     <font>
+                        <Font name="Arial Bold" size="50.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: fff;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <MFXTextField fx:id="cerca_utente_nomeUtente" floatMode="BORDER" floatingText="Nome Utente" minWidth="0.0" prefHeight="51.0" prefWidth="1348.0">
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </MFXTextField>
+                        <StackPane>
+                           <children>
+                              <MaterialIconView glyphName="SEARCH" onMouseClicked="#cercaUtenteCerca" size="40">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </MaterialIconView>
+                              <MFXProgressSpinner fx:id="progressSpinner_cerca" maxHeight="40.0" maxWidth="40.0" prefHeight="40.0" prefWidth="40.0" visible="false">
+                                 <color1>
+                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+                                 </color1>
+                                 <color2>
+                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+                                 </color2>
+                                 <color3>
+                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+                                 </color3>
+                                 <color4>
+                                    <Color red="1.0" green="0.7686274647712708" blue="0.0117647061124444" />
+                                 </color4>
+                              </MFXProgressSpinner>
+                           </children>
+                        </StackPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <GridPane prefHeight="725.0" prefWidth="1100.0" style="-fx-background-color: #E2E2E2; -fx-background-radius: 10;">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <VBox.margin>
+                        <Insets bottom="40.0" left="25.0" right="25.0" top="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Dati Utente" GridPane.valignment="TOP">
+                           <font>
+                              <Font name="Arial Bold" size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" top="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="Nome Utente:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="cerca_utente_nome_utente" text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="200.0" prefWidth="710.0">
+                                 <children>
+                                    <Label text="Nome Cognome:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="cerca_utente_nome_cognome" text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="Codice Fiscale:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="cerca_utente_cf" text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="200.0" prefWidth="710.0">
+                                 <children>
+                                    <Label text="Data di Nascita:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="cerca_utente_dataNascita" text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                           <children>
+                              <VBox prefHeight="246.0" prefWidth="710.0">
+                                 <children>
+                                    <Label text="Indirizzo:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="cerca_utente_indirizzo" text="Label" wrapText="true">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="Telefono:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="cerca_utente_telefono" text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="200.0" prefWidth="710.0">
+                                 <children>
+                                    <Label text="Email:">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="cerca_utente_email" text="Label">
+                                       <font>
+                                          <Font name="Arial" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+      <BorderPane fx:id="creaUtentePane" minHeight="800.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: fff;">
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane minWidth="1100.0" prefHeight="250.0" prefWidth="1100.0" styleClass="box-informazioni" stylesheets="@../style.css">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="227.10208892822266" minHeight="0.0" prefHeight="76.7" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="159.09933471679688" minHeight="0.0" prefHeight="76.7" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Informazioni personali">
+                           <font>
+                              <Font name="Arial" size="25.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <MFXTextField fx:id="crea_utente_nomeUtente" borderGap="15.0" floatMode="BORDER" floatingText="Nome Utente" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                        <MFXTextField fx:id="crea_utente_cf" floatMode="BORDER" floatingText="Codice fiscale" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                        <MFXTextField fx:id="crea_utente_cognome" floatMode="BORDER" floatingText="Cognome" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                        <MFXTextField fx:id="crea_utente_nome" floatMode="BORDER" floatingText="Nome" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </MFXTextField>
+                        <MFXDatePicker fx:id="crea_utente_dataNascita" floatMode="BORDER" floatingText="Data di nascita" prefHeight="50.0" prefWidth="325.0" styleClass="input-data" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                        </MFXDatePicker>
+                     </children>
+                  </GridPane>
+                  <GridPane minWidth="1100.0" prefHeight="350.0" prefWidth="1100.0" styleClass="box-informazioni" stylesheets="@../style.css">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" top="15.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Indirizzo">
+                           <font>
+                              <Font name="Arial" size="25.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <MFXTextField fx:id="crea_utente_indirizzo" floatMode="BORDER" floatingText="Indirizzo" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                        </MFXTextField>
+                        <MFXTextField fx:id="crea_utente_civico" floatMode="BORDER" floatingText="Civico" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                        </MFXTextField>
+                        <MFXTextField fx:id="crea_utente_cap" floatMode="BORDER" floatingText="CAP" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                        </MFXTextField>
+                        <MFXTextField fx:id="crea_utente_citta" floatMode="BORDER" floatingText="Città" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                        </MFXTextField>
+                        <MFXTextField fx:id="crea_utente_provincia" floatMode="BORDER" floatingText="Provincia" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                        </MFXTextField>
+                        <MFXComboBox fx:id="crea_utente_tipoIndirizzo" floatMode="BORDER" floatingText="Tipo" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                        </MFXComboBox>
+                        <MFXComboBox fx:id="crea_utente_regione" floatMode="BORDER" floatingText="Regione" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                        </MFXComboBox>
+                     </children>
+                  </GridPane>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" top="15.0" />
+                     </VBox.margin>
+                     <children>
+                        <GridPane prefHeight="180.0" prefWidth="900.0" styleClass="box-informazioni" stylesheets="@../style.css">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.3696899414062" minWidth="10.0" prefWidth="474.12457275390625" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.070068359375" minWidth="10.0" prefWidth="475.87542724609375" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Contatti">
+                                 <font>
+                                    <Font name="Arial" size="25.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <MFXTextField fx:id="crea_utente_email" floatMode="BORDER" floatingText="Email" prefHeight="50.0" prefWidth="325.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font name="Arial" size="16.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </GridPane.margin>
+                              </MFXTextField>
+                              <MFXTextField fx:id="crea_utente_telefono" floatMode="BORDER" floatingText="Telefono" prefHeight="50.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font name="Arial" size="16.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </GridPane.margin>
+                              </MFXTextField>
+                           </children>
+                        </GridPane>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="500.0">
+                           <children>
+                              <MFXButton onAction="#creaUtenteReset" prefHeight="50.0" prefWidth="150.0" styleClass="reset-tasto" text="reset" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial" size="25.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </MFXButton>
+                              <MFXButton onAction="#creaUtenteCrea" prefHeight="50.0" prefWidth="150.0" styleClass="crea-tasto" text="crea" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="Arial" size="25.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </MFXButton>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="20.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+         <top>
+            <GridPane minHeight="100.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Crea Utente" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="50.0" />
                      </font>

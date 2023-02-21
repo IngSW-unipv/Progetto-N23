@@ -240,4 +240,9 @@ public class LoginController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    public void loginIndietro(ActionEvent actionEvent) {
+        login.toFront();
+        posizione=0;
+    }
 }

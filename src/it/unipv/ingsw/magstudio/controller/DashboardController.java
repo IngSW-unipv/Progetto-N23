@@ -72,7 +72,7 @@ public class DashboardController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
-        this.stage.setMaximized(true);
+        //this.stage.setMaximized(true);
         utentiController.setStage(this.stage);
     }
 

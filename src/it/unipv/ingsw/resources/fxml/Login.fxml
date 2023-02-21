@@ -54,6 +54,15 @@
                         <Font size="18.0" />
                      </font>
                   </MFXPasswordField>
+                  <MFXButton maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#loginIndietro" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #e2e2e2; -fx-background-radius: 20;" text=" " AnchorPane.leftAnchor="211.0" AnchorPane.topAnchor="30.0">
+                     <graphic>
+                        <MaterialIconView glyphName="UNDO" size="30" translateX="-4.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </MaterialIconView>
+                     </graphic>
+                  </MFXButton>
                </children>
             </AnchorPane>
               <AnchorPane fx:id="login" prefHeight="412.5" prefWidth="602.0" style="-fx-background-color: white;" styleClass="centerBar" stylesheets="@../style.css">
