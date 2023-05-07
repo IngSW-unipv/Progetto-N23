@@ -172,12 +172,21 @@ public class PersonaDAO implements IPersonaDAO{
         int queryResult = 0;
         try{
             Connection connection = connectionFacade.connect();
-            String query = "DELETE FROM PERSONA " +
-                    "WHERE NOME_UTENTE = ?";
-            ps = connection.prepareStatement(query);
 
+            ps = connection.prepareStatement("SELECT ID FROM PERSONA WHERE NOME_UTENTE=?");
             ps.setString(1,p.getNomeUtente());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int id = rs.getInt("ID");
+            ps.close();
 
+            ps = connection.prepareStatement("DELETE FROM T_PERSONA WHERE ID = ?");
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            ps.close();
+
+            ps = connection.prepareStatement("DELETE FROM PERSONA WHERE NOME_UTENTE = ?");
+            ps.setString(1,p.getNomeUtente());
             queryResult = ps.executeUpdate();
         }finally {
             ps.close();

@@ -32,7 +32,7 @@ public class SSHConnection{
     public static SSHConnection getIstance() {
         if(istance == null)
             istance = new SSHConnection.Builder()
-                    .setHost("195.231.85.22")
+                    .setHost("80.211.121.174")
                     .setUser("hivehub")
                     .setPassword("hivehub")
                     .setRemoteHost("127.0.0.1")
