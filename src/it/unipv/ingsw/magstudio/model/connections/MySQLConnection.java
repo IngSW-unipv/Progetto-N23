@@ -1,6 +1,11 @@
 package it.unipv.ingsw.magstudio.model.connections;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 
 public class MySQLConnection implements IConnectionStrategy {
     private static MySQLConnection istance;
@@ -27,13 +32,23 @@ public class MySQLConnection implements IConnectionStrategy {
      */
     public static MySQLConnection getIstance() {
         if(istance == null){
-            istance = new MySQLConnection.Builder()
-                    .setHost("127.0.0.1")
-                    .setPort(5656)
-                    .setSchema("HIVEHUB")
-                    .setUsername("sql-hivehub")
-                    .setPassword("Hivehub2023!")
-                    .build();
+            try (InputStream file = new FileInputStream("config.properties")) {
+                Properties prop = new Properties();
+
+                prop.load(file);
+
+                istance = new MySQLConnection.Builder()
+                        .setHost(prop.getProperty("mysql.host"))
+                        .setPort(Integer.parseInt(prop.getProperty("mysql.port")))
+                        .setSchema(prop.getProperty("mysql.schema"))
+                        .setUsername(prop.getProperty("mysql.username"))
+                        .setPassword(prop.getProperty("mysql.password"))
+                .build();
+            } catch (FileNotFoundException ex) {
+                System.out.println("File di Properties non trovato");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
         return istance;
     }

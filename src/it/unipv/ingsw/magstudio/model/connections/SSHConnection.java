@@ -4,6 +4,12 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class SSHConnection{
     private static SSHConnection istance;
     private final String host;
@@ -30,15 +36,26 @@ public class SSHConnection{
      * @return L'istanza dell'oggetto
      */
     public static SSHConnection getIstance() {
-        if(istance == null)
-            istance = new SSHConnection.Builder()
-                    .setHost("80.211.121.174")
-                    .setUser("hivehub")
-                    .setPassword("hivehub")
-                    .setRemoteHost("127.0.0.1")
-                    .setListenPort(5656)
-                    .setRecivePort(3306)
-            .build();
+        if(istance == null) {
+            try (InputStream file = new FileInputStream("config.properties")) {
+                Properties prop = new Properties();
+
+                prop.load(file);
+
+                istance = new SSHConnection.Builder()
+                        .setHost(prop.getProperty("ssh.host"))
+                        .setUser(prop.getProperty("ssh.username"))
+                        .setPassword(prop.getProperty("ssh.password"))
+                        .setRemoteHost(prop.getProperty("ssh.remoteHost"))
+                        .setListenPort(Integer.parseInt(prop.getProperty("ssh.listenPort")))
+                        .setRecivePort(Integer.parseInt(prop.getProperty("ssh.recivePort")))
+                .build();
+            } catch (FileNotFoundException ex) {
+                System.out.println("File di Properties non trovato");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
         return istance;
     }
 

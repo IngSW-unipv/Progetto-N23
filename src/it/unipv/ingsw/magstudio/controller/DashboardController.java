@@ -57,6 +57,7 @@ public class DashboardController implements Initializable {
 
             centerPane.getChildren().add(fxmlLoader.load());
             prodottiController = fxmlLoader.getController();
+            prodottiController.setStage(stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -72,7 +73,7 @@ public class DashboardController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
-        this.stage.setMaximized(true);
+        //this.stage.setMaximized(true);
         utentiController.setStage(this.stage);
     }
 

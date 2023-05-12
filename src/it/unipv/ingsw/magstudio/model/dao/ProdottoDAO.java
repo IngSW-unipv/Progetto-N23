@@ -131,4 +131,12 @@ public class ProdottoDAO implements IProdottoDAO{
 
         return queryResult > 0;
     }
+    public class PosizioneDAO implements IPosizioneDAO{
+
+        @Override
+        public boolean insertPosizione(Prodotto p) throws SQLException {
+            //TODO: da implementare
+            return false;
+        }
+    }
 }

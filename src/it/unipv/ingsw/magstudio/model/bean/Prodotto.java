@@ -1,17 +1,21 @@
 package it.unipv.ingsw.magstudio.model.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Prodotto {
     private String nome;
     private int qnt, codice;
     private String descrizione;
-    private Posizione posizione;
+    private List<Posizione> posizione;
 
-    public Prodotto(int scaffale, int area, int livello, int scompartimento, String nome, int qnt, int codice, String descrizione) {
+    public Prodotto(Posizione p, String nome, int qnt, int codice, String descrizione) {
         this.nome = nome;
         this.qnt = qnt;
         this.codice = codice;
         this.descrizione = descrizione;
-        this.posizione = new Posizione(scaffale,area,livello,scompartimento);
+        this.posizione = new ArrayList<>();
+        this.posizione.add(p);
     }
 
     public String getNome() {
@@ -42,11 +46,12 @@ public class Prodotto {
         this.qnt = qnt;
     }
 
-    public Posizione getPosizione() {
+    public List<Posizione> getPosizione() {
         return posizione;
     }
 
-    public void setPosizione(Posizione posizione) {
-        this.posizione = posizione;
+    public void addPosizione(Posizione p){
+        //PROBLEMA: possibile ripetizione di una stessa posizione
+        this.posizione.add(p);
     }
 }
