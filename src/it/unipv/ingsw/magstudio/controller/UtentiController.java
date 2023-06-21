@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -206,16 +207,16 @@ public class UtentiController implements Initializable {
             Date data = new Date(crea_utente_dataNascita.getText());
             Indirizzo indirizzo = new Indirizzo(
                     TipoStrada.valueOf(crea_utente_tipoIndirizzo.getText()),
-                    crea_utente_indirizzo.getText(),
-                    crea_utente_civico.getText(),
+                    crea_utente_indirizzo.getText().toUpperCase(),
+                    crea_utente_civico.getText().toUpperCase(),
                     Integer.parseInt(crea_utente_cap.getText()),
-                    crea_utente_citta.getText(),
-                    crea_utente_provincia.getText(),
+                    crea_utente_citta.getText().toUpperCase(),
+                    crea_utente_provincia.getText().toUpperCase(),
                     Regione.valueOf(crea_utente_regione.getText())
             );
 
             Contatto contatto;
-            String email = crea_utente_email.getText();
+            String email = crea_utente_email.getText().toUpperCase();
             String telefono = crea_utente_telefono.getText();
 
             if(email.isBlank() || email.isEmpty() && !telefono.isEmpty() && !telefono.isBlank())
@@ -226,10 +227,10 @@ public class UtentiController implements Initializable {
                 contatto = new Contatto(email, Long.parseLong(telefono));
 
             Persona p = new Persona(
-                    crea_utente_nomeUtente.getText(),
-                    crea_utente_nome.getText(),
-                    crea_utente_cognome.getText(),
-                    crea_utente_cf.getText(),
+                    crea_utente_nomeUtente.getText().toUpperCase(),
+                    crea_utente_nome.getText().toUpperCase(),
+                    crea_utente_cognome.getText().toUpperCase(),
+                    crea_utente_cf.getText().toUpperCase(),
                     data,
                     indirizzo,
                     contatto
@@ -238,7 +239,11 @@ public class UtentiController implements Initializable {
             new PersonaDAO().insertPersona(p);  // Carico la persona
             alert.informazione("Utente creato con successo");
             creaUtenteReset(null);
-        }catch (Exception e){
+        }catch (ConstraintViolationException e){
+            e.printStackTrace();
+            alert.errore("Vincoli violati, controlla le informazioni e riprova");    // Mostro messaggio errore
+        } catch (Exception e){
+            e.printStackTrace();
             alert.errore(e.getMessage());    // Mostro messaggio errore
         }
     }
@@ -262,17 +267,17 @@ public class UtentiController implements Initializable {
                     // Creo l'oggetto Persona
                     Indirizzo indirizzo = new Indirizzo(
                             TipoStrada.valueOf(modifica_utente_tipoIndirizzo.getText()),
-                            modifica_utente_indirizzo.getText(),
-                            modifica_utente_civico.getText(),
+                            modifica_utente_indirizzo.getText().toUpperCase(),
+                            modifica_utente_civico.getText().toUpperCase(),
                             Integer.parseInt(modifica_utente_cap.getText()),
-                            modifica_utente_citta.getText(),
-                            modifica_utente_provincia.getText(),
+                            modifica_utente_citta.getText().toUpperCase(),
+                            modifica_utente_provincia.getText().toUpperCase(),
                             Regione.valueOf(modifica_utente_regione.getText())
                     );
 
                     Contatto contatto;
-                    String email = modifica_utente_email.getText();
-                    String telefono = modifica_utente_telefono.getText();
+                    String email = modifica_utente_email.getText().toUpperCase();
+                    String telefono = modifica_utente_telefono.getText().toUpperCase();
 
                     if(email.isBlank() || email.isEmpty() && !telefono.isEmpty() && !telefono.isBlank())
                         contatto = new Contatto(Long.parseLong(telefono));
@@ -282,11 +287,11 @@ public class UtentiController implements Initializable {
                         contatto = new Contatto(email, Long.parseLong(telefono));
 
                     Persona p = new Persona(
-                            modifica_utente_nomeUtente.getText(),
-                            modifica_utente_nome.getText(),
-                            modifica_utente_cognome.getText(),
-                            modifica_utente_cf.getText(),
-                            new Date(),
+                            modifica_utente_nomeUtente.getText().toUpperCase(),
+                            modifica_utente_nome.getText().toUpperCase(),
+                            modifica_utente_cognome.getText().toUpperCase(),
+                            modifica_utente_cf.getText().toUpperCase(),
+                            new Date(modifica_utente_dataNascita.getText()),
                             indirizzo,
                             contatto
                     );
@@ -421,7 +426,7 @@ public class UtentiController implements Initializable {
         Optional<Persona> p = Optional.empty();
         try {
             p = new PersonaDAO().selectByNomeUtente(utente);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Platform.runLater(() -> {
                 alert.errore(e.getMessage());
             });
@@ -486,8 +491,9 @@ public class UtentiController implements Initializable {
                 boolean esito = false;
                 try {
                     esito = new PersonaDAO().dropPersona(new Persona(elimina_utente_nomeUtente.getText()));
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     Platform.runLater(() -> {
+                        e.printStackTrace();
                         alert.errore(e.getMessage());
                     });
                 }

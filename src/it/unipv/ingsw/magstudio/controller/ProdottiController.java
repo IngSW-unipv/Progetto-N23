@@ -3,12 +3,21 @@ package it.unipv.ingsw.magstudio.controller;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
+import it.unipv.ingsw.magstudio.model.bean.Posizione;
+import it.unipv.ingsw.magstudio.model.bean.Prodotto;
+import it.unipv.ingsw.magstudio.model.dao.ProdottoDAO;
 import it.unipv.ingsw.magstudio.model.util.GeneratoreCodici;
 import it.unipv.ingsw.magstudio.model.util.HiveHubAlert;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
@@ -20,11 +29,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,6 +56,36 @@ public class ProdottiController implements Initializable {
             crea_prodotti_fornitore,
             crea_prodotti_scaffale,
             crea_prodotti_ripiano;
+
+    @FXML
+    private Label ricerca_prodotto_codice;
+
+    @FXML
+    private Label ricerca_prodotto_descrizione;
+
+    @FXML
+    private Label ricerca_prodotto_nome;
+
+    @FXML
+    private TableView<Posizione> ricerca_prodotto_posizioni;
+
+    @FXML
+    private TableColumn<Posizione, Integer> ricerca_tabella_area;
+
+    @FXML
+    private TableColumn<Posizione, Integer> ricerca_tabella_livello;
+
+    @FXML
+    private TableColumn<Posizione, Integer> ricerca_tabella_scompartimento;
+
+    @FXML
+    private TableColumn<Posizione, Integer> ricerca_tabella_quantita;
+
+    @FXML
+    private TableColumn<Posizione, Integer> ricerca_tabella_scaffale;
+
+    @FXML
+    private MFXTextField ricerca_prodotto_codice_cerca;
 
     @FXML
     private ImageView codiceBarreCrea, qrCodeCrea, crea_prodotti_immagine;
@@ -89,6 +129,11 @@ public class ProdottiController implements Initializable {
             codiceBarreCrea.setImage(GeneratoreCodici.generaBarCode(c, (int) codiceBarreCrea.getFitWidth(), (int) codiceBarreCrea.getFitHeight()));
             qrCodeCrea.setImage(GeneratoreCodici.generaQrCode(c, (int) qrCodeCrea.getFitWidth(), (int) qrCodeCrea.getFitHeight()));
         });
+
+        ricerca_tabella_scaffale.setCellValueFactory(new PropertyValueFactory<>("scaffale"));
+        ricerca_tabella_area.setCellValueFactory(new PropertyValueFactory<>("area"));
+        ricerca_tabella_livello.setCellValueFactory(new PropertyValueFactory<>("livello"));
+        ricerca_tabella_scompartimento.setCellValueFactory(new PropertyValueFactory<>("scompartimento"));
     }
 
     public void setStage(Stage stage) {
@@ -160,5 +205,19 @@ public class ProdottiController implements Initializable {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+
+    @FXML
+    void ricercaProdottoCerca(MouseEvent event) {
+        System.out.println(ricerca_prodotto_codice_cerca.getText());
+        ProdottoDAO prodottoDAO = new ProdottoDAO();
+        Optional<Prodotto> p = prodottoDAO.selectByCodice(new Prodotto(null,null,0, Integer.parseInt(ricerca_prodotto_codice_cerca.getText()),null ));
+        System.out.println(p.get());
+
+        ObservableList<Posizione> data = FXCollections.observableArrayList(
+               p.get().getPosizione().stream().toList()
+        );
+        ricerca_prodotto_posizioni.setItems(data);
     }
 }

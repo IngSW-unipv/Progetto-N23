@@ -1,12 +1,27 @@
 package it.unipv.ingsw.magstudio.model.bean;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+@Embeddable
 public class Indirizzo {
+    @Column(name = "INDIRIZZO_NOME")
     private String nome;
+    @Column(name = "INDIRIZZO_CIVICO")
     private String civico;
+    @Column(name = "INDIRIZZO_CAP")
     private int cap;
+    @Column(name = "INDIRIZZO_CITTA")
     private String citta;
+    @Column(name = "INDIRIZZO_PROVINCIA")
     private String provincia;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "INDIRIZZO_REGIONE")
     private Regione regione;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "INDIRIZZO_TIPO_STRADA")
     private TipoStrada tipoStrada;
 
     /**
@@ -31,6 +46,7 @@ public class Indirizzo {
         this.tipoStrada = tipoStrada;
     }
 
+    public Indirizzo(){}
     /**
      * Restituisce il nome della strada
      * @return Il nome

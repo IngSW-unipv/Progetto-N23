@@ -76,10 +76,7 @@ public class DashboardController implements Initializable {
         //this.stage.setMaximized(true);
         utentiController.setStage(this.stage);
     }
-
-    public void exitButton(MouseEvent mouseEvent) {
-        stage.close();
-    }
+    
 
     public void creaUtenteAction(MouseEvent mouseEvent) {
         utentiController.showCreaUtenti();

@@ -1,11 +1,11 @@
 package it.unipv.ingsw.magstudio.model.dao;
 
-import it.unipv.ingsw.magstudio.model.facade.ConnectionFacade;
 import it.unipv.ingsw.magstudio.model.util.Encryption;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GestoreAccount {
@@ -14,49 +14,60 @@ public class GestoreAccount {
      * @param nomeUtente Il nome utente
      * @param password La password
      * @return L'esito dell'operazione, 'true' -> credenziali corrette; 'false' -> credenziali errate
-     * @throws SQLException Eccezione lanciata in caso di errore con il server DB
      */
-    public static boolean controllaCredenziali(String nomeUtente, String password) throws SQLException {
-        password = Encryption.SHA256Encryptor(password);
+    public static boolean controllaCredenziali(String nomeUtente, String password) {
+        Configuration cfg = new Configuration();
+        cfg.configure("hibernate.cfg.xml");
 
-        ConnectionFacade connectionFacade = ConnectionFacade.getIstance();
-        Connection connection = connectionFacade.connect();
+        SessionFactory sessionFactory = cfg.buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 
-        PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS N FROM T_PERSONA INNER JOIN PERSONA ON T_PERSONA.ID = PERSONA.ID WHERE NOME_UTENTE=? AND PASSWORD=?");
-        ps.setString(1,nomeUtente);
-        ps.setString(2,password);
-        ResultSet rs = ps.executeQuery();
-        rs.next();
-        int res = rs.getInt("N");
-        connectionFacade.close();
+        Query<Long> query = session.createNativeQuery("SELECT COUNT(*) FROM T_PERSONA tp WHERE tp.PASSWORD = :password AND tp.ID = (SELECT p.ID FROM Persona p WHERE p.NOME_UTENTE = :nomeUtente)", Long.class);
+        query.setParameter("nomeUtente", nomeUtente);
+        query.setParameter("password",  Encryption.SHA256Encryptor(password));
+        Long result = query.uniqueResult();
 
-        return res == 1;
+        session.getTransaction().commit();
+
+        session.close();
+        sessionFactory.close();
+
+        return result != null && result > 0;
     }
 
-    public static boolean impostaPassword(String nomeUtente, String password) throws SQLException {
+    public static boolean impostaPassword(String nomeUtente, String password) {
         password = Encryption.SHA256Encryptor(password);
 
-        ConnectionFacade connectionFacade = ConnectionFacade.getIstance();
-        Connection connection = connectionFacade.connect();
+        Configuration cfg = new Configuration();
+        cfg.configure("hibernate.cfg.xml");
 
-        PreparedStatement ps1 = connection.prepareStatement("SELECT ID FROM PERSONA WHERE NOME_UTENTE = ?");
-        ps1.setString(1, nomeUtente);
-        ResultSet rs = ps1.executeQuery();
+        SessionFactory sessionFactory = cfg.buildSessionFactory();
+        Session session = sessionFactory.openSession();
 
-        rs.next();
-        int result = 0;
-        try {
-            String utente = rs.getString("ID");
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO T_PERSONA VALUES(?, ?)");
-            ps.setString(1,password);
-            ps.setString(2,utente);
-            result = ps.executeUpdate();
-        }catch (Exception e){
-            return false;
-        }finally {
-            connectionFacade.close();
+        session.getTransaction().begin();
+
+        Query query = session.createNativeQuery("SELECT COUNT(*) FROM T_Persona tp WHERE tp.id = (SELECT p.ID FROM Persona p WHERE p.NOME_UTENTE = :nomeUtente)",Integer.class);
+        query.setParameter("nomeUtente", nomeUtente);
+        Integer result = (Integer) query.uniqueResult();
+
+        session.getTransaction().commit();
+
+        int rows = 0;
+        if(result < 1){
+            session.getTransaction().begin();
+
+            Query insert = session.createNativeQuery("INSERT INTO T_Persona(PASSWORD,ID) VALUES (:password,(SELECT p.ID FROM Persona p WHERE p.NOME_UTENTE = :nomeUtente))",Integer.class);
+            insert.setParameter("nomeUtente", nomeUtente);
+            insert.setParameter("password", password);
+            rows = insert.executeUpdate();
+
+            session.getTransaction().commit();
         }
 
-        return result == 1;
+        session.close();
+        sessionFactory.close();
+
+        return rows == 1;
     }
 }

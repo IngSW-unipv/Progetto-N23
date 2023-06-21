@@ -1,21 +1,48 @@
 package it.unipv.ingsw.magstudio.model.bean;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Entity
+@Table(name = "PRODOTTO")
 public class Prodotto {
+    @Id
+    @Column(name = "CODICE")
+    private int codice;
+
+    @Column(name = "NOME")
     private String nome;
-    private int qnt, codice;
+
+    @Column(name = "QNT")
+    private int qnt;
+
+    @Column(name = "DESCRIZIONE")
     private String descrizione;
-    private List<Posizione> posizione;
+
+    @OneToMany(mappedBy = "prodotto", cascade = CascadeType.ALL)
+    private Set<Posizione> posizione;
+
+    public Prodotto(){}
 
     public Prodotto(Posizione p, String nome, int qnt, int codice, String descrizione) {
         this.nome = nome;
         this.qnt = qnt;
         this.codice = codice;
         this.descrizione = descrizione;
-        this.posizione = new ArrayList<>();
+        this.posizione = new HashSet<>();
         this.posizione.add(p);
+    }
+
+    public Prodotto(String nome, int qnt, int codice, String descrizione) {
+        this.nome = nome;
+        this.qnt = qnt;
+        this.codice = codice;
+        this.descrizione = descrizione;
+        this.posizione = new HashSet<>();
     }
 
     public String getNome() {
@@ -46,12 +73,30 @@ public class Prodotto {
         this.qnt = qnt;
     }
 
-    public List<Posizione> getPosizione() {
+    public Set<Posizione> getPosizione() {
         return posizione;
     }
 
     public void addPosizione(Posizione p){
-        //PROBLEMA: possibile ripetizione di una stessa posizione
         this.posizione.add(p);
+    }
+
+    @Override
+    public String toString() {
+       StringBuilder out = new StringBuilder();
+
+       out.append("Nome: ")
+               .append(this.getNome())
+               .append(" - Quantità: ")
+               .append(this.getQnt())
+               .append(" - Codice: ")
+               .append(this.getCodice())
+               .append(" - Descrizione: ")
+               .append(this.getDescrizione());
+                this.getPosizione().forEach(pos -> {
+                    out.append(" - ")
+                        .append(pos.toString());
+                });
+       return out.toString();
     }
 }

@@ -1,10 +1,8 @@
 
 @import 'colors.css';
 
-AnchorPane{
-    -fx-background-radius: 40px;
-}
 .sideBar{
+    -fx-background-radius: 0px 20px 20px 0px;
     -fx-background-color: linear-gradient(to right top, yellow, orange);
 }
 
@@ -13,19 +11,12 @@ AnchorPane{
 	-fx-background-radius:0 20 20 0;
 }
 
-.centerBar{
-    -fx-background-color: -hh-white;
-    -fx-border-width: 2px;
-    -fx-border-color: -hh-lightgray;
-    -fx-border-radius: 40px;
-}
-
 .mfx-button .mfx-ripple-generator {
     -mfx-ripple-radius: 20;
     -mfx-auto-clip: true;
 }
 .loginButton{
-    -fx-background-radius: 20px;
+    -fx-background-radius: 25px;
     -fx-background-color: -hh-orange;
 }
 

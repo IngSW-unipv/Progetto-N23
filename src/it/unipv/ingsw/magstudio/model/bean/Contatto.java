@@ -1,7 +1,9 @@
 package it.unipv.ingsw.magstudio.model.bean;
 
-import it.unipv.ingsw.magstudio.model.exceptions.EmailFormatException;
-import it.unipv.ingsw.magstudio.model.exceptions.TelefonoFormatException;
+
+import it.unipv.ingsw.magstudio.model.exceptions.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -10,9 +12,12 @@ import java.util.regex.Pattern;
 /**
  * Classe che modella un contatto di una Persona, formato da una Email e un Numero di Telefono
  */
+@Embeddable
 public class Contatto {
+    @Column(name = "CONTATTO_EMAIL")
     private String email;
-    private long telefono;
+    @Column(name = "CONTATTO_TELEFONO")
+    private Long telefono;
 
     /**
      * Crea un contatto formato da solo l'email
@@ -21,7 +26,7 @@ public class Contatto {
      */
     public Contatto(String email) throws EmailFormatException {
         setEmail(email);
-        this.telefono=0;
+        this.telefono=null;
     }
 
     /**
@@ -29,7 +34,7 @@ public class Contatto {
      * @param telefono Numero di telefono del contatto
      * @throws TelefonoFormatException Eccezione lanciata in caso il numero di telefono non segue il pattern di un numero di telefono
      */
-    public Contatto(long telefono) throws TelefonoFormatException {
+    public Contatto(Long telefono) throws TelefonoFormatException {
         setTelefono(telefono);
         this.email=null;
     }
@@ -45,6 +50,7 @@ public class Contatto {
         setEmail(email);
         setTelefono(telefono);
     }
+    public Contatto(){}
 
     /**
      * Restituisce l'indirizzo email del contatto. Se non presente restituisce null
@@ -61,7 +67,7 @@ public class Contatto {
      * @return Il numero di telfono se presente, altrimenti 0
      */
     public Optional<Long> getTelefono() {
-        if(telefono == 0)
+        if(telefono == null)
             return Optional.empty();
         return Optional.of(telefono);
     }

@@ -1,23 +1,34 @@
 package it.unipv.ingsw.magstudio.model.bean;
 
-import it.unipv.ingsw.magstudio.model.exceptions.CfFormatException;
-import it.unipv.ingsw.magstudio.model.exceptions.EmailFormatException;
-import it.unipv.ingsw.magstudio.model.exceptions.TelefonoFormatException;
-
+import jakarta.persistence.*;
+import it.unipv.ingsw.magstudio.model.exceptions.*;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+@Entity
+@Table(name = "PERSONA")
 public class Persona {
+    @Id
+    @Column(name = "NOME_UTENTE")
     private String nomeUtente;
+    @Column(name = "NOME")
     private String nome;
+    @Column(name = "COGNOME")
     private String cognome;
+    @Column(name = "CF")
     private String cf;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DATA_NASCITA")
     private Date dataNascita;
+    @Embedded
     private Indirizzo indirizzo;
+    @Embedded
     private Contatto contatto;
+
+    public Persona(){}
 
     /**
      * Crea una Persona
@@ -91,7 +102,7 @@ public class Persona {
      * @return La Data di Nascita
      */
     public String getDataNascita() {
-        return new SimpleDateFormat("yyyy-MM-dd").format(dataNascita);
+        return new SimpleDateFormat("dd-MM-yyyy").format(dataNascita);
     }
 
     /**

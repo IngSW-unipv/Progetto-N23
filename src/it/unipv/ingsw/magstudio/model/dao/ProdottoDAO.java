@@ -1,142 +1,98 @@
 package it.unipv.ingsw.magstudio.model.dao;
 
 import it.unipv.ingsw.magstudio.model.bean.*;
-import it.unipv.ingsw.magstudio.model.facade.ConnectionFacade;
+import it.unipv.ingsw.magstudio.model.util.HiberanteSessionFactory;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Optional;
 
 public class ProdottoDAO implements IProdottoDAO{
-    private final ConnectionFacade connectionFacade;
 
     public ProdottoDAO(){
-        this.connectionFacade = ConnectionFacade.getIstance();
     }
     @Override
-    public Optional<Prodotto> selectByCodice(Prodotto p) throws SQLException {
+    public Optional<Prodotto> selectByCodice(Prodotto p){
         Optional<Prodotto> out = Optional.empty();
-        Connection connection=connectionFacade.connect();
 
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM PRODOTTO WHERE CODICE=?")) {
-            ps.setInt(1, p.getCodice());
-            ResultSet rs = ps.executeQuery();
-            //TODO: finire select by codice
-            /*if (rs.next()) {
-                out = Optional.of(new Prodotto(
-                        /*Inserire
-                ));
-            }*/
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            connectionFacade.close();
+        SessionFactory sessionFactory = HiberanteSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        session.getTransaction().begin();
+
+        Prodotto p1 = session.get(Prodotto.class, p.getCodice());
+
+        session.getTransaction().commit();
+
+        if(p1 != null){
+            session.refresh(p1);
+            out = Optional.of(p1);
         }
+
+        session.close();
+        sessionFactory.close();
+
         return out;
     }
 
     @Override
-    public Optional<Prodotto> selectByPosizione(Posizione p) throws SQLException {
+    public Optional<Prodotto> selectByPosizione(Posizione p){
         //TODO: finire select by posizione
         return Optional.empty();
     }
 
     @Override
-    public Optional<Prodotto> selectByNome(Prodotto p) throws SQLException {
+    public Optional<Prodotto> selectByNome(Prodotto p){
         Optional<Prodotto> out = Optional.empty();
-        Connection connection=connectionFacade.connect();
 
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM PRODOTTO WHERE CODICE=?")) {
-            ps.setString(1, p.getNome());
-            ResultSet rs = ps.executeQuery();
-            //TODO: select by nome
-            /*if (rs.next()) {
-                out = Optional.of(new Prodotto(
-                        /*Inserire
-                ));
-            }*/
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            connectionFacade.close();
-        }
         return out;
     }
 
     @Override
-    public boolean insertProdotto(Prodotto p) throws SQLException {
-        PreparedStatement ps = null;
-        int queryResult = 0;
-        try{
-            Connection connection = connectionFacade.connect();
-            String query = "INSERT INTO PRODOTTO(" +
-                    "CODICE," +
-                    "NOME," +
-                    "DESCRIZIONE," +
-                    "QNT" +
-                    ") VALUES(?,?,?,?)";
-            ps = connection.prepareStatement(query);
+    public boolean insertProdotto(Prodotto p){
+        SessionFactory sessionFactory = HiberanteSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
 
-            ps.setInt(1, p.getCodice());
-            ps.setString(2, p.getNome());
-            ps.setString(3, p.getDescrizione());
-            ps.setInt(4, p.getQnt());
+        session.getTransaction().begin();
 
-            queryResult = ps.executeUpdate();
-        }finally {
-            ps.close();
-            connectionFacade.close();
-        }
+        session.persist(p);
 
-        return queryResult > 0;
+        session.getTransaction().commit();
+
+        session.close();
+        sessionFactory.close();
+        return true;
     }
 
     @Override
-    public boolean updateProdotto(Prodotto p) throws SQLException {
-        PreparedStatement ps = null;
-        int queryResult = 0;
-        //TODO: finire update prodotto
-        try{
-            Connection connection = connectionFacade.connect();
-            String query = "UPDATE PRODOTTO SET "; /*Inserire*/
+    public boolean updateProdotto(Prodotto p){
+        SessionFactory sessionFactory = HiberanteSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
 
-            queryResult = ps.executeUpdate();
-        }finally {
-            ps.close();
-            connectionFacade.close();
-        }
-        return queryResult > 0;
+        session.getTransaction().begin();
+
+        session.merge(p);
+
+        session.getTransaction().commit();
+
+        session.close();
+        sessionFactory.close();
+        return true;
     }
 
     @Override
-    public boolean dropProdotto(Prodotto p) throws SQLException {
-        PreparedStatement ps = null;
-        int queryResult = 0;
-        try{
-            Connection connection = connectionFacade.connect();
-            String query = "DELETE FROM PRODOTTO " +
-                    "WHERE CODICE = ?";
-            //TODO: finire drop prodotto
-            ps = connection.prepareStatement(query);
+    public boolean dropProdotto(Prodotto p){
+        SessionFactory sessionFactory = HiberanteSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
 
-            ps.setInt(1,p.getCodice());
+        session.getTransaction().begin();
 
-            queryResult = ps.executeUpdate();
-        }finally {
-            ps.close();
-            connectionFacade.close();
-        }
+        session.remove(p);
 
-        return queryResult > 0;
-    }
-    public class PosizioneDAO implements IPosizioneDAO{
+        session.getTransaction().commit();
 
-        @Override
-        public boolean insertPosizione(Prodotto p) throws SQLException {
-            //TODO: da implementare
-            return false;
-        }
+        session.close();
+        sessionFactory.close();
+        return true;
     }
 }

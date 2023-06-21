@@ -1,9 +1,34 @@
 package it.unipv.ingsw.magstudio.model.bean;
 
-public class Posizione {
-    private int scaffale, area, livello, scompartimento;
+import jakarta.persistence.*;
 
-    public Posizione(int scaffale, int area, int livello, int scompartimento) {
+import java.util.Objects;
+
+@Entity
+@Table(name = "POSIZIONE")
+public class Posizione {
+    @Id
+    @Column(name = "SCAFFALE")
+    private int scaffale;
+
+
+    @Column(name = "AREA")
+    private int area;
+
+
+    @Column(name = "LIVELLO")
+    private int livello;
+    @Column(name = "SCOMPARTIMENTO")
+    private int scompartimento;
+
+    @ManyToOne
+    @JoinColumn(name = "CODICE")
+    private Prodotto prodotto;
+
+    public Posizione(){}
+
+    public Posizione(Prodotto p, int scaffale, int area, int livello, int scompartimento) {
+        this.prodotto = p;
         this.scaffale = scaffale;
         this.area = area;
         this.livello = livello;
@@ -43,12 +68,38 @@ public class Posizione {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(this.scaffale,this.area,this.livello,this.scompartimento);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Posizione posizione = (Posizione) obj;
+
+        return (this.scaffale == posizione.scaffale)&&
+                (this.area == posizione.area) &&
+                (this.livello == posizione.livello)&&
+                (this.scompartimento == posizione.scompartimento);
+    }
+
+    @Override
     public String toString() {
         StringBuilder out = new StringBuilder();
 
-        out.append(getScaffale())
+        out.append("Scaffale: ")
+                .append(getScaffale())
+                .append(" - Area: ")
                 .append(getArea())
+                .append(" - Livello: ")
                 .append(getLivello())
+                .append(" - Scompartimento: ")
                 .append(getScompartimento());
 
         return out.toString();

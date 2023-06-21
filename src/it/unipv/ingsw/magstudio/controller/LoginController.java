@@ -28,6 +28,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,7 +69,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Impostazioni per movimento finestra
-        sideBar.setOnMousePressed (mouseEvent -> {
+        sideBar.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
             y = mouseEvent.getSceneY();
         });
@@ -108,50 +111,47 @@ public class LoginController implements Initializable {
         posizione = 0;
     }
 
-    public void closeAction(MouseEvent mouseEvent) {
-        stage.close();
-    }
-
     //Azione di Click su bottone Login
-    public void loginButtonPressed(){
+    public void loginButtonPressed() {
         String nomeUtente = nomeUtenteField.getText();
         String password = passwordField.getText();
 
         //Creazione del Task in Background per Thread
         Task<Optional<Persona>> task = new Task<>() {
             @Override
-            protected Optional<Persona> call(){
+            protected Optional<Persona> call() {
                 progressSpinner.setVisible(true);
                 loginButton.setVisible(false);
                 Optional<Persona> user = Optional.empty();
 
                 try {
-                    if(GestoreAccount.controllaCredenziali(nomeUtente, password)){
-
+                    if (GestoreAccount.controllaCredenziali(nomeUtente, password)) {
                         user = new PersonaDAO().selectByNomeUtente(new Persona(nomeUtente));
-
-                        return user;
-                    }else {
+                    } else {
                         Platform.runLater(() -> {
                             alert.errore("Credenziali utente errate");
                         });
                     }
-                }catch (SQLException e){
+                } catch (Exception e) {
+                    e.printStackTrace();
                     Platform.runLater(() -> {
                         alert.errore("Impossibile connettersi al Database");
                     });
-                }finally {
+                } finally {
                     progressSpinner.setVisible(false);
                     loginButton.setVisible(true);
                 }
                 return user;
-            };
+            }
+
+            ;
         };
 
         task.setOnSucceeded(event -> {
             Optional<Persona> user = task.getValue();
-            if(user.isPresent()){
+            if (user.isPresent()) {
                 switchToDashboard();
+                enableResizable();
             }
         });
 
@@ -161,9 +161,9 @@ public class LoginController implements Initializable {
 
     //Azione pressione tasto Enter da tastiera
     public void onEnterPressed(KeyEvent keyEvent) {
-        if(keyEvent.getCode() == KeyCode.ENTER && posizione < 1){
+        if (keyEvent.getCode() == KeyCode.ENTER && posizione < 1) {
             loginButtonPressed();
-        } else if(keyEvent.getCode() == KeyCode.ENTER){
+        } else if (keyEvent.getCode() == KeyCode.ENTER) {
             nuovoAccessoAction(null);
         }
     }
@@ -181,50 +181,53 @@ public class LoginController implements Initializable {
         //Creazione del Task in Background per Thread
         Task<Boolean> task = new Task<>() {
             @Override
-            protected Boolean call(){
+            protected Boolean call() {
                 nuovoAccessoButton.setVisible(false);
                 progressSpinnerNuovoAccesso.setVisible(true);
                 boolean esito = false;
 
                 try {
-                    if(GestoreAccount.impostaPassword(nomeUtente, password)){
+                    if (GestoreAccount.impostaPassword(nomeUtente, password)) {
                         esito = true;
-                    }else {
+                    } else {
                         Platform.runLater(() -> {
-                            alert.errore("Errore, utente non trovato");
+                            alert.errore("Errore, utente non trovato o già inizializzato ");
                         });
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     Platform.runLater(() -> {
                         alert.errore("Impossibile connettersi al Database");
                     });
-                }finally {
+                } finally {
                     progressSpinnerNuovoAccesso.setVisible(false);
                     nuovoAccessoButton.setVisible(true);
                 }
                 return esito;
-            };
+            }
+
+            ;
         };
 
         task.setOnSucceeded(event -> {
             Boolean esito = task.getValue();
-            if(esito){
+            if (esito) {
                 Platform.runLater(() -> {
                     alert.informazione("Password aggiornata con successo");
+                    enableResizable();
                 });
                 switchToDashboard();
             }
         });
 
         //Thread per richiesta al DataBase
-        if(password.equals(confermaPassword) && !password.isBlank() && !password.isEmpty())
+        if (password.equals(confermaPassword) && !password.isBlank() && !password.isEmpty())
             new Thread(task).start();
         else
             alert.errore("Le password non coincidono");
     }
 
-    private void switchToDashboard(){
+    private void switchToDashboard() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Dashboard.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -243,6 +246,12 @@ public class LoginController implements Initializable {
 
     public void loginIndietro(ActionEvent actionEvent) {
         login.toFront();
-        posizione=0;
+        posizione = 0;
+    }
+    private void enableResizable() {
+        if (stage != null) {
+            stage.setResizable(true);
+        }
+
     }
 }
