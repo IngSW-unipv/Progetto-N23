@@ -1,12 +1,9 @@
 package it.unipv.ingsw.magstudio;
 
 import it.unipv.ingsw.magstudio.controller.LoginController;
-import it.unipv.ingsw.magstudio.model.facade.ConnectionFacade;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -30,7 +27,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        ConnectionFacade.getIstance().setStrategy(ConnectionFacade.ConnectionStrategy.MYSQL_OVER_SSH);
         launch();
     }
 }

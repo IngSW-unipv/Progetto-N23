@@ -24,17 +24,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -151,7 +145,7 @@ public class LoginController implements Initializable {
             Optional<Persona> user = task.getValue();
             if (user.isPresent()) {
                 switchToDashboard();
-                enableResizable();
+                attivaRidimensionamento();
             }
         });
 
@@ -214,7 +208,7 @@ public class LoginController implements Initializable {
             if (esito) {
                 Platform.runLater(() -> {
                     alert.informazione("Password aggiornata con successo");
-                    enableResizable();
+                    attivaRidimensionamento();
                 });
                 switchToDashboard();
             }
@@ -248,7 +242,7 @@ public class LoginController implements Initializable {
         login.toFront();
         posizione = 0;
     }
-    private void enableResizable() {
+    private void attivaRidimensionamento() {
         if (stage != null) {
             stage.setResizable(true);
         }

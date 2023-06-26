@@ -54,10 +54,8 @@ public class DashboardController implements Initializable {
 
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Prodotti.fxml"));
         try {
-
             centerPane.getChildren().add(fxmlLoader.load());
             prodottiController = fxmlLoader.getController();
-            prodottiController.setStage(stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -75,6 +73,7 @@ public class DashboardController implements Initializable {
         this.stage = stage;
         //this.stage.setMaximized(true);
         utentiController.setStage(this.stage);
+        prodottiController.setStage(this.stage);
     }
     
 

@@ -8,6 +8,7 @@ import it.unipv.ingsw.magstudio.model.bean.Prodotto;
 import it.unipv.ingsw.magstudio.model.dao.ProdottoDAO;
 import it.unipv.ingsw.magstudio.model.util.GeneratoreCodici;
 import it.unipv.ingsw.magstudio.model.util.HiveHubAlert;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,10 +33,7 @@ import javax.imageio.ImageIO;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,6 +65,9 @@ public class ProdottiController implements Initializable {
     private Label ricerca_prodotto_nome;
 
     @FXML
+    private Label elimina_prodotto_nome, elimina_prodotto_codice, elimina_prodotto_descrizione;
+
+    @FXML
     private TableView<Posizione> ricerca_prodotto_posizioni;
 
     @FXML
@@ -85,10 +86,16 @@ public class ProdottiController implements Initializable {
     private TableColumn<Posizione, Integer> ricerca_tabella_scaffale;
 
     @FXML
-    private MFXTextField ricerca_prodotto_codice_cerca;
+    private MFXTextField ricerca_prodotto_codice_cerca, elimina_prodotto_codice_cerca;
 
     @FXML
     private ImageView codiceBarreCrea, qrCodeCrea, crea_prodotti_immagine;
+    @FXML
+    private ImageView codiceBarreCerca, codiceBarreElimina;
+
+    @FXML
+    private ImageView qrCodeCerca, qrCodeElimina;
+
 
     @FXML
     private List<MFXTextField> crea_prodotto_nodes, modifica_prodotto_nodes;
@@ -138,6 +145,7 @@ public class ProdottiController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+        alert = new HiveHubAlert(this.stage);
     }
 
     public void showCreaProdotto(){
@@ -178,21 +186,26 @@ public class ProdottiController implements Initializable {
     }
 
     public void creaProdottoCrea(ActionEvent actionEvent) {
-
         try{
             String nome = crea_prodotti_nome.getText();
             int quantita = Integer.parseInt(crea_prodotti_quantita.getText());
             String codice = crea_prodotti_codice.getText();
-            String fornitore = crea_prodotti_fornitore.getText();
+            //String fornitore = crea_prodotti_fornitore.getText();
             String descrizione = crea_prodotti_descrizione.getText();
-            String scaffale = crea_prodotti_scaffale.getText();
-            String ripiano = crea_prodotti_ripiano.getText();
+            //String scaffale = crea_prodotti_scaffale.getText();
+            //String ripiano = crea_prodotti_ripiano.getText();
 
-            System.out.println(nome + quantita + codice + fornitore + descrizione + scaffale + ripiano);
-            // alert.informazione("Prodotto creato con successo");
+            Prodotto p = new Prodotto(
+                    nome,
+                    quantita,
+                    Integer.parseInt(codice),
+                    descrizione
+            );
+            alert.informazione("Prodotto creato con successo");
+            new ProdottoDAO().insertProdotto(p);
             creaProdottoReset(null);
         }catch (Exception e){
-            // alert.errore(e.getMessage());
+            alert.errore(e.getMessage());
         }
     }
 
@@ -210,14 +223,51 @@ public class ProdottiController implements Initializable {
 
     @FXML
     void ricercaProdottoCerca(MouseEvent event) {
-        System.out.println(ricerca_prodotto_codice_cerca.getText());
         ProdottoDAO prodottoDAO = new ProdottoDAO();
-        Optional<Prodotto> p = prodottoDAO.selectByCodice(new Prodotto(null,null,0, Integer.parseInt(ricerca_prodotto_codice_cerca.getText()),null ));
-        System.out.println(p.get());
+        Integer codice = null;
+        try {
+            codice = Integer.parseInt(ricerca_prodotto_codice_cerca.getText());
+            Optional<Prodotto> p = prodottoDAO.selectByCodice(new Prodotto(null,null,0, codice,null ));
 
-        ObservableList<Posizione> data = FXCollections.observableArrayList(
-               p.get().getPosizione().stream().toList()
-        );
-        ricerca_prodotto_posizioni.setItems(data);
+            if(p.isPresent()){
+                this.ricerca_prodotto_nome.setText(p.get().getNome());
+                this.ricerca_prodotto_codice.setText(Integer.toString(p.get().getCodice()));
+                this.ricerca_prodotto_descrizione.setText(p.get().getDescrizione());
+
+                this.codiceBarreCerca.setImage(GeneratoreCodici.generaBarCode(Integer.toString(p.get().getCodice()), (int) codiceBarreCrea.getFitWidth(), (int) codiceBarreCrea.getFitHeight()));
+                this.qrCodeCerca.setImage(GeneratoreCodici.generaQrCode(Integer.toString(p.get().getCodice()), (int) qrCodeCrea.getFitWidth(), (int) qrCodeCrea.getFitHeight()));
+
+                ObservableList<Posizione> data = FXCollections.observableArrayList(
+                        p.get().getPosizione().stream().toList()
+                );
+                ricerca_prodotto_posizioni.setItems(data);
+            }else {
+                alert.informazione("Nessun prodotto trovato con il codice fornito");
+            }
+        }catch (NumberFormatException ex){
+            alert.errore("Il codice è composto da sole cifre");
+        }
+    }
+
+    public void eliminaProdottoCerca(MouseEvent mouseEvent) {
+        Integer codice = null;
+        try{
+            codice = Integer.parseInt(elimina_prodotto_codice_cerca.getText());
+            Optional<Prodotto> p = new ProdottoDAO().selectByCodice(new Prodotto(null,0,codice,null));
+            if(p.isPresent()){
+                Prodotto prodotto = p.get();
+                elimina_prodotto_nome.setText(prodotto.getNome());
+                elimina_prodotto_codice.setText(Integer.toString(prodotto.getCodice()));
+                elimina_prodotto_descrizione.setText(prodotto.getDescrizione());
+                codiceBarreElimina.setImage(GeneratoreCodici.generaBarCode(Integer.toString(prodotto.getCodice()), (int) codiceBarreElimina.getFitWidth(), (int) codiceBarreElimina.getFitHeight()));
+                qrCodeElimina.setImage(GeneratoreCodici.generaQrCode(Integer.toString(prodotto.getCodice()), (int) qrCodeElimina.getFitWidth(), (int) qrCodeElimina.getFitHeight()));
+            }else {
+                alert.informazione("Nessun prodotto trovato");
+            }
+        }catch (NumberFormatException ex){
+            alert.errore("Il codice è formato da sole cifre");
+        }
+
+
     }
 }
