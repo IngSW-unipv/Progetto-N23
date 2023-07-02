@@ -7,19 +7,11 @@ import java.util.Objects;
 @Entity
 @Table(name = "POSIZIONE")
 public class Posizione {
-    @Id
-    @Column(name = "SCAFFALE")
-    private int scaffale;
+    @EmbeddedId
+    private Coordinata posizione;
 
-
-    @Column(name = "AREA")
-    private int area;
-
-
-    @Column(name = "LIVELLO")
-    private int livello;
-    @Column(name = "SCOMPARTIMENTO")
-    private int scompartimento;
+    @Column(name = "QNT")
+    private int qnt;
 
     @ManyToOne
     @JoinColumn(name = "CODICE")
@@ -27,49 +19,44 @@ public class Posizione {
 
     public Posizione(){}
 
-    public Posizione(Prodotto p, int scaffale, int area, int livello, int scompartimento) {
+    public Posizione(Prodotto p, int scaffale, int area, int livello, int scompartimento, int qnt) {
         this.prodotto = p;
-        this.scaffale = scaffale;
-        this.area = area;
-        this.livello = livello;
-        this.scompartimento = scompartimento;
+        this.posizione = new Coordinata(scaffale,area,livello,scompartimento);
+        this.qnt = qnt;
     }
 
-    public int getScaffale() {
-        return scaffale;
+    public Coordinata getPosizione() {
+        return posizione;
     }
 
-    public void setScaffale(int scaffale) {
-        this.scaffale = scaffale;
+    public int getQnt() {
+        return qnt;
     }
 
-    public int getArea() {
-        return area;
+    public int getLivello(){
+        return getPosizione().getLivello();
     }
 
-    public void setArea(int area) {
-        this.area = area;
+    public int getScaffale(){
+        return  getPosizione().getScaffale();
     }
 
-    public int getLivello() {
-        return livello;
+    public int getArea(){
+        return  getPosizione().getArea();
     }
 
-    public void setLivello(int livello) {
-        this.livello = livello;
+    public int getScompartimento(){
+        return  getPosizione().getScompartimento();
     }
 
-    public int getScompartimento() {
-        return scompartimento;
-    }
-
-    public void setScompartimento(int scompartimento) {
-        this.scompartimento = scompartimento;
+    public void setQnt(int qnt) {
+        this.qnt = qnt;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.scaffale,this.area,this.livello,this.scompartimento);
+        Coordinata c = getPosizione();
+        return Objects.hash(c.getScaffale(),c.getArea(),c.getLivello(),c.getScompartimento());
     }
 
     @Override
@@ -83,10 +70,10 @@ public class Posizione {
 
         Posizione posizione = (Posizione) obj;
 
-        return (this.scaffale == posizione.scaffale)&&
-                (this.area == posizione.area) &&
-                (this.livello == posizione.livello)&&
-                (this.scompartimento == posizione.scompartimento);
+        return (getPosizione().getScaffale() == posizione.getPosizione().getScaffale())&&
+                (getPosizione().getArea() == posizione.getPosizione().getArea()) &&
+                (getPosizione().getLivello() == posizione.getPosizione().getLivello())&&
+                (getPosizione().getScompartimento() == posizione.getPosizione().getScompartimento());
     }
 
     @Override
@@ -94,13 +81,15 @@ public class Posizione {
         StringBuilder out = new StringBuilder();
 
         out.append("Scaffale: ")
-                .append(getScaffale())
+                .append(getPosizione().getScaffale())
                 .append(" - Area: ")
-                .append(getArea())
+                .append(getPosizione().getArea())
                 .append(" - Livello: ")
-                .append(getLivello())
+                .append(getPosizione().getLivello())
                 .append(" - Scompartimento: ")
-                .append(getScompartimento());
+                .append(getPosizione().getScompartimento())
+                .append(" - Quantità: ")
+                .append(getQnt());
 
         return out.toString();
     }

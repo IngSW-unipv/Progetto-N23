@@ -2,9 +2,7 @@ package it.unipv.ingsw.magstudio.model.bean;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,29 +15,20 @@ public class Prodotto {
     @Column(name = "NOME")
     private String nome;
 
-    @Column(name = "QNT")
-    private int qnt;
-
     @Column(name = "DESCRIZIONE")
     private String descrizione;
+
+    @Column(name = "IMMAGINE", columnDefinition="LONGBLOB")
+    private byte[] immagine;
 
     @OneToMany(mappedBy = "prodotto", cascade = CascadeType.ALL)
     private Set<Posizione> posizione;
 
     public Prodotto(){}
 
-    public Prodotto(Posizione p, String nome, int qnt, int codice, String descrizione) {
-        this.nome = nome;
-        this.qnt = qnt;
-        this.codice = codice;
-        this.descrizione = descrizione;
-        this.posizione = new HashSet<>();
-        this.posizione.add(p);
-    }
 
-    public Prodotto(String nome, int qnt, int codice, String descrizione) {
+    public Prodotto(String nome, int codice, String descrizione) {
         this.nome = nome;
-        this.qnt = qnt;
         this.codice = codice;
         this.descrizione = descrizione;
         this.posizione = new HashSet<>();
@@ -65,14 +54,6 @@ public class Prodotto {
         this.descrizione = descrizione;
     }
 
-    public int getQnt() {
-        return qnt;
-    }
-
-    public void setQnt(int qnt) {
-        this.qnt = qnt;
-    }
-
     public Set<Posizione> getPosizione() {
         return posizione;
     }
@@ -81,14 +62,20 @@ public class Prodotto {
         this.posizione.add(p);
     }
 
+    public byte[] getImmagine() {
+        return immagine;
+    }
+
+    public void setImmagine(byte[] immagine) {
+        this.immagine = immagine;
+    }
+
     @Override
     public String toString() {
        StringBuilder out = new StringBuilder();
 
        out.append("Nome: ")
                .append(this.getNome())
-               .append(" - Quantità: ")
-               .append(this.getQnt())
                .append(" - Codice: ")
                .append(this.getCodice())
                .append(" - Descrizione: ")
