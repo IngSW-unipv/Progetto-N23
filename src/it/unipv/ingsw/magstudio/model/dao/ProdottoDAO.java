@@ -4,6 +4,7 @@ import it.unipv.ingsw.magstudio.model.bean.*;
 import it.unipv.ingsw.magstudio.model.util.HiberanteSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import java.util.Optional;
 
@@ -36,19 +37,6 @@ public class ProdottoDAO implements IProdottoDAO{
     }
 
     @Override
-    public Optional<Prodotto> selectByPosizione(Posizione p){
-        //TODO: finire select by posizione
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Prodotto> selectByNome(Prodotto p){
-        Optional<Prodotto> out = Optional.empty();
-
-        return out;
-    }
-
-    @Override
     public boolean insertProdotto(Prodotto p){
         SessionFactory sessionFactory = HiberanteSessionFactory.getSessionFactory();
         Session session = sessionFactory.openSession();
@@ -66,6 +54,8 @@ public class ProdottoDAO implements IProdottoDAO{
 
     @Override
     public boolean updateProdotto(Prodotto p){
+        //TODO: Se si inserisce una posizione gia occupata
+        //      sostituisce l'id del prodotto con quello nuovo
         SessionFactory sessionFactory = HiberanteSessionFactory.getSessionFactory();
         Session session = sessionFactory.openSession();
 
@@ -77,6 +67,7 @@ public class ProdottoDAO implements IProdottoDAO{
 
         session.close();
         sessionFactory.close();
+
         return true;
     }
 

@@ -21,7 +21,7 @@ public class Prodotto {
     @Column(name = "IMMAGINE", columnDefinition="LONGBLOB")
     private byte[] immagine;
 
-    @OneToMany(mappedBy = "prodotto", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "prodotto", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Posizione> posizione;
 
     public Prodotto(){}

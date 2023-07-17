@@ -24,19 +24,4 @@ public class ImageFacade {
         Image img = new Image(inputStream);
         return img;
     }
-
-    public static byte[] imageToByte(Image img) throws IOException {
-        File f = new File("tmp.jpg");
-        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(img, null);
-        ImageIO.write(bufferedImage,"jpg",f);
-
-        InputStream ip = new FileInputStream(f);
-        byte[] foto = new byte[(int) f.length()];
-        ip.read(foto);
-
-        ip.close();
-        f.delete();
-
-        return foto;
-    }
 }

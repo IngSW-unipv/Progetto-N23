@@ -324,43 +324,37 @@ public class ProdottiController implements Initializable {
     }
 
     public void modificaProdottoModifica(ActionEvent actionEvent) {
-        String nome = this.modifica_prodotti_nome.getText();
-        int codice = Integer.parseInt(this.modifica_prodotti_codice.getText());
-        String descrizione = this.modifica_prodotti_descrizione.getText();
+        try{
+            String nome = modifica_prodotti_nome.getText();
+            String codice = modifica_prodotti_codice.getText();
+            String descrizione = modifica_prodotti_descrizione.getText();
 
-        Prodotto p = new Prodotto(
-                nome,
-                codice,
-                descrizione
-        );
-
-        this.modifica_prodotto_posizioni.getItems().forEach(posizione -> {
-            p.addPosizione(
-                    new Posizione(
-                        p,
-                        posizione.getScaffale(),
-                        posizione.getArea(),
-                        posizione.getLivello(),
-                        posizione.getScompartimento(),
-                        posizione.getQnt()
-                    )
+            Prodotto p = new Prodotto(
+                    nome,
+                    Integer.parseInt(codice),
+                    descrizione
             );
-        });
 
-        try {
-            p.setImmagine(
-                    ImageFacade.imageToByte(
-                           modifica_prodotti_immagine.getImage()
-                    )
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            modifica_prodotto_posizioni.getItems().forEach(posizione -> {
+                p.addPosizione(
+                        new Posizione(
+                                p,
+                                posizione.getScaffale(),
+                                posizione.getArea(),
+                                posizione.getLivello(),
+                                posizione.getScompartimento(),
+                                posizione.getQnt()
+                        )
+                );
+            });
+
+            new ProdottoDAO().updateProdotto(p);
+            alert.informazione("Prodotto modificato con successo");
+            creaProdottoReset(null);
+        }catch (Exception e){
+            e.printStackTrace();
+            alert.errore(e.getMessage());
         }
-
-        //TODO: non vengono eliminate eventuali posizioni rimosse
-        ProdottoDAO prodottoDAO = new ProdottoDAO();
-        prodottoDAO.updateProdotto(p);
-        modificaProdottoReset(null);
     }
 
     public void modificaProdottiCerca(MouseEvent mouseEvent) {

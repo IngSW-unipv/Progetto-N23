@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface IProdottoDAO {
     public Optional<Prodotto> selectByCodice(Prodotto p);
-    public Optional<Prodotto> selectByPosizione(Posizione p);
-    public Optional<Prodotto> selectByNome(Prodotto p);
     public boolean insertProdotto(Prodotto p);
     public boolean updateProdotto(Prodotto p);
     public boolean dropProdotto(Prodotto p);
