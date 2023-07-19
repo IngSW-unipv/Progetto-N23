@@ -1,6 +1,11 @@
 
 @import 'colors.css';
 
+.background{
+    -fx-background-color: -hh-lightgray-1;
+    -fx-background-radius: 10;
+}
+
 .sideBar{
     -fx-background-radius: 0px 20px 20px 0px;
     -fx-background-color: linear-gradient(to right top, yellow, orange);
