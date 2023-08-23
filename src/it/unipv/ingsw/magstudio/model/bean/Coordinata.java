@@ -21,6 +21,13 @@ public class Coordinata {
     public Coordinata() {
     }
 
+    /**
+     * Crea un oggetto Coordinata da 4 valori
+     * @param scaffale
+     * @param area
+     * @param livello
+     * @param scompartimento
+     */
     public Coordinata(int scaffale, int area, int livello, int scompartimento) {
         this.scaffale = scaffale;
         this.area = area;

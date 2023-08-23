@@ -19,9 +19,9 @@ public class Posizione {
 
     public Posizione(){}
 
-    public Posizione(Prodotto p, int scaffale, int area, int livello, int scompartimento, int qnt) {
+    public Posizione(Prodotto p, Coordinata cordinata, int qnt) {
         this.prodotto = p;
-        this.posizione = new Coordinata(scaffale,area,livello,scompartimento);
+        this.posizione = cordinata;
         this.qnt = qnt;
     }
 

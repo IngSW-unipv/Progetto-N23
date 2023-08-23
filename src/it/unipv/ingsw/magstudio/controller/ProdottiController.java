@@ -1,7 +1,10 @@
 package it.unipv.ingsw.magstudio.controller;
 
+import de.jensd.fx.glyphs.materialicons.MaterialIconView;
+import io.github.palexdev.materialfx.controls.MFXProgressSpinner;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
+import it.unipv.ingsw.magstudio.model.bean.Coordinata;
 import it.unipv.ingsw.magstudio.model.bean.Posizione;
 import it.unipv.ingsw.magstudio.model.bean.Prodotto;
 import it.unipv.ingsw.magstudio.model.dao.ProdottoDAO;
@@ -25,15 +28,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.hibernate.exception.ConstraintViolationException;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * PROBLEMI RISCONTRATI DA RISOLVERE:
+ * -    IMMAGINE PERSA DOPO MODIFICA PRODOTTO
+ * -    PROBLEMI IN MODIFICA PRODOTTO CON LE POSIZIONI
+ */
 public class ProdottiController implements Initializable {
     @FXML
     private StackPane mainPane;
@@ -42,6 +53,9 @@ public class ProdottiController implements Initializable {
             eliminaProdottoPane,
             modificaProdottoPane,
             ricercaProdottoPane;
+
+    @FXML
+    MFXProgressSpinner progressSpinner_ricerca;
 
     @FXML
     private MFXTextField crea_prodotti_nome,
@@ -250,10 +264,10 @@ public class ProdottiController implements Initializable {
                 p.addPosizione(
                         new Posizione(
                                 p,
-                                posizione.getScaffale(),
+                                new Coordinata(posizione.getScaffale(),
                                 posizione.getArea(),
                                 posizione.getLivello(),
-                                posizione.getScompartimento(),
+                                posizione.getScompartimento()),
                                 posizione.getQnt()
                         )
                 );
@@ -267,14 +281,17 @@ public class ProdottiController implements Initializable {
             new ProdottoDAO().insertProdotto(p);
             alert.informazione("Prodotto creato con successo");
             creaProdottoReset(null);
+        }catch (ConstraintViolationException e){
+            alert.errore("Attenzione! Codice prodotto o posizione già in uso!");
         }catch (Exception e){
+            e.printStackTrace();
             alert.errore(e.getMessage());
         }
     }
 
     public void scegliImmagine(MouseEvent mouseEvent) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File"); //TODO: mettere scelta file solo immagini
+        fileChooser.setTitle("Open Resource File");
         File selectedFile = fileChooser.showOpenDialog(stage);
         try {
             this.tmp_path = selectedFile.getPath();
@@ -286,19 +303,23 @@ public class ProdottiController implements Initializable {
     }
 
     public void creaProdottiAggiungiPosizione(MouseEvent mouseEvent) {
-        int scaffale = Integer.parseInt(this.crea_prodotti_scaffale.getText());
-        int area = Integer.parseInt(this.crea_prodotti_area.getText());
-        int livello = Integer.parseInt(this.crea_prodotti_livello.getText());
-        int scompartimento = Integer.parseInt(this.crea_prodotti_scompartimento.getText());
-        int qnt = Integer.parseInt(this.crea_prodotti_qnt.getText());
+        try {
+            int scaffale = Integer.parseInt(this.crea_prodotti_scaffale.getText());
+            int area = Integer.parseInt(this.crea_prodotti_area.getText());
+            int livello = Integer.parseInt(this.crea_prodotti_livello.getText());
+            int scompartimento = Integer.parseInt(this.crea_prodotti_scompartimento.getText());
+            int qnt = Integer.parseInt(this.crea_prodotti_qnt.getText());
 
-        crea_prodotto_posizioni.getItems().add(new Posizione(null,scaffale,area,livello,scompartimento,qnt));
+            crea_prodotto_posizioni.getItems().add(new Posizione(null,new Coordinata(scaffale,area,livello,scompartimento),qnt));
 
-        this.crea_prodotti_scaffale.setText("");
-        this.crea_prodotti_area.setText("");
-        this.crea_prodotti_livello.setText("");
-        this.crea_prodotti_scompartimento.setText("");
-        this.crea_prodotti_qnt.setText("");
+            this.crea_prodotti_scaffale.setText("");
+            this.crea_prodotti_area.setText("");
+            this.crea_prodotti_livello.setText("");
+            this.crea_prodotti_scompartimento.setText("");
+            this.crea_prodotti_qnt.setText("");
+        }catch (NumberFormatException e){
+            alert.errore("Tutti i campi devono essere dei numeri interi");
+        }
     }
 
     public void creaProdottiEliminaPosizione(MouseEvent mouseEvent) {
@@ -339,10 +360,10 @@ public class ProdottiController implements Initializable {
                 p.addPosizione(
                         new Posizione(
                                 p,
-                                posizione.getScaffale(),
-                                posizione.getArea(),
-                                posizione.getLivello(),
-                                posizione.getScompartimento(),
+                                new Coordinata(posizione.getScaffale(),
+                                    posizione.getArea(),
+                                    posizione.getLivello(),
+                                    posizione.getScompartimento()),
                                 posizione.getQnt()
                         )
                 );
@@ -350,7 +371,7 @@ public class ProdottiController implements Initializable {
 
             new ProdottoDAO().updateProdotto(p);
             alert.informazione("Prodotto modificato con successo");
-            creaProdottoReset(null);
+            modificaProdottoReset(null);
         }catch (Exception e){
             e.printStackTrace();
             alert.errore(e.getMessage());
@@ -359,48 +380,56 @@ public class ProdottiController implements Initializable {
 
     public void modificaProdottiCerca(MouseEvent mouseEvent) {
         ProdottoDAO prodottoDAO = new ProdottoDAO();
-        Optional<Prodotto> p = prodottoDAO.selectByCodice(new Prodotto(null,Integer.parseInt(modifica_prodotti_codice.getText()),null));
-        if(p.isPresent()){
-            Prodotto prodotto = p.get();
-            this.modifica_prodotti_codice.setDisable(true);
-            this.modifica_prodotti_nome.setText(prodotto.getNome());
-            this.modifica_prodotti_descrizione.setText(prodotto.getDescrizione());
-            this.codiceBarreModifica.setImage(
-                    GeneratoreCodici.generaBarCode(
-                            String.valueOf(prodotto.getCodice()),
-                            (int)this.codiceBarreModifica.getFitWidth(),
-                            (int)this.codiceBarreModifica.getFitHeight()
-                    )
-            );
-            this.qrCodeModifica.setImage(
-                    GeneratoreCodici.generaQrCode(
-                            String.valueOf(prodotto.getCodice()),
-                            (int)this.qrCodeModifica.getFitWidth(),
-                            (int)this.qrCodeModifica.getFitHeight()
-                    )
-            );
-
-            modifica_prodotto_posizioni.getItems().clear();
-            prodotto.getPosizione().forEach(posizione -> {
-                modifica_prodotto_posizioni.getItems().add(
-                        new Posizione(
-                                prodotto,
-                                posizione.getScaffale(),
-                                posizione.getArea(),
-                                posizione.getLivello(),
-                                posizione.getScompartimento(),
-                                posizione.getQnt()
+        Optional<Prodotto> p;
+        try{
+            p = prodottoDAO.selectByCodice(new Prodotto(null,Integer.parseInt(modifica_prodotti_codice.getText()),null));
+            if(p.isPresent()){
+                Prodotto prodotto = p.get();
+                this.modifica_prodotti_codice.setDisable(true);
+                this.modifica_prodotti_nome.setText(prodotto.getNome());
+                this.modifica_prodotti_descrizione.setText(prodotto.getDescrizione());
+                this.codiceBarreModifica.setImage(
+                        GeneratoreCodici.generaBarCode(
+                                String.valueOf(prodotto.getCodice()),
+                                (int)this.codiceBarreModifica.getFitWidth(),
+                                (int)this.codiceBarreModifica.getFitHeight()
                         )
                 );
-            });
-
-            if(prodotto.getImmagine() != null){
-                this.modifica_prodotti_immagine.setImage(
-                        ImageFacade.byteToImage(prodotto.getImmagine())
+                this.qrCodeModifica.setImage(
+                        GeneratoreCodici.generaQrCode(
+                                String.valueOf(prodotto.getCodice()),
+                                (int)this.qrCodeModifica.getFitWidth(),
+                                (int)this.qrCodeModifica.getFitHeight()
+                        )
                 );
-            }else {
-                this.modifica_prodotti_immagine.setImage(null);
+
+                modifica_prodotto_posizioni.getItems().clear();
+                prodotto.getPosizione().forEach(posizione -> {
+                    modifica_prodotto_posizioni.getItems().add(
+                            new Posizione(
+                                    prodotto,
+                                    new Coordinata(posizione.getScaffale(),
+                                            posizione.getArea(),
+                                            posizione.getLivello(),
+                                            posizione.getScompartimento()),
+                                    posizione.getQnt()
+                            )
+                    );
+                });
+
+                if(prodotto.getImmagine() != null){
+                    this.modifica_prodotti_immagine.setImage(
+                            ImageFacade.byteToImage(prodotto.getImmagine())
+                    );
+                }else {
+                    this.modifica_prodotti_immagine.setImage(null);
+                }
+            }else{
+                alert.informazione("Nessun prodotto trovato con il codice fornito");
             }
+        }catch (NumberFormatException e){
+            p = Optional.empty();
+            alert.errore("Il codice è formato da sole cifre");
         }
     }
 
@@ -420,10 +449,10 @@ public class ProdottiController implements Initializable {
         this.modifica_prodotto_posizioni.getItems().add(
                 new Posizione(
                         null,
-                        scaffale,
-                        area,
-                        livello,
-                        scompartimento,
+                        new Coordinata(scaffale,
+                            area,
+                            livello,
+                            scompartimento),
                         qnt
                 )
         );
@@ -455,6 +484,9 @@ public class ProdottiController implements Initializable {
 
     @FXML
     void ricercaProdottoCerca(MouseEvent event) {
+        ((MaterialIconView)event.getSource()).setVisible(false);
+        progressSpinner_ricerca.setVisible(true);
+
         ProdottoDAO prodottoDAO = new ProdottoDAO();
         Integer codice = null;
         try {
@@ -501,6 +533,8 @@ public class ProdottiController implements Initializable {
         }catch (NumberFormatException ex){
             alert.errore("Il codice è composto da sole cifre");
         }
+        ((MaterialIconView)event.getSource()).setVisible(true);
+        progressSpinner_ricerca.setVisible(false);
     }
 
     /*
@@ -553,10 +587,10 @@ public class ProdottiController implements Initializable {
                     elimina_prodotto_posizioni.getItems().add(
                             new Posizione(
                                     prodotto,
-                                    posizione.getScaffale(),
-                                    posizione.getArea(),
-                                    posizione.getLivello(),
-                                    posizione.getScompartimento(),
+                                    new Coordinata(posizione.getScaffale(),
+                                        posizione.getArea(),
+                                        posizione.getLivello(),
+                                        posizione.getScompartimento()),
                                     posizione.getQnt())
                     );
                 });
