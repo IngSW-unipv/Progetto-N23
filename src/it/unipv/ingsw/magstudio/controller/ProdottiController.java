@@ -22,7 +22,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -31,20 +30,13 @@ import javafx.stage.Stage;
 import org.hibernate.exception.ConstraintViolationException;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * PROBLEMI RISCONTRATI DA RISOLVERE:
- * -    IMMAGINE PERSA DOPO MODIFICA PRODOTTO
- * -    PROBLEMI IN MODIFICA PRODOTTO CON LE POSIZIONI
- */
 public class ProdottiController implements Initializable {
     @FXML
     private StackPane mainPane;
@@ -196,12 +188,15 @@ public class ProdottiController implements Initializable {
         modifica_tabella_scompartimento.setCellValueFactory(new PropertyValueFactory<>("scompartimento"));
         modifica_tabella_quantita.setCellValueFactory(new PropertyValueFactory<>("qnt"));
 
-        modifica_prodotto_posizioni.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            modifica_prodotti_area.setText(Integer.toString(newValue.getArea()));
-            modifica_prodotti_livello.setText(Integer.toString(newValue.getLivello()));
-            modifica_prodotti_scompartimento.setText(Integer.toString(newValue.getScompartimento()));
-            modifica_prodotti_scaffale.setText(Integer.toString(newValue.getScaffale()));
-            modifica_prodotti_qnt.setText(Integer.toString(newValue.getQnt()));
+        modifica_prodotto_posizioni.setOnMousePressed(event -> {
+            Posizione p = modifica_prodotto_posizioni.getSelectionModel().getSelectedItem();
+            modifica_prodotti_area.setText(Integer.toString(p.getArea()));
+            modifica_prodotti_livello.setText(Integer.toString(p.getLivello()));
+            modifica_prodotti_scompartimento.setText(Integer.toString(p.getScompartimento()));
+            modifica_prodotti_scaffale.setText(Integer.toString(p.getScaffale()));
+            modifica_prodotti_qnt.setText(Integer.toString(p.getQnt()));
+
+            modifica_prodotto_posizioni.refresh();
         });
     }
 
@@ -437,31 +432,45 @@ public class ProdottiController implements Initializable {
         this.modifica_prodotto_posizioni.getItems().remove(
                 this.modifica_prodotto_posizioni.getSelectionModel().getSelectedItem()
         );
+        modifica_prodotto_posizioni.refresh();
     }
 
     public void modificaProdottiAggiungiPosizione(MouseEvent mouseEvent) {
-        int scaffale = Integer.parseInt(this.modifica_prodotti_scaffale.getText());
-        int area = Integer.parseInt(this.modifica_prodotti_area.getText());
-        int livello = Integer.parseInt(this.modifica_prodotti_livello.getText());
-        int scompartimento = Integer.parseInt(this.modifica_prodotti_scompartimento.getText());
-        int qnt = Integer.parseInt(this.modifica_prodotti_qnt.getText());
+        try{
+            int scaffale = Integer.parseInt(this.modifica_prodotti_scaffale.getText());
+            int area = Integer.parseInt(this.modifica_prodotti_area.getText());
+            int livello = Integer.parseInt(this.modifica_prodotti_livello.getText());
+            int scompartimento = Integer.parseInt(this.modifica_prodotti_scompartimento.getText());
+            int qnt = Integer.parseInt(this.modifica_prodotti_qnt.getText());
 
-        this.modifica_prodotto_posizioni.getItems().add(
-                new Posizione(
-                        null,
-                        new Coordinata(scaffale,
+            Posizione posizione = new Posizione(
+                    null,
+                    new Coordinata(
+                            scaffale,
                             area,
                             livello,
-                            scompartimento),
-                        qnt
-                )
-        );
+                            scompartimento
+                    ),
+                    qnt
+            );
+            this.modifica_prodotto_posizioni.getItems().stream().toList().forEach(posizione1 -> {
+                if(posizione.equals(posizione1)){
+                    this.modifica_prodotto_posizioni.getItems().remove(posizione1);
+                }
+            });
+            this.modifica_prodotto_posizioni.getItems().add(
+                    posizione
+            );
 
-        this.modifica_prodotti_scaffale.setText("");
-        this.modifica_prodotti_area.setText("");
-        this.modifica_prodotti_livello.setText("");
-        this.modifica_prodotti_scompartimento.setText("");
-        this.modifica_prodotti_qnt.setText("");
+            this.modifica_prodotti_scaffale.setText("");
+            this.modifica_prodotti_area.setText("");
+            this.modifica_prodotti_livello.setText("");
+            this.modifica_prodotti_scompartimento.setText("");
+            this.modifica_prodotti_qnt.setText("");
+        }catch(NumberFormatException e){
+            alert.errore("Tutti i campi devono essere dei numeri interi");
+        }
+        modifica_prodotto_posizioni.refresh();
     }
 
     /*

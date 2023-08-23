@@ -18,7 +18,7 @@ public class Prodotto {
     @Column(name = "DESCRIZIONE")
     private String descrizione;
 
-    @Column(name = "IMMAGINE", columnDefinition="LONGBLOB")
+    @Column(name = "IMMAGINE", columnDefinition="LONGBLOB", updatable = false)
     private byte[] immagine;
 
     @OneToMany(mappedBy = "prodotto", cascade = CascadeType.ALL, orphanRemoval = true)
